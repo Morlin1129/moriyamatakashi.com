@@ -20,7 +20,6 @@ const TAX = {
 const toc = [
   { id: 'calc', label: '計算してみる' },
   { id: 'facts', label: '資料に書かれていること' },
-  { id: 'view', label: '私の見方' },
   { id: 'check', label: 'まだ確かめたいこと' },
   { id: 'method', label: '計算のしかたと前提' },
 ];
@@ -41,13 +40,19 @@ const toc = [
     <article class="prose">
       <section id="calc" class="tax-calc">
         <h2>計算してみる</h2>
+        <div class="tax-switch" role="tablist" aria-label="表示の切り替え">
+          <button type="button" role="tab" class="chip is-active" data-mode="tax" aria-selected="true">あなたの市民税で見る</button>
+          <button type="button" role="tab" class="chip" data-mode="household" aria-selected="false">家計に置き換えて見る</button>
+        </div>
+        <p class="tax-mode-note" data-mode-note="tax">あなたが払う市民税（市民税分の概算）が、1日あたり何にいくら使われているかを表示します。</p>
+        <p class="tax-mode-note" data-mode-note="household" hidden>市の1年分の歳出（約{(total / 100000).toFixed(1)}億円）を、入力した年収の家計に縮めて表示します。「もし市が年収○万円の家庭だったら、福祉に年○万円、月○万円」という見方です。</p>
         <form class="tax-form" id="tax-form">
           <label>
             <span>年収（給与収入・税込）</span>
             <span class="tax-input"><input type="number" id="income" name="income" inputmode="numeric" min="0" step="10000" value="4000000" /><span>円</span></span>
           </label>
           <input type="range" id="income-range" min="0" max="15000000" step="100000" value="4000000" aria-label="年収をスライダーで調整" />
-          <label>
+          <label data-only="tax">
             <span>扶養している家族の人数</span>
             <select id="dependents" name="dependents">
               <option value="0">0人</option><option value="1">1人</option><option value="2">2人</option><option value="3">3人</option><option value="4">4人</option>
@@ -56,13 +61,14 @@ const toc = [
         </form>
         <div class="tax-result" id="tax-result" aria-live="polite">
           <div class="tax-total">
-            <p>あなたの市民税は、1年で <strong id="tax-year">—</strong> 円、<span class="nowrap">1日あたり <strong id="tax-day">—</strong> 円</span></p>
+            <p data-only="tax">あなたの市民税は、1年で <strong id="tax-year">—</strong> 円、<span class="nowrap">1日あたり <strong id="tax-day">—</strong> 円</span></p>
+            <p data-only="household" hidden>市の歳出を年収 <strong id="hh-income">—</strong> 円の家計に置き換えると、<span class="nowrap">1か月 <strong id="hh-month">—</strong> 円</span> の使い道はこうなります</p>
             <p class="tax-note" id="tax-message"></p>
           </div>
           <ol class="tax-bars" id="tax-bars">
             {purposes.map((p) => (
               <li data-id={p.id}>
-                <div class="tax-bar-head"><span class="tax-bar-name">{p.name}</span><span class="tax-bar-amount"><strong data-day>—</strong> 円／日<small>（<span data-year>—</span> 円／年）</small></span></div>
+                <div class="tax-bar-head"><span class="tax-bar-name">{p.name}</span><span class="tax-bar-amount"><strong data-day>—</strong> <span data-unit>円／日</span><small>（<span data-year>—</span> <span data-unit2>円／年</span>）</small></span></div>
                 <div class="tax-bar-track"><div class="tax-bar-fill" style={`width:${(p.share * 100).toFixed(1)}%`}></div></div>
                 <p class="tax-bar-plain">{p.plain}<span class="tax-bar-share">歳出の {(p.share * 100).toFixed(1)}%</span></p>
               </li>
@@ -73,16 +79,11 @@ const toc = [
 
       <section id="facts">
         <h2>資料に書かれていること</h2>
-        <p>{kessan.fiscalYear}の南相馬市の普通会計の歳出は、合計 約{fmt(Math.round(total / 100000) / 10)}億円です。内訳の上位は、市役所の運営や復興関連を含む総務費（{(purposes.find((p) => p.id === 'somu')!.share * 100).toFixed(1)}%）、福祉の民生費（{(purposes.find((p) => p.id === 'minsei')!.share * 100).toFixed(1)}%）、農林水産業費（{(purposes.find((p) => p.id === 'norin')!.share * 100).toFixed(1)}%）、教育費（{(purposes.find((p) => p.id === 'kyoiku')!.share * 100).toFixed(1)}%）です。</p>
-        <p>市税のうち個人市民税は 約{fmt(Math.round(kessan.personalResidentTax / 100000) / 10)}億円で、市税全体の27.6%にあたります。市の歳入全体で見ると、地方税は18.6%、地方交付税が22.4%です。</p>
+        <p>{kessan.fiscalYear}の南相馬市の普通会計の歳出は、合計 約{(total / 100000).toFixed(1)}億円です。内訳の上位は、市役所の運営や復興関連を含む総務費（{(purposes.find((p) => p.id === 'somu')!.share * 100).toFixed(1)}%）、福祉の民生費（{(purposes.find((p) => p.id === 'minsei')!.share * 100).toFixed(1)}%）、農林水産業費（{(purposes.find((p) => p.id === 'norin')!.share * 100).toFixed(1)}%）、教育費（{(purposes.find((p) => p.id === 'kyoiku')!.share * 100).toFixed(1)}%）です。</p>
+        <p>市税のうち個人市民税は 約{(kessan.personalResidentTax / 100000).toFixed(1)}億円で、市税全体の27.6%にあたります。市の歳入全体で見ると、地方税は18.6%、地方交付税が22.4%です。</p>
         <p class="note-small"><a href={kessan.source.url} target="_blank" rel="noopener">出典：{kessan.source.title}（{kessan.source.publisher}）↗</a></p>
       </section>
 
-      <section id="view" class="goal">
-        <h2>私の見方</h2>
-        <p>農林水産業費が歳出の15%を占めるのは、南相馬らしい特徴だと思います。震災後の営農再開や農地の整備が続いていることの表れではないかと考えています。総務費が民生費と並んで大きいのも、復興関連の事業がここに含まれているためではないかと見ています。</p>
-        <p>このページで見えるのは「使い道の割合」までです。それぞれの事業が暮らしをどれだけ良くしたかは、決算の数字だけでは分かりません。そこを確かめることが、私が議員として取り組みたいことです。</p>
-      </section>
 
       <section id="check">
         <h2>まだ確かめたいこと</h2>
@@ -146,9 +147,36 @@ const toc = [
     return { year, exempt: exemptIncomePart ? 'income' : null };
   };
 
+  let mode = 'tax';
+  const setMode = (next) => {
+    mode = next;
+    document.querySelectorAll('.tax-switch [data-mode]').forEach((b) => {
+      const on = b.dataset.mode === mode;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-selected', String(on));
+    });
+    document.querySelectorAll('[data-mode-note]').forEach((p) => { p.hidden = p.dataset.modeNote !== mode; });
+    document.querySelectorAll('[data-only]').forEach((el) => { el.hidden = el.dataset.only !== mode; });
+    document.querySelectorAll('[data-unit]').forEach((el) => { el.textContent = mode === 'tax' ? '円／日' : '円／月'; });
+    document.querySelectorAll('[data-unit2]').forEach((el) => { el.textContent = '円／年'; });
+    render();
+  };
+  document.querySelectorAll('.tax-switch [data-mode]').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
+
   const render = () => {
     const salary = Math.max(0, Number(income.value) || 0);
     const n = Number(dependents.value) || 0;
+    if (mode === 'household') {
+      // 市の歳出全体を、入力した年収の家計に縮める
+      document.getElementById('hh-income').textContent = fmt(salary);
+      document.getElementById('hh-month').textContent = fmt(salary / 12);
+      purposes.forEach((p) => {
+        const li = document.querySelector(`#tax-bars li[data-id="${p.id}"]`);
+        li.querySelector('[data-day]').textContent = fmt(salary * p.share / 12);
+        li.querySelector('[data-year]').textContent = fmt(salary * p.share);
+      });
+      return;
+    }
     const { year, exempt } = calcTax(salary, n);
     const day = year / 365;
     document.getElementById('tax-year').textContent = fmt(year);

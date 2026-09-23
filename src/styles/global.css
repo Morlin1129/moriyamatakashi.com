@@ -100,3 +100,22 @@
 .prose .tax-bar-plain{font-size:13px;color:#5c6f5f;line-height:1.7;margin:0;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .tax-bar-share{white-space:nowrap;color:var(--green);font-weight:600}
 @media(max-width:760px){.tax-total strong{font-size:24px}}
+.tax-switch{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}.prose .tax-mode-note{font-size:14px;color:#5c6f5f;margin-bottom:14px}
+
+/* ミニアプリ：まちの健康診断 */
+.chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:0 0 1.2em}.chart-grid.one{grid-template-columns:1fr;max-width:480px}
+.mini-chart{margin:0;background:#fff;border:1px solid #dfe8d8;border-radius:6px;padding:12px 14px 8px}
+.mini-chart figcaption{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;margin-bottom:4px}.mini-chart figcaption span{font-size:12px;color:#5c6f5f}
+.mini-chart svg{width:100%;height:auto;display:block}
+.mc-base{stroke:#cfdcc8;stroke-width:1}.mc-bar{fill:var(--green)}.mc-bar:hover{fill:#37694f}
+.mc-line{fill:none;stroke:var(--green);stroke-width:2;stroke-linejoin:round}.mc-dot{fill:var(--green);stroke:#fff;stroke-width:2;opacity:0}.mc-dot:hover{opacity:1}
+.mc-val{font-size:11px;fill:#222d26;font-weight:700}.mc-axis{font-size:10px;fill:#5c6f5f}
+.mc-mark line{stroke:#bd9b46;stroke-width:1;stroke-dasharray:3 3}.mc-mark text{font-size:10px;fill:#8a6d1f}
+.prose .mini-chart-note{font-size:12px;color:#5c6f5f;margin:6px 0 0;line-height:1.6}
+.table-wrap{overflow-x:auto;margin-bottom:1.2em}
+.data-table{width:100%;border-collapse:collapse;font-size:14px;background:#fff;border:1px solid #dfe8d8;border-radius:6px}
+.data-table th,.data-table td{padding:10px 12px;border-bottom:1px solid #e6ece2;text-align:right;vertical-align:top;white-space:nowrap}
+.data-table th{text-align:left}.data-table thead th{background:#f3f7f0;text-align:right;font-size:13px}.data-table thead th:first-child{text-align:left}
+.data-table small{display:block;font-size:11px;color:#5c6f5f;font-weight:400;white-space:normal}
+.data-table td.up{color:var(--green);font-weight:700}.data-table td.down{color:#8a4b3a;font-weight:700}.data-table tr.total th,.data-table tr.total td{background:#f3f7f0;font-weight:700}
+@media(max-width:760px){.chart-grid{grid-template-columns:1fr}}

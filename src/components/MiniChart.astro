@@ -1,0 +1,72 @@
+---
+// 単一系列の小さな折れ線／棒グラフ（SVG）。0 を基準線にし、2011年（震災）に目印を入れる。
+interface Point { year: number; label: string; value: number | null }
+interface Props {
+  title: string;
+  points: Point[];
+  unit: string; // 表示単位（億円、人、％ など）
+  kind?: 'bar' | 'line';
+  decimals?: number;
+  note?: string;
+  markYear?: number;
+}
+const { title, points, unit, kind = 'bar', decimals = 1, note, markYear = 2011 } = Astro.props;
+
+const W = 320, H = 150, padL = 8, padR = 8, padT = 22, padB = 24;
+const plotW = W - padL - padR, plotH = H - padT - padB;
+const values = points.map((p) => p.value).filter((v): v is number => v !== null);
+const max = Math.max(...values, 0) || 1;
+const n = points.length;
+const x = (i: number) => padL + (plotW / n) * (i + 0.5);
+const y = (v: number) => padT + plotH - (v / max) * plotH;
+const fmt = (v: number) => v.toLocaleString('ja-JP', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+const barW = Math.max(4, plotW / n - 4);
+const linePath = points
+  .map((p, i) => (p.value === null ? null : `${x(i).toFixed(1)},${y(p.value).toFixed(1)}`))
+  .reduce<string[]>((acc, seg, i) => {
+    if (seg === null) return acc;
+    const prev = i > 0 && points[i - 1].value !== null;
+    acc.push(`${prev && acc.length ? 'L' : 'M'}${seg}`);
+    return acc;
+  }, [])
+  .join(' ');
+const first = points.find((p) => p.value !== null);
+const last = [...points].reverse().find((p) => p.value !== null);
+const markIndex = points.findIndex((p) => p.year === markYear);
+const id = `c${Math.random().toString(36).slice(2, 8)}`;
+---
+<figure class="mini-chart">
+  <figcaption><strong>{title}</strong><span>{unit}</span></figcaption>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby={`${id}-t`} aria-describedby={`${id}-d`}>
+    <title id={`${id}-t`}>{title}（{unit}）</title>
+    <desc id={`${id}-d`}>{points.filter((p) => p.value !== null).map((p) => `${p.year}年度 ${fmt(p.value!)}`).join('、')}</desc>
+    <line class="mc-base" x1={padL} x2={W - padR} y1={padT + plotH} y2={padT + plotH} />
+    {markIndex >= 0 && (
+      <g class="mc-mark">
+        <line x1={x(markIndex)} x2={x(markIndex)} y1={padT - 4} y2={padT + plotH} />
+        <text x={x(markIndex) + 4} y={padT + 4}>震災</text>
+      </g>
+    )}
+    {kind === 'bar'
+      ? points.map((p, i) => p.value !== null && (
+          <rect class="mc-bar" x={x(i) - barW / 2} y={y(p.value)} width={barW} height={Math.max(0, padT + plotH - y(p.value))} rx="2">
+            <title>{p.label}（{p.year}年度）：{fmt(p.value)} {unit}</title>
+          </rect>
+        ))
+      : (
+          <>
+            <path class="mc-line" d={linePath} />
+            {points.map((p, i) => p.value !== null && (
+              <circle class="mc-dot" cx={x(i)} cy={y(p.value)} r="6">
+                <title>{p.label}（{p.year}年度）：{fmt(p.value)} {unit}</title>
+              </circle>
+            ))}
+          </>
+        )}
+    {first && <text class="mc-val" x={x(points.indexOf(first))} y={y(first.value!) - 6} text-anchor="start">{fmt(first.value!)}</text>}
+    {last && last !== first && <text class="mc-val" x={x(points.indexOf(last))} y={y(last.value!) - 6} text-anchor="end">{fmt(last.value!)}</text>}
+    <text class="mc-axis" x={x(0)} y={H - 6} text-anchor="start">{points[0].year}</text>
+    <text class="mc-axis" x={x(n - 1)} y={H - 6} text-anchor="end">{points[n - 1].year}</text>
+  </svg>
+  {note && <p class="mini-chart-note">{note}</p>}
+</figure>
