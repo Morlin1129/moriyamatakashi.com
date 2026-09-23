@@ -1,16 +1,80 @@
-const entries={
-vision:['頑張りを形にする「しくみ」をつくる','一人ひとりの「もっとこうなればいいのに」を、実際の改善につなげる。そのために、現場の声を聴き、事実を確かめ、実現方法を一緒に考えたいと思っています。','要望の言葉だけでなく、何に困っているのかをつかむこと。事業を始めた後も、暮らしの不便が減ったかを確かめること。そして、採り入れた意見も採り入れられなかった意見も、その理由を伝えることを大切にします。','議員一人で事業を決めたり、実行したりすることはできません。住民、事業者、行政職員の間に入り、それぞれの知恵や力を結びつけ、実現する方法を探ります。'],
-policy0:['職員が力を発揮できる市役所へ','職員が住民の声を聞き、課題を調べ、事業を改善するための時間を持てる市役所を目指します。',['業務ごとの作業量や労働時間を調べ、負担の集中や重複している仕事を明らかにする。','情報共有や議事録作成など身近なIT環境の改善を提案する。','過去の判断や改善の記録を共有し、担当者が替わっても知識が伝わる仕組みをつくる。','住民の要望と職員の事情を一緒に整理し、実現方法を探る。']],
-policy1:['小高の生活を、実感できる形で便利に','買い物、医療、移動について、どんな場面で何に困っているかを具体的に調べます。',['品ぞろえや営業時間、受診の負担、移動する行き先や時間帯まで確かめる。','既存の商店、市民、事業者、行政が実現方法を一緒に考える。','配達やチャレンジショップなど、小さな実証で需要・採算・担い手を確かめる。','商業、交流、福祉などを組み合わせる方法も、運営と収支まで含めて検討する。']],
-policy2:['子どもが過ごしたいまちへ','子ども本人が、家と学校以外にも行きたい場所や会いたい人を持てるまちを目指します。',['小学校高学年や中学生も含め、放課後や休日の過ごし方を本人に聞く。','場所だけでなく、開いている時間、見守る人、そこまでの移動も一緒に考える。','地域の自然遊びの知恵を親子につなぐ。安全に活動する条件を地域と考える。','今ある支援や施設について、情報の届き方や日々の不便を確かめ、改善につなげる。']],
-policy3:['地場産業の次の成長へ','地域で事業を始める人と、ここで事業を大きくしたい人。その両方が次の一歩を踏み出せる環境を考えます。',['企業の成長段階ごとに、採用・育成・資金・販路・組織運営の課題を調べる。','5人から30人、30人から100人を目指す企業が、経験のある経営者や実務家と継続して相談できる仕組みを提案する。','地元への発注、共同開発、販路の共有など、企業同士が仕事をつくる機会を増やす。','支援が地域の雇用や人材、継続的な事業につながったかを確かめる。']],
-policy4:['将来も続くまちづくりへ','施設や事業を続けるために何が必要かを、早い段階から市民と一緒に考えます。',['建設費だけでなく、運営費・修繕費・更新費用と担い手の見通しを確かめる。','市全体の財政と身近なサービスの関係を、分かりやすく共有する。','必要な機能を将来も届けるために、複合化や運営改善などの選択肢を比べる。','費用だけでなく利用者の満足度や移動への影響も確認し、計画を見直す。']],
-materials:['政策の根拠をたどれる資料集へ','資料集は現在、構想段階です。市の計画、統計、議会資料などを政策ごとに整理し、誰でも根拠をたどれる形を目指します。','「資料に書かれた事実」「自分の見方」「まだ確かめたいこと」を分けて示します。題名、発行元、年度、該当ページ、原本へのリンクを添え、見方が変わったときには理由も記録します。','最初は小高の買い物を題材に、過去の調査や計画を少数から整理する予定です。'],
-tax:['税金はどこへ行った？ 南相馬版','このミニアプリは構想段階です。現在は計算機能や実際の決算データを掲載していません。','市の予算が、福祉、教育、道路など何に使われているのか。暮らしに引きつけて分かりやすく見られる道具を検討しています。公開時にはデータの出典・年度と計算方法を示します。'],
-dashboard:['南相馬 まちの健康診断','このミニアプリは構想段階です。現在は実際の人口・財政データや比較グラフを掲載していません。','人口、転入転出、出生数、財政などの変化をグラフで見られる道具を検討しています。数字の意味や対象期間を示し、まちの状況を一緒に考える入口にします。'],
-profile:['森山について','大阪出身。2014年に南相馬市小高区へ移住しました。Webエンジニアとして仕事をしながら、一般社団法人オムスビの代表理事として地域に関わっています。','カフェ・小売・コワーキングなどの機能を持つAOSUBASHIの運営を通じて、地域の人が集まり、やりたいことを形にする場所づくりに取り組んでいます。','日々の対話から課題を見つけ、事実を確かめ、できるところから改善する。その進め方を、まちの仕事にもつなげたいと考えています。'],
-contact:['お問い合わせ窓口は準備中です','現在はサイトのデザイン試作版です。連絡先が決まり次第、お問い合わせ先をご案内します。','この画面では入力や送信を受け付けていません。']};
-const dialog=document.getElementById('detail');const content=document.getElementById('detail-content');
-document.querySelectorAll('[data-open]').forEach(button=>button.addEventListener('click',()=>{const [title,...sections]=entries[button.dataset.open];content.replaceChildren();const h=document.createElement('h2');h.textContent=title;content.append(h);sections.forEach(section=>{if(Array.isArray(section)){const ul=document.createElement('ul');section.forEach(text=>{const li=document.createElement('li');li.textContent=text;ul.append(li)});content.append(ul)}else{const p=document.createElement('p');p.textContent=section;content.append(p)}});dialog.showModal();}));
-dialog.querySelector('.close').addEventListener('click',()=>dialog.close());dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close()}});
-const menu=document.querySelector('.menu');const nav=document.querySelector('.header nav');menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'メニューを閉じる':'メニューを開く');menu.textContent=open?'×':'☰'});nav.querySelectorAll('a,button').forEach(link=>link.addEventListener('click',()=>{nav.classList.remove('open');menu.setAttribute('aria-expanded','false');menu.textContent='☰'}));
+(() => {
+  const { details, resources } = window.SITE_CONTENT;
+  const HASH_PREFIX = '#detail-';
+
+  const dialog = document.getElementById('detail');
+  const content = document.getElementById('detail-content');
+
+  const el = (tag, props = {}, children = []) => {
+    const node = Object.assign(document.createElement(tag), props);
+    node.append(...children);
+    return node;
+  };
+
+  const linkList = (items) =>
+    el('ul', { className: 'link-list' }, items.map((item) =>
+      el('li', {}, [
+        el('a', { href: item.url, target: '_blank', rel: 'noopener', textContent: item.title }),
+        item.note ? el('p', { textContent: item.note }) : '',
+      ])
+    ));
+
+  const renderBlock = (block) => {
+    if (typeof block === 'string') return el('p', { textContent: block });
+    if (block.h) return el('h3', { textContent: block.h });
+    if (block.list) return el('ul', {}, block.list.map((text) => el('li', { textContent: text })));
+    if (block.links) return linkList(block.links);
+    return '';
+  };
+
+  const render = (key) => {
+    const entry = details[key];
+    const nodes = [el('h2', { id: 'detail-title', textContent: entry.title }), ...entry.blocks.map(renderBlock)];
+    const related = entry.policy ? resources.filter((r) => r.policy === key) : [];
+    if (related.length) nodes.push(el('h3', { textContent: '関連する資料' }), linkList(related));
+    content.replaceChildren(...nodes);
+  };
+
+  // 詳細は #detail-<key> で直接開けるので、URLを共有できる
+  const open = (key) => {
+    if (!details[key]) return;
+    render(key);
+    if (!dialog.open) dialog.showModal();
+    dialog.scrollTop = 0;
+    if (location.hash !== HASH_PREFIX + key) history.replaceState(null, '', HASH_PREFIX + key);
+  };
+
+  const openFromHash = () => {
+    if (location.hash.startsWith(HASH_PREFIX)) open(decodeURIComponent(location.hash.slice(HASH_PREFIX.length)));
+  };
+
+  document.querySelectorAll('[data-open]').forEach((button) =>
+    button.addEventListener('click', () => open(button.dataset.open))
+  );
+
+  dialog.querySelector('.close').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', (event) => {
+    if (event.target !== dialog) return;
+    const r = dialog.getBoundingClientRect();
+    if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    if (location.hash.startsWith(HASH_PREFIX)) history.replaceState(null, '', location.pathname + location.search);
+  });
+  window.addEventListener('hashchange', openFromHash);
+  openFromHash();
+
+  const menu = document.querySelector('.menu');
+  const nav = document.querySelector('.header nav');
+  const setMenu = (isOpen) => {
+    nav.classList.toggle('open', isOpen);
+    menu.setAttribute('aria-expanded', String(isOpen));
+    menu.setAttribute('aria-label', isOpen ? 'メニューを閉じる' : 'メニューを開く');
+    menu.textContent = isOpen ? '×' : '☰';
+  };
+  menu.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
+  nav.querySelectorAll('a,button').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && nav.classList.contains('open')) setMenu(false);
+  });
+})();
