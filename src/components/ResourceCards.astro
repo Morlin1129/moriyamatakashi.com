@@ -1,0 +1,22 @@
+---
+interface Props {
+  items: { title: string; url: string; note: string; tag?: string; cat?: string }[];
+  id?: string;
+}
+const { items, id } = Astro.props;
+---
+<ul class="resource-cards" id={id}>
+  {items.map((r) => (
+    <li data-cat={r.cat}>
+      <a href={r.url} target="_blank" rel="noopener">
+        <span class="doc-icon" aria-hidden="true"></span>
+        <span>
+          {r.tag && <span class="cat-tag">{r.tag}</span>}
+          <strong>{r.title}</strong>
+          <small>{r.note}</small>
+          <em>資料の要点・原本を確認する →</em>
+        </span>
+      </a>
+    </li>
+  ))}
+</ul>
