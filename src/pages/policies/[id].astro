@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import Toc from '../../components/Toc.astro';
+import ResourceCards from '../../components/ResourceCards.astro';
+import CtaBar from '../../components/CtaBar.astro';
+
+export async function getStaticPaths() {
+  const policies = (await getCollection('policies')).sort((a, b) => a.data.order - b.data.order);
+  return policies.map((policy, i) => ({
+    params: { id: policy.id },
+    props: { policy, prev: policies[i - 1] ?? null, next: policies[i + 1] ?? null },
+  }));
+}
+
+const { policy, prev, next } = Astro.props;
+const p = policy.data;
+const number = String(p.order).padStart(2, '0');
+const toc = [
+  { id: 'issue', label: 'いま、課題と考えていること' },
+  { id: 'actions', label: '提案・働きかけたいこと' },
+  { id: 'check', label: 'まず確かめたいこと' },
+  { id: 'goal', label: p.goalHeading },
+  ...(p.resources.length ? [{ id: 'sources', label: '関連する資料' }] : []),
+];
+---
+<Base title={p.title} description={p.lead.replace(/\n/g, '')} current="policies">
+  <Breadcrumb items={[{ label: '取り組み', href: '/policies/' }, { label: p.badge }]} />
+  <section class="page-hero wrap">
+    <div class="page-hero-copy">
+      <p class="page-badge">{p.badge}</p>
+      <h1>{p.titleLines.map((line) => <span class="nowrap">{line}</span>)}</h1>
+      <p class="page-lead">{p.lead.split('\n').map((line, i) => <>{i > 0 && <br class="pc" />}{line}</>)}</p>
+      {p.policyName && <p class="page-subtitle">政策名：{p.policyName}</p>}
+    </div>
+    <div class="page-hero-media"><span class={`crop crop${p.image.crop}`} role="img" aria-label={p.image.alt}></span></div>
+  </section>
+  <div class="page-body wrap">
+    <Toc items={toc} />
+    <article class="prose">
+      <section id="issue">
+        <h2>いま、課題と考えていること</h2>
+        {p.issue.map((text) => <p set:html={text} />)}
+      </section>
+      <section id="actions">
+        <h2>提案・働きかけたいこと</h2>
+        <ol class="action-list">{p.actions.map((a) => <li><h3>{a.title}</h3><p>{a.text}</p></li>)}</ol>
+      </section>
+      <section id="check">
+        <h2>まず確かめたいこと</h2>
+        <ul class="check-list">{p.checks.map((c) => <li>{c}</li>)}</ul>
+      </section>
+      <section id="goal" class="goal">
+        <h2>{p.goalHeading}</h2>
+        {p.goal.map((text) => <p>{text}</p>)}
+      </section>
+      {p.resources.length > 0 && (
+        <section id="sources">
+          <h2>関連する資料</h2>
+          <ResourceCards items={p.resources} />
+          <p class="note-small"><a href="/resources/#sources">資料集をすべて見る →</a></p>
+        </section>
+      )}
+    </article>
+  </div>
+  <nav class="pager wrap" aria-label="ほかの取り組み">
+    {prev ? <a class="prev" href={`/policies/${prev.id}/`}><small>← 前の取り組み</small>{prev.data.title}</a> : <span></span>}
+    <a class="all" href="/policies/">取り組みの一覧</a>
+    {next ? <a class="next" href={`/policies/${next.id}/`}><small>次の取り組み →</small>{next.data.title}</a> : <span></span>}
+  </nav>
+  <CtaBar />
+</Base>

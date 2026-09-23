@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CtaBar from '../../components/CtaBar.astro';
+
+const policies = (await getCollection('policies')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="取り組み" description="森山貴士が南相馬で取り組みたい5つのテーマ。" current="policies">
+  <Breadcrumb items={[{ label: '取り組み' }]} />
+  <section class="page-hero wrap">
+    <div class="page-hero-copy">
+      <p class="page-badge">取り組み</p>
+      <h1>取り組みたい、5つのこと</h1>
+      <p class="page-lead">現場で聞いた声と、市の資料や数字をもとに、5つのテーマで取り組みたいことをまとめました。<br class="pc" />どのテーマも、「実施した」で終わらせず、結果を確かめて改善することを大切にします。</p>
+    </div>
+    <div class="page-hero-media"><img src="/assets/landscape.jpg" alt="緑に囲まれた地方のまちのイメージ" /></div>
+  </section>
+  <div class="wrap">
+    <ul class="policy-list">
+      {policies.map((policy) => (
+        <li>
+          <a class="policy-card" href={`/policies/${policy.id}/`}>
+            <span class={`crop crop${policy.data.image.crop}`} role="img" aria-label={policy.data.image.alt}></span>
+            <span class="policy-card-body">
+              <small>取り組み {String(policy.data.order).padStart(2, '0')}</small>
+              <strong>{policy.data.title}</strong>
+              <span>{policy.data.lead.replace(/\n/g, '')}</span>
+              <em>くわしく読む →</em>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+  <CtaBar />
+</Base>

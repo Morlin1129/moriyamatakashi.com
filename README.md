@@ -1,34 +1,46 @@
 # moriyamatakashi.com
 
-森山のウェブサイト試作。緑のB案をもとにした、HTML・CSS・JavaScriptの静的サイトです。
+森山貴士のウェブサイト。[Astro](https://astro.build/) で作った静的サイトです。
 
-## ローカルで確認
+## 開発
+
+Node.js 22.12 以上が必要です（`.node-version` を参照）。
 
 ```sh
-python3 -m http.server 8000 --directory dist
+npm install
+npm run dev
 ```
 
-http://localhost:8000 を開いてください。ビルドやnpmのインストールは不要です。
+http://localhost:4321 を開いてください。
+
+## ビルド
+
+```sh
+npm run build
+```
+
+`dist/` に静的ファイルが出力されます。公開対象はこの `dist/` です（Gitには含めていません）。
 
 ## ファイル
 
-- `dist/index.html`: トップページ
-- `dist/vision/`: 考え方（基本的な考え方・共通する仕事の進め方・目指す議員としての役割）
-- `dist/policies/`: 取り組みの一覧と、5つの取り組みの個別ページ（`city-hall` / `odaka` / `children` / `economy` / `future`）
-- `dist/resources/`: 資料と数字（参照している公開資料、構想中のミニアプリ）
-- `dist/profile/`: プロフィール
-- `dist/style.css`: 配色、レイアウト、スマートフォン対応（全ページ共通）
-- `dist/script.js`: メニュー、お問い合わせ（準備中）のダイアログ
-- `dist/assets/`: 写真とデザイン素材
+- `src/layouts/Base.astro`: 全ページ共通のヘッダー・フッター・お問い合わせダイアログ
+- `src/pages/`: 各ページ（`index` トップ、`vision` 考え方、`resources` 資料と数字、`profile` プロフィール、`policies/` 取り組み）
+- `src/content/policies/*.yaml`: 取り組み5つの内容。**取り組みの文章・資料リンクを直すときはここだけ編集**すれば、個別ページ・一覧・トップのカード・資料集の一覧に反映されます
+- `src/components/`: パンくず、目次、資料カード、ご意見バー
+- `src/styles/global.css`: 配色、レイアウト、スマートフォン対応
+- `src/scripts/site.js`: メニュー、お問い合わせダイアログ、資料集の絞り込み
+- `public/assets/`: 写真とデザイン素材
 
-各ページはビルド不要の静的HTMLです。ヘッダー・フッターは各ページに記述しているため、メニューを変更するときは全ページを更新してください。
+## 取り組みを追加・編集する
+
+`src/content/policies/` に YAML を1つ置くと、`/policies/<ファイル名>/` のページができます。項目は `src/content.config.ts` のスキーマを参照してください。`order` が表示順、`badge` がラベル、`resources` が関連する資料です。
 
 ## 試作段階の項目
 
 写真はAI生成の仮素材です。資料集は市の公開資料へのリンク一覧まで、ミニアプリは構想の説明のみで、実データの表示・計算は未実装です。お問い合わせ先は未設定で、送信機能はありません。公開前に本人の写真と確定した情報へ差し替えてください。
 
-`reference.jpg`は政策カードの写真領域をCSSで表示するために使用しています。
+`reference.jpg` は取り組みカードの写真領域をCSSで表示するために使用しています。
 
 ## 公開
 
-公開対象のディレクトリは `dist` です。このリポジトリへのpushによる自動公開は設定していません。
+このリポジトリへのpushによる自動公開は設定していません。

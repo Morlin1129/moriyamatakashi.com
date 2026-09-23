@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import Toc from '../components/Toc.astro';
+import CtaBar from '../components/CtaBar.astro';
+
+const career = [
+  ['出身', '大阪市'],
+  ['学歴', '立命館大学 政策科学部 卒業'],
+  ['2014年', '南相馬市小高区へ移住'],
+  ['仕事', 'Webエンジニア／業務改善（BPR）コンサルティング'],
+  ['地域活動', '一般社団法人オムスビ 代表理事、地域拠点 AOSUBASHI を運営'],
+  ['受賞', '令和4年度「新しい東北」復興・創生の星顕彰'],
+];
+---
+<Base title="プロフィール" description="森山貴士のプロフィール。大阪市出身、2014年に南相馬市小高区へ移住。" current="profile">
+  <Breadcrumb items={[{ label: 'プロフィール' }]} />
+  <section class="page-hero wrap">
+    <div class="page-hero-copy">
+      <p class="page-badge">プロフィール</p>
+      <h1>森山貴士について</h1>
+      <p class="page-lead">大阪市出身 ／ 2014年 南相馬へ。Webエンジニア・地域拠点運営。</p>
+    </div>
+    <div class="page-hero-media"><img src="/assets/portrait.jpg" alt="プロフィール写真の仮イメージ" /></div>
+  </section>
+  <div class="page-body wrap">
+    <Toc items={[{ id: 'about', label: '森山貴士について' }, { id: 'career', label: '経歴' }]} />
+    <article class="prose">
+      <section id="about">
+        <h2>このまちで出会った人たちと、これからも。</h2>
+        <p>大阪市出身。立命館大学政策科学部を卒業し、2014年に南相馬市小高区へ移住しました。Webエンジニアとして、業務改善（BPR）のコンサルティングなどの仕事をしながら、一般社団法人オムスビの代表理事として地域に関わっています。</p>
+        <p>カフェ・小売・コワーキングなどの機能を持つAOSUBASHIの運営を通じて、地域の人が集まり、やりたいことを形にする場所づくりに取り組んでいます。</p>
+        <p>日々の対話から課題を見つけ、事実を確かめ、できるところから改善する。その進め方を、まちの仕事にもつなげたいと考えています。</p>
+      </section>
+      <section id="career">
+        <h2>経歴</h2>
+        <dl class="career">{career.map(([k, v]) => <><dt>{k}</dt><dd>{v}</dd></>)}</dl>
+      </section>
+      <p class="next-link"><a class="button" href="/vision/">考え方を読む <span>→</span></a></p>
+    </article>
+  </div>
+  <CtaBar />
+</Base>

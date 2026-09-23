@@ -1,0 +1,72 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import Toc from '../components/Toc.astro';
+import ResourceCards from '../components/ResourceCards.astro';
+import CtaBar from '../components/CtaBar.astro';
+
+// 資料一覧は取り組みの YAML に書いた resources をまとめたもの
+const policies = (await getCollection('policies')).sort((a, b) => a.data.order - b.data.order);
+const resources = policies.flatMap((p) => p.data.resources.map((r) => ({ ...r, tag: p.data.badge, cat: p.id })));
+
+const toc = [
+  { id: 'about', label: '資料集で目指すこと' },
+  { id: 'sources', label: '資料を探す' },
+  { id: 'apps', label: '数字を触って考える' },
+];
+---
+<Base title="資料と数字" description="政策の根拠にしている南相馬市の公開資料と、構想中のミニアプリ。" current="resources">
+  <Breadcrumb items={[{ label: '資料と数字' }]} />
+  <section class="page-hero wrap">
+    <div class="page-hero-copy">
+      <p class="page-badge">資料と数字</p>
+      <h1><span class="nowrap">資料と数字から、</span><span class="nowrap">まちを考える。</span></h1>
+      <p class="page-lead">事実と私の見方を分けて、考え方の根拠をたどれるようにします。</p>
+    </div>
+    <div class="page-hero-media"><div class="resource-art paper"><span>南相馬の<br />これからを考える<br /><b>資料ノート</b></span></div></div>
+  </section>
+  <div class="page-body wrap">
+    <Toc items={toc} />
+    <article class="prose">
+      <section id="about">
+        <h2>資料集で目指すこと</h2>
+        <p>政策案の背景にある市の計画、統計、議会資料、市民の声を政策ごとに整理し、誰でも根拠をたどれるようにすることを目指しています。</p>
+        <p>「資料に書かれた事実」「自分の見方」「まだ確かめたいこと」を分けて示します。新しい資料や聞き取りを追加したら更新履歴を残し、見方が変わった場合も理由を記録します。個人の声を公開する際は、本人の同意と匿名化を確認します。</p>
+        <p>資料集は現在、構想段階です。最初の試作として、小高の買い物を題材に、過去の住民調査・商業施設の計画・現在の事業などを登録し、要望から実施までの経緯と、今も確かめるべき点が一画面で分かる形を試す予定です。</p>
+      </section>
+      <section id="sources">
+        <h2>資料を探す</h2>
+        <p>取り組みを考えるうえで参照している南相馬市の公開資料です。</p>
+        <div class="filter-chips" role="group" aria-label="取り組みで絞り込む">
+          <button type="button" class="chip is-active" data-filter="all" aria-pressed="true">すべて</button>
+          {policies.map((p) => <button type="button" class="chip" data-filter={p.id} aria-pressed="false">{p.data.badge}</button>)}
+        </div>
+        <ResourceCards items={resources} id="resource-list" />
+      </section>
+      <section id="apps">
+        <h2>数字を触って考える</h2>
+        <p>選挙や政策を考える「参考材料」として、事実（データ）を並べて一緒に考えるための道具を検討しています。現在はどちらも構想段階で、計算機能や実際のデータは掲載していません。公開時にはデータの出典・年度と計算方法を示します。</p>
+        <div class="app-list">
+          <article id="tax" class="app-item">
+            <div class="resource-art bars"><span class="badge">構想中</span><i></i><i></i><i></i><i></i><i></i></div>
+            <div>
+              <h3>税金はどこへ行った？ 南相馬版</h3>
+              <p>年収を入力すると、自分の市民税が「福祉に1日○円、教育に○円…」と表示される道具です。市の予算を「自分ごと」として考える入口にします。</p>
+              <p class="meta">使う予定のデータ：南相馬市の歳出決算（目的別）、市民税の税率<br />参考：Code for Japan「税金はどこへ行った？」</p>
+            </div>
+          </article>
+          <article id="dashboard" class="app-item">
+            <div class="resource-art rings"><span class="badge">構想中</span><span class="ring"></span></div>
+            <div>
+              <h3>南相馬 まちの健康診断</h3>
+              <p>人口・高齢化率・転入転出・出生数・財政指標（財政力指数、経常収支比率など）・公共施設数などを、近隣や県内の類似市と比べて表示します。震災前後の推移も見られるようにし、「何が強くて何が弱いか」を事実で示します。</p>
+              <p class="meta">使う予定のデータ：RESAS、e-Stat、市の統計情報、決算カード</p>
+            </div>
+          </article>
+        </div>
+      </section>
+    </article>
+  </div>
+  <CtaBar />
+</Base>
