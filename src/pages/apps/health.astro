@@ -1,0 +1,165 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import Toc from '../../components/Toc.astro';
+import CtaBar from '../../components/CtaBar.astro';
+import MiniChart from '../../components/MiniChart.astro';
+import ts from '../../data/kessan-timeseries.json';
+
+const rows = ts.rows;
+const oku = (v: number | null) => (v === null ? null : v / 100000); // 千円 → 億円
+const series = (pick: (r: (typeof rows)[number]) => number | null) => rows.map((r) => ({ year: r.year, label: r.label, value: pick(r) }));
+
+const PURPOSES: Record<string, { name: string; plain: string }> = {
+  minsei: { name: '民生費', plain: '福祉（高齢者・障がい・子ども・生活保護）' },
+  somu: { name: '総務費', plain: '市役所の運営、復興関連の事業など' },
+  norin: { name: '農林水産業費', plain: '農業・林業・漁業、農地の整備' },
+  kyoiku: { name: '教育費', plain: '学校、図書館、スポーツ・文化' },
+  eisei: { name: '衛生費', plain: '健康、病院、ごみ処理、環境' },
+  shoko: { name: '商工費', plain: '商業・工業・観光、企業支援' },
+  doboku: { name: '土木費', plain: '道路、河川、公園、住宅' },
+  kosai: { name: '公債費', plain: '借金（市債）の返済' },
+  shobo: { name: '消防費', plain: '消防、救急、防災' },
+  saigai: { name: '災害復旧費', plain: '災害で壊れた施設の復旧' },
+  gikai: { name: '議会費', plain: '市議会の運営' },
+  rodo: { name: '労働費', plain: '雇用対策' },
+  sho: { name: '諸支出金', plain: 'その他' },
+};
+
+const before = rows.find((r) => r.year === 2010)!;
+const latest = rows[rows.length - 1];
+const peak = rows.reduce((a, b) => (b.expTotal > a.expTotal ? b : a));
+const fmtOku = (v: number) => (v / 100000).toLocaleString('ja-JP', { maximumFractionDigits: 1 });
+const fmtInt = (v: number) => v.toLocaleString('ja-JP');
+const pct = (v: number, total: number) => ((v / total) * 100).toFixed(1);
+const compare = Object.keys(PURPOSES)
+  .filter((k) => k !== 'sho')
+  .map((k) => ({ key: k, ...PURPOSES[k], b: before.purposes[k as keyof typeof before.purposes] ?? 0, l: latest.purposes[k as keyof typeof latest.purposes] ?? 0 }))
+  .sort((a, b) => b.l - a.l);
+
+const toc = [
+  { id: 'population', label: '人口' },
+  { id: 'budget', label: '歳入と歳出の大きさ' },
+  { id: 'purposes', label: '何に使ってきたか' },
+  { id: 'revenue', label: 'お金はどこから来たか' },
+  { id: 'health', label: '財政の健全さ' },
+  { id: 'facts', label: '資料に書かれていること' },
+  { id: 'check', label: 'まだ確かめたいこと' },
+  { id: 'method', label: 'データと注意点' },
+];
+---
+<Base title="南相馬 まちの健康診断" description="人口、歳出、目的別の使い道、財政指標を2008年度から2024年度まで並べ、震災前と今を比べる試作ページ。総務省の決算カードをもとにしています。" current="resources">
+  <Breadcrumb items={[{ label: '資料と数字', href: '/resources/' }, { label: 'まちの健康診断' }]} />
+  <section class="page-hero wrap">
+    <div class="page-hero-copy">
+      <p class="page-badge">ミニアプリ · 試作版</p>
+      <h1><span class="nowrap">南相馬</span><span class="nowrap">まちの健康診断</span></h1>
+      <p class="page-lead">人口、市のお金の出入り、使い道、借金の重さを、震災前の{before.year}年度から{latest.year}年度まで並べました。<br class="pc" />「何が変わって、何が戻っていないか」を数字で見るための入口です。</p>
+      <p class="page-subtitle">データ：{ts.source.title}（{ts.source.publisher}）{rows[0].year}〜{latest.year}年度</p>
+    </div>
+  </section>
+
+  <div class="page-body wrap">
+    <Toc items={toc} />
+    <article class="prose">
+      <section id="population">
+        <h2>人口</h2>
+        <p>住民基本台帳の人口は、{before.year}年度の{fmtInt(before.population!)}人から{latest.year}年度の{fmtInt(latest.population!)}人へ、{fmtInt(before.population! - latest.population!)}人（{(100 - (latest.population! / before.population!) * 100).toFixed(0)}%）減りました。震災の年に大きく減り、その後も毎年少しずつ減り続けています。</p>
+        <div class="chart-grid one">
+          <MiniChart title="住民基本台帳人口" unit="人" kind="line" decimals={0} points={series((r) => r.population)} />
+        </div>
+      </section>
+
+      <section id="budget">
+        <h2>歳入と歳出の大きさ</h2>
+        <p>震災前の歳出は年{fmtOku(before.expTotal)}億円ほどでした。震災後は復興事業で急増し、{peak.year}年度の{fmtOku(peak.expTotal)}億円が最大です。{latest.year}年度は{fmtOku(latest.expTotal)}億円で、震災前の約{(latest.expTotal / before.expTotal).toFixed(1)}倍の規模が続いています。</p>
+        <div class="chart-grid">
+          <MiniChart title="歳出総額" unit="億円" points={series((r) => oku(r.expTotal))} />
+          <MiniChart title="歳入総額" unit="億円" points={series((r) => oku(r.revTotal))} />
+        </div>
+      </section>
+
+      <section id="purposes">
+        <h2>何に使ってきたか（目的別歳出）</h2>
+        <p>震災直後は避難者支援などで民生費が膨らみ、その後は復興関連の事業を含む総務費と、農地の復旧・営農再開を含む農林水産業費が大きくなりました。教育費は震災前の水準に戻りきっていません。</p>
+        <div class="chart-grid">
+          {['minsei', 'somu', 'norin', 'kyoiku', 'doboku', 'shoko'].map((k) => (
+            <MiniChart title={PURPOSES[k].name} unit="億円" note={PURPOSES[k].plain} points={series((r) => oku(r.purposes[k as keyof typeof r.purposes] ?? null))} />
+          ))}
+        </div>
+        <h3>震災前（{before.year}年度）と直近（{latest.year}年度）を比べる</h3>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>区分</th><th>{before.year}年度</th><th>{latest.year}年度</th><th>変化</th></tr></thead>
+            <tbody>
+              {compare.map((c) => (
+                <tr>
+                  <th scope="row">{c.name}<small>{c.plain}</small></th>
+                  <td>{fmtOku(c.b)}億円<small>{pct(c.b, before.expTotal)}%</small></td>
+                  <td>{fmtOku(c.l)}億円<small>{pct(c.l, latest.expTotal)}%</small></td>
+                  <td class={c.l >= c.b ? 'up' : 'down'}>{c.b > 0 ? `${(c.l / c.b).toFixed(1)}倍` : '—'}</td>
+                </tr>
+              ))}
+              <tr class="total"><th scope="row">歳出合計</th><td>{fmtOku(before.expTotal)}億円</td><td>{fmtOku(latest.expTotal)}億円</td><td>{(latest.expTotal / before.expTotal).toFixed(1)}倍</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="revenue">
+        <h2>お金はどこから来たか（歳入の主な内訳）</h2>
+        <p>市民や企業が納める地方税は、震災の年に大きく落ち込み、その後は震災前とほぼ同じ水準に戻っています。一方、国からの地方交付税と国庫支出金は震災後に大きく増え、今も震災前より多い水準です。市の財政は、震災前より国のお金に頼る割合が高くなっていると読めます。</p>
+        <div class="chart-grid">
+          <MiniChart title="地方税（市税）" unit="億円" points={series((r) => oku(r.localTax))} />
+          <MiniChart title="地方交付税" unit="億円" points={series((r) => oku(r.kofuzei))} />
+          <MiniChart title="国庫支出金" unit="億円" points={series((r) => oku(r.kokko))} />
+          <MiniChart title="個人市民税" unit="億円" note="均等割＋所得割" points={series((r) => oku(r.personalTax))} />
+        </div>
+      </section>
+
+      <section id="health">
+        <h2>財政の健全さ</h2>
+        <p>借金（地方債）の残高は、{rows[0].year}年度の{fmtOku(rows[0].bondBalance)}億円から{latest.year}年度の{fmtOku(latest.bondBalance)}億円へ減っています。返済の重さを示す実質公債費比率も{rows[0].kosaihi}%から{latest.kosaihi}%へ下がり、将来負担比率は2013年度以降「算定されない」（将来の負担より貯金などのほうが多い）状態です。財政力指数（1に近いほど自前の税収で運営できる）は0.6前後で大きく変わっていません。</p>
+        <div class="chart-grid">
+          <MiniChart title="地方債現在高（借金の残高）" unit="億円" points={series((r) => oku(r.bondBalance))} />
+          <MiniChart title="実質公債費比率" unit="％" kind="line" note="18%を超えると借金に許可が必要。低いほど返済が軽い" points={series((r) => r.kosaihi)} />
+          <MiniChart title="将来負担比率" unit="％" kind="line" note="2013年度以降は算定なし（負担より資産が多い）" points={series((r) => r.shorai)} />
+          <MiniChart title="財政力指数" unit="" kind="line" decimals={2} note="1に近いほど自前の税収で運営できる" points={series((r) => r.zaiseiryoku)} />
+        </div>
+      </section>
+
+      <section id="facts">
+        <h2>資料に書かれていること</h2>
+        <ul class="check-list">
+          <li>人口：{before.year}年度 {fmtInt(before.population!)}人 → {latest.year}年度 {fmtInt(latest.population!)}人</li>
+          <li>歳出総額：{before.year}年度 {fmtOku(before.expTotal)}億円 → 最大 {peak.year}年度 {fmtOku(peak.expTotal)}億円 → {latest.year}年度 {fmtOku(latest.expTotal)}億円</li>
+          <li>地方税：{before.year}年度 {fmtOku(before.localTax)}億円 → 2011年度 {fmtOku(rows.find((r) => r.year === 2011)!.localTax)}億円 → {latest.year}年度 {fmtOku(latest.localTax)}億円</li>
+          <li>地方債現在高：{rows[0].year}年度 {fmtOku(rows[0].bondBalance)}億円 → {latest.year}年度 {fmtOku(latest.bondBalance)}億円</li>
+          <li>実質公債費比率：{rows[0].year}年度 {rows[0].kosaihi}% → {latest.year}年度 {latest.kosaihi}%</li>
+        </ul>
+      </section>
+
+      <section id="check">
+        <h2>まだ確かめたいこと</h2>
+        <ul class="check-list">
+          <li>総務費・農林水産業費のうち、復興関連の事業がどれくらいを占め、今後どう減っていくのか</li>
+          <li>震災後に整備した施設の、毎年の運営費・修繕費と、将来の更新費用（公共施設等総合管理計画と照らし合わせる）</li>
+          <li>人口の内訳（年齢別、地区別）と、転入・転出の動き。決算カードには載っていないので、別の統計で補う</li>
+          <li>相馬市・県内の類似市と比べたときの位置（決算カードの類似団体比較を使う）</li>
+        </ul>
+      </section>
+
+      <section id="method">
+        <h2>データと注意点</h2>
+        <p>数字はすべて<a href={ts.source.url} target="_blank" rel="noopener">総務省が公表している市町村決算カード（普通会計）↗</a>から、年度ごとに南相馬市の欄を抜き出したものです。金額は千円単位の数値を億円に換算し、小数第1位までにしています。</p>
+        <ol class="action-list">
+          <li><h3>人口</h3><p>住民基本台帳人口です。年度によって基準日が1月1日または3月31日と異なります。国勢調査の人口とは別です。</p></li>
+          <li><h3>普通会計</h3><p>一般会計と一部の特別会計を合わせた、自治体を比べるための会計区分です。国民健康保険や下水道などの事業会計は含みません。</p></li>
+          <li><h3>震災後の数字の見方</h3><p>2011年度以降の歳出には、国から受けた復興関連の交付金を基金に積み立てたり、翌年度に繰り越したりした分が含まれます。金額の大きさがそのまま「その年に使ったお金」とは限りません。</p></li>
+          <li><h3>抜き出しの方法</h3><p>PDFの決算カードから機械的に読み取っています。読み取りの誤りがあれば、元の決算カードを正とします。各年度の元資料は<a href="/resources/#sources">資料集</a>から確認できるようにしていく予定です。</p></li>
+        </ol>
+      </section>
+    </article>
+  </div>
+  <CtaBar />
+</Base>
