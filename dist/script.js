@@ -13,6 +13,21 @@
     });
   }
 
+  // 資料集の絞り込み
+  const chips = document.querySelectorAll('.filter-chips .chip');
+  const items = document.querySelectorAll('#resource-list > li');
+  chips.forEach((chip) =>
+    chip.addEventListener('click', () => {
+      const filter = chip.dataset.filter;
+      chips.forEach((c) => {
+        const active = c === chip;
+        c.classList.toggle('is-active', active);
+        c.setAttribute('aria-pressed', String(active));
+      });
+      items.forEach((item) => { item.hidden = filter !== 'all' && item.dataset.cat !== filter; });
+    })
+  );
+
   // スマートフォンのメニュー
   const menu = document.querySelector('.menu');
   const nav = document.querySelector('.header nav');
