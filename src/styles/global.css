@@ -81,3 +81,22 @@
 .cat-tag{display:inline-block;font-size:11px;font-weight:600;color:var(--green);background:#e8efe3;border-radius:3px;padding:1px 8px;margin-bottom:6px}
 .resource-cards li[hidden]{display:none}
 .vision-sub{font-size:17px;font-weight:700;color:var(--green);margin:-8px 0 16px}.page-sub{font-size:18px;font-weight:700;color:var(--green);margin:-4px 0 14px}
+
+/* ミニアプリ：税金はどこへ行った？ */
+.tax-form{display:grid;gap:14px;background:#fff;border:1px solid #dfe8d8;border-radius:6px;padding:20px 22px;margin-bottom:18px}
+.tax-form label{display:grid;gap:6px;font-weight:600;font-size:14px}
+.tax-input{display:flex;align-items:center;gap:8px;font-weight:400}
+.tax-input input{font:inherit;font-size:20px;font-weight:700;width:100%;max-width:260px;padding:8px 12px;border:1px solid #b9c9b7;border-radius:6px;text-align:right}
+.tax-form input[type=range]{width:100%;accent-color:var(--green)}
+.tax-form select{font:inherit;padding:8px 12px;border:1px solid #b9c9b7;border-radius:6px;background:#fff;max-width:200px}
+.tax-total{background:var(--green);color:#fff;border-radius:6px;padding:18px 22px;margin-bottom:18px}
+.tax-total p{font-size:16px;margin:0}.tax-total strong{font-size:30px;font-weight:700;margin:0 2px}
+.tax-total .tax-note{font-size:13px;color:#dbe6dc;margin-top:6px}.tax-total .tax-note:empty{display:none}
+.tax-bars{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.tax-bars li{background:#fff;border:1px solid #dfe8d8;border-radius:6px;padding:12px 16px}
+.tax-bar-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.tax-bar-name{font-weight:700}.tax-bar-amount{font-size:14px}.tax-bar-amount strong{font-size:20px;color:var(--green)}.tax-bar-amount small{color:#5c6f5f;margin-left:4px}
+.tax-bar-track{height:8px;background:#e8efe3;border-radius:4px;margin:8px 0 6px;overflow:hidden}.tax-bar-fill{height:100%;background:var(--green);border-radius:4px}
+.prose .tax-bar-plain{font-size:13px;color:#5c6f5f;line-height:1.7;margin:0;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.tax-bar-share{white-space:nowrap;color:var(--green);font-weight:600}
+@media(max-width:760px){.tax-total strong{font-size:24px}}

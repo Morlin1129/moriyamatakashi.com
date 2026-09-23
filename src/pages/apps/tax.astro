@@ -1,0 +1,173 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import Toc from '../../components/Toc.astro';
+import CtaBar from '../../components/CtaBar.astro';
+import kessan from '../../data/kessan-r6.json';
+
+const total = kessan.purposes.reduce((sum, p) => sum + p.amount, 0);
+const purposes = kessan.purposes.map((p) => ({ ...p, share: p.amount / total })).sort((a, b) => b.amount - a.amount);
+const fmt = (n: number) => n.toLocaleString('ja-JP');
+
+// 個人市民税の税率（令和6年度〜）。出典は本文の「計算のしかた」に記載
+const TAX = {
+  incomeRate: 0.06, // 所得割（市民税分）
+  perCapita: 3000, // 均等割（市民税分）
+  basicDeduction: 430000, // 基礎控除（住民税）
+  socialInsuranceRate: 0.15, // 社会保険料の概算（収入に対する割合）
+};
+
+const toc = [
+  { id: 'calc', label: '計算してみる' },
+  { id: 'facts', label: '資料に書かれていること' },
+  { id: 'view', label: '私の見方' },
+  { id: 'check', label: 'まだ確かめたいこと' },
+  { id: 'method', label: '計算のしかたと前提' },
+];
+---
+<Base title="税金はどこへ行った？ 南相馬版" description="年収を入れると、自分の市民税が1日あたり何にいくら使われているかが見える試作ページ。南相馬市の令和6年度決算カードをもとにしています。" current="resources">
+  <Breadcrumb items={[{ label: '資料と数字', href: '/resources/' }, { label: '税金はどこへ行った？' }]} />
+  <section class="page-hero wrap">
+    <div class="page-hero-copy">
+      <p class="page-badge">ミニアプリ · 試作版</p>
+      <h1><span class="nowrap">税金はどこへ行った？</span><span class="nowrap">南相馬版</span></h1>
+      <p class="page-lead">年収を入れると、あなたの市民税が「福祉に1日○円、教育に○円」と見えます。<br class="pc" />市のお金の使い道を、自分ごととして考える入口です。</p>
+      <p class="page-subtitle">データ：{kessan.source.title}（{kessan.source.publisher}）</p>
+    </div>
+  </section>
+
+  <div class="page-body wrap">
+    <Toc items={toc} />
+    <article class="prose">
+      <section id="calc" class="tax-calc">
+        <h2>計算してみる</h2>
+        <form class="tax-form" id="tax-form">
+          <label>
+            <span>年収（給与収入・税込）</span>
+            <span class="tax-input"><input type="number" id="income" name="income" inputmode="numeric" min="0" step="10000" value="4000000" /><span>円</span></span>
+          </label>
+          <input type="range" id="income-range" min="0" max="15000000" step="100000" value="4000000" aria-label="年収をスライダーで調整" />
+          <label>
+            <span>扶養している家族の人数</span>
+            <select id="dependents" name="dependents">
+              <option value="0">0人</option><option value="1">1人</option><option value="2">2人</option><option value="3">3人</option><option value="4">4人</option>
+            </select>
+          </label>
+        </form>
+        <div class="tax-result" id="tax-result" aria-live="polite">
+          <div class="tax-total">
+            <p>あなたの市民税は、1年で <strong id="tax-year">—</strong> 円、<span class="nowrap">1日あたり <strong id="tax-day">—</strong> 円</span></p>
+            <p class="tax-note" id="tax-message"></p>
+          </div>
+          <ol class="tax-bars" id="tax-bars">
+            {purposes.map((p) => (
+              <li data-id={p.id}>
+                <div class="tax-bar-head"><span class="tax-bar-name">{p.name}</span><span class="tax-bar-amount"><strong data-day>—</strong> 円／日<small>（<span data-year>—</span> 円／年）</small></span></div>
+                <div class="tax-bar-track"><div class="tax-bar-fill" style={`width:${(p.share * 100).toFixed(1)}%`}></div></div>
+                <p class="tax-bar-plain">{p.plain}<span class="tax-bar-share">歳出の {(p.share * 100).toFixed(1)}%</span></p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section id="facts">
+        <h2>資料に書かれていること</h2>
+        <p>{kessan.fiscalYear}の南相馬市の普通会計の歳出は、合計 約{fmt(Math.round(total / 100000) / 10)}億円です。内訳の上位は、市役所の運営や復興関連を含む総務費（{(purposes.find((p) => p.id === 'somu')!.share * 100).toFixed(1)}%）、福祉の民生費（{(purposes.find((p) => p.id === 'minsei')!.share * 100).toFixed(1)}%）、農林水産業費（{(purposes.find((p) => p.id === 'norin')!.share * 100).toFixed(1)}%）、教育費（{(purposes.find((p) => p.id === 'kyoiku')!.share * 100).toFixed(1)}%）です。</p>
+        <p>市税のうち個人市民税は 約{fmt(Math.round(kessan.personalResidentTax / 100000) / 10)}億円で、市税全体の27.6%にあたります。市の歳入全体で見ると、地方税は18.6%、地方交付税が22.4%です。</p>
+        <p class="note-small"><a href={kessan.source.url} target="_blank" rel="noopener">出典：{kessan.source.title}（{kessan.source.publisher}）↗</a></p>
+      </section>
+
+      <section id="view" class="goal">
+        <h2>私の見方</h2>
+        <p>農林水産業費が歳出の15%を占めるのは、南相馬らしい特徴だと思います。震災後の営農再開や農地の整備が続いていることの表れではないかと考えています。総務費が民生費と並んで大きいのも、復興関連の事業がここに含まれているためではないかと見ています。</p>
+        <p>このページで見えるのは「使い道の割合」までです。それぞれの事業が暮らしをどれだけ良くしたかは、決算の数字だけでは分かりません。そこを確かめることが、私が議員として取り組みたいことです。</p>
+      </section>
+
+      <section id="check">
+        <h2>まだ確かめたいこと</h2>
+        <ul class="check-list">
+          <li>総務費・農林水産業費のうち、復興関連の事業がどれくらいを占めるか</li>
+          <li>民生費・教育費の内訳（児童福祉、高齢者福祉、学校、図書館など）。決算書の明細から掘り下げる予定です</li>
+          <li>震災前（2010年度ごろ）と比べて、歳出の構成がどう変わったか</li>
+          <li>市民税の額を、給与収入以外（年金・事業所得）の人にも合う形で計算できるか</li>
+        </ul>
+      </section>
+
+      <section id="method">
+        <h2>計算のしかたと前提</h2>
+        <p>このページの数字は概算です。実際の税額は、所得控除の内容によって変わります。</p>
+        <ol class="action-list">
+          <li><h3>市民税の年額を概算する</h3><p>年収から給与所得控除を引いて給与所得を出し、社会保険料（年収の{Math.round(TAX.socialInsuranceRate * 100)}%と仮定）、基礎控除{fmt(TAX.basicDeduction)}円、扶養控除（1人33万円）を引いて課税所得を求めます。課税所得の{Math.round(TAX.incomeRate * 100)}%（所得割・市民税分）から調整控除を引き、均等割{fmt(TAX.perCapita)}円（市民税分）を足します。県民税と森林環境税は含めていません。</p></li>
+          <li><h3>使い道の割合で割り振る</h3><p>{kessan.fiscalYear}決算カードの「目的別歳出」の割合で、市民税の年額を配分し、365日で割って1日あたりにしています。市民税は使い道を限定しない一般財源なので、歳出全体の割合で配分する簡易な方法です（Code for Japan「税金はどこへ行った？」と同じ考え方）。</p></li>
+          <li><h3>非課税の判定</h3><p>前年の合計所得が「28万円×(本人＋扶養親族数)＋10万円（扶養がいる場合は＋16万8千円）」以下なら、均等割も所得割もかかりません。所得割だけかからない基準（35万円ベース）も市のページのとおりに計算しています。配偶者は扶養親族の人数に含めて入力してください。</p></li>
+        </ol>
+        <p class="note-small">税率の出典：<a href="https://www.city.minamisoma.lg.jp/portal/sections/11/1140/11402/2/25747.html" target="_blank" rel="noopener">令和6年度〜令和7年度の個人市民税・県民税（南相馬市）↗</a>　参考：<a href="https://spending.jp/" target="_blank" rel="noopener">税金はどこへ行った？（Code for Japan）↗</a></p>
+      </section>
+    </article>
+  </div>
+  <CtaBar />
+</Base>
+
+<script define:vars={{ purposes: purposes.map((p) => ({ id: p.id, share: p.share })), TAX }}>
+  const income = document.getElementById('income');
+  const range = document.getElementById('income-range');
+  const dependents = document.getElementById('dependents');
+  const fmt = (n) => Math.round(n).toLocaleString('ja-JP');
+
+  // 給与所得控除（令和2年分以降）
+  const salaryDeduction = (salary) => {
+    if (salary <= 1625000) return 550000;
+    if (salary <= 1800000) return salary * 0.4 - 100000;
+    if (salary <= 3600000) return salary * 0.3 + 80000;
+    if (salary <= 6600000) return salary * 0.2 + 440000;
+    if (salary <= 8500000) return salary * 0.1 + 1100000;
+    return 1950000;
+  };
+
+  const calcTax = (salary, n) => {
+    const salaryIncome = Math.max(0, salary - salaryDeduction(salary));
+    // 非課税の判定（均等割・所得割ともに）
+    const exemptAll = salaryIncome <= 280000 * (1 + n) + 100000 + (n > 0 ? 168000 : 0);
+    if (exemptAll) return { year: 0, exempt: 'all' };
+    const exemptIncomePart = salaryIncome <= 350000 * (1 + n) + 100000 + (n > 0 ? 320000 : 0);
+    const deductions = salary * TAX.socialInsuranceRate + TAX.basicDeduction + 330000 * n;
+    const taxable = Math.floor(Math.max(0, salaryIncome - deductions) / 1000) * 1000;
+    let incomePart = 0;
+    if (!exemptIncomePart) {
+      // 調整控除（市民税分3%）。人的控除の差：基礎控除5万円＋扶養控除1人5万円
+      const humanDiff = 50000 * (1 + n);
+      const adjust = taxable <= 2000000
+        ? Math.min(humanDiff, taxable) * 0.03
+        : Math.max(50000, humanDiff - (taxable - 2000000)) * 0.03;
+      incomePart = Math.max(0, taxable * TAX.incomeRate - adjust);
+    }
+    const year = Math.floor((incomePart + TAX.perCapita) / 100) * 100;
+    return { year, exempt: exemptIncomePart ? 'income' : null };
+  };
+
+  const render = () => {
+    const salary = Math.max(0, Number(income.value) || 0);
+    const n = Number(dependents.value) || 0;
+    const { year, exempt } = calcTax(salary, n);
+    const day = year / 365;
+    document.getElementById('tax-year').textContent = fmt(year);
+    document.getElementById('tax-day').textContent = day.toFixed(1);
+    const msg = document.getElementById('tax-message');
+    msg.textContent = exempt === 'all'
+      ? 'この年収と家族構成では、市民税はかかりません（非課税）。'
+      : exempt === 'income'
+        ? '所得割はかからず、均等割のみです。'
+        : '';
+    purposes.forEach((p) => {
+      const li = document.querySelector(`#tax-bars li[data-id="${p.id}"]`);
+      li.querySelector('[data-day]').textContent = (day * p.share).toFixed(1);
+      li.querySelector('[data-year]').textContent = fmt(year * p.share);
+    });
+  };
+
+  income.addEventListener('input', () => { range.value = Math.min(Number(range.max), Number(income.value) || 0); render(); });
+  range.addEventListener('input', () => { income.value = range.value; render(); });
+  dependents.addEventListener('change', render);
+  render();
+</script>
