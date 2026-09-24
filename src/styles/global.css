@@ -119,3 +119,16 @@
 .data-table small{display:block;font-size:11px;color:#5c6f5f;font-weight:400;white-space:normal}
 .data-table td.up{color:var(--green);font-weight:700}.data-table td.down{color:#8a4b3a;font-weight:700}.data-table tr.total th,.data-table tr.total td{background:#f3f7f0;font-weight:700}
 @media(max-width:760px){.chart-grid{grid-template-columns:1fr}}
+
+/* まちの健康診断：近くの市と比べる */
+.cmp-bars{margin:0;background:#fff;border:1px solid #dfe8d8;border-radius:6px;padding:12px 14px 10px}
+.cmp-bars figcaption{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;margin-bottom:8px}.cmp-bars figcaption span{font-size:12px;color:#5c6f5f}
+.cmp-bars ol{list-style:none;padding:0;margin:0;display:grid;gap:6px}
+.cmp-bars li{display:grid;grid-template-columns:64px 1fr 56px;align-items:center;gap:8px;font-size:12px;color:#5c6f5f}
+.cmp-bars li.is-target{color:var(--ink);font-weight:700}
+.cmp-track{position:relative;height:12px;background:#eef2ea;border-radius:3px;overflow:visible}
+.cmp-fill{position:absolute;left:0;top:0;height:100%;background:#a9c0a6;border-radius:3px}
+.cmp-bars li.is-target .cmp-fill{background:var(--green)}
+.cmp-ref{position:absolute;top:-3px;bottom:-3px;border-left:2px dashed #bd9b46}
+.cmp-val{text-align:right;font-variant-numeric:tabular-nums}
+.prose .cmp-bars .mini-chart-note{margin-top:8px}

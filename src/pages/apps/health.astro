@@ -4,7 +4,9 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import Toc from '../../components/Toc.astro';
 import CtaBar from '../../components/CtaBar.astro';
 import MiniChart from '../../components/MiniChart.astro';
+import CompareBars from '../../components/CompareBars.astro';
 import ts from '../../data/kessan-timeseries.json';
+import cmp from '../../data/kessan-compare.json';
 
 const rows = ts.rows;
 const oku = (v: number | null) => (v === null ? null : v / 100000); // 千円 → 億円
@@ -37,12 +39,20 @@ const compare = Object.keys(PURPOSES)
   .map((k) => ({ key: k, ...PURPOSES[k], b: before.purposes[k as keyof typeof before.purposes] ?? 0, l: latest.purposes[k as keyof typeof latest.purposes] ?? 0 }))
   .sort((a, b) => b.l - a.l);
 
+// 近くの市との比較（直近年度、人口1人あたり）
+const cmpYear = latest.year;
+const cmpRows = cmp.cities.map((c) => ({ name: c.name, target: c.slug === 'minamisoma', r: c.rows.find((r) => r.year === cmpYear)! }));
+const perCapitaMan = (v: number | null, pop: number | null) => (v === null || !pop ? null : (v * 1000) / pop / 10000); // 千円 → 円 → 万円/人
+const cmpItems = (pick: (r: (typeof cmpRows)[number]['r']) => number | null) => cmpRows.map((c) => ({ name: c.name, value: pick(c.r), highlight: c.target }));
+const cmpNames = cmp.cities.filter((c) => c.slug !== 'minamisoma').map((c) => c.name).join('・');
+
 const toc = [
   { id: 'population', label: '人口' },
   { id: 'budget', label: '歳入と歳出の大きさ' },
   { id: 'purposes', label: '何に使ってきたか' },
   { id: 'revenue', label: 'お金はどこから来たか' },
   { id: 'health', label: '財政の健全さ' },
+  { id: 'compare', label: '近くの市と比べる' },
   { id: 'facts', label: '資料に書かれていること' },
   { id: 'check', label: 'まだ確かめたいこと' },
   { id: 'method', label: 'データと注意点' },
@@ -55,7 +65,7 @@ const toc = [
       <p class="page-badge">ミニアプリ · 試作版</p>
       <h1><span class="nowrap">南相馬</span><span class="nowrap">まちの健康診断</span></h1>
       <p class="page-lead">人口、市のお金の出入り、使い道、借金の重さを、震災前の{before.year}年度から{latest.year}年度まで並べました。<br class="pc" />「何が変わって、何が戻っていないか」を数字で見るための入口です。</p>
-      <p class="page-subtitle">データ：{ts.source.title}（{ts.source.publisher}）{rows[0].year}〜{latest.year}年度</p>
+      <p class="page-subtitle">データ：総務省「市町村決算カード」「主要財政指標一覧」 {rows[0].year}〜{latest.year}年度</p>
     </div>
   </section>
 
@@ -119,13 +129,31 @@ const toc = [
 
       <section id="health">
         <h2>財政の健全さ</h2>
-        <p>借金（地方債）の残高は、{rows[0].year}年度の{fmtOku(rows[0].bondBalance)}億円から{latest.year}年度の{fmtOku(latest.bondBalance)}億円へ減っています。返済の重さを示す実質公債費比率も{rows[0].kosaihi}%から{latest.kosaihi}%へ下がり、将来負担比率は2013年度以降「算定されない」（将来の負担より貯金などのほうが多い）状態です。財政力指数（1に近いほど自前の税収で運営できる）は0.6前後で大きく変わっていません。</p>
+        <p>借金（地方債）の残高は、{rows[0].year}年度の{fmtOku(rows[0].bondBalance)}億円から{latest.year}年度の{fmtOku(latest.bondBalance)}億円へ減っています。返済の重さを示す実質公債費比率も{rows[0].kosaihi}%から{latest.kosaihi}%へ下がり、将来負担比率は2013年度以降「算定されない」（将来の負担より貯金などのほうが多い）状態です。財政力指数（1に近いほど自前の税収で運営できる）は0.6前後で大きく変わっていません。経常収支比率（毎年決まって入るお金のうち、人件費や借金返済など決まって出ていくお金が占める割合。高いほど自由に使えるお金が少ない）は震災前の85%前後から、近年は94%前後に上がっています。</p>
         <div class="chart-grid">
           <MiniChart title="地方債現在高（借金の残高）" unit="億円" points={series((r) => oku(r.bondBalance))} />
           <MiniChart title="実質公債費比率" unit="％" kind="line" note="18%を超えると借金に許可が必要。低いほど返済が軽い" points={series((r) => r.kosaihi)} />
           <MiniChart title="将来負担比率" unit="％" kind="line" note="2013年度以降は算定なし（負担より資産が多い）" points={series((r) => r.shorai)} />
           <MiniChart title="財政力指数" unit="" kind="line" decimals={2} note="1に近いほど自前の税収で運営できる" points={series((r) => r.zaiseiryoku)} />
+          <MiniChart title="経常収支比率" unit="％" kind="line" note="高いほど、自由に使えるお金が少ない。2011年度は震災で税収が落ちたため一時的に100%超" points={series((r) => r.keijo)} />
         </div>
+      </section>
+
+      <section id="compare">
+        <h2>近くの市と比べる（{cmpYear}年度）</h2>
+        <p>隣の相馬市と、県内で人口が3〜7万人の市（{cmpNames}）を、人口1人あたりの金額で並べました。南相馬市は歳出も地方税も、借金の残高も、1人あたりで見ると同じ規模の市と比べて多めです。歳出が多いのは復興関連の事業が続いているためと考えられますが、人口が減るなかで、この規模をどう着地させるかが問われます。</p>
+        <div class="chart-grid">
+          <CompareBars title="歳出総額（1人あたり）" unit="万円／人" items={cmpItems((r) => perCapitaMan(r.expTotal, r.population))} />
+          <CompareBars title="地方税（1人あたり）" unit="万円／人" items={cmpItems((r) => perCapitaMan(r.localTax, r.population))} />
+          <CompareBars title="地方債現在高（1人あたり）" unit="万円／人" items={cmpItems((r) => perCapitaMan(r.bondBalance, r.population))} />
+          <CompareBars title="民生費（1人あたり）" unit="万円／人" items={cmpItems((r) => perCapitaMan(r.purposes.minsei, r.population))} />
+          <CompareBars title="教育費（1人あたり）" unit="万円／人" items={cmpItems((r) => perCapitaMan(r.purposes.kyoiku, r.population))} />
+          <CompareBars title="農林水産業費（1人あたり）" unit="万円／人" items={cmpItems((r) => perCapitaMan(r.purposes.norin, r.population))} />
+          <CompareBars title="財政力指数" unit="" decimals={2} items={cmpItems((r) => r.zaiseiryoku)} note="1に近いほど自前の税収で運営できる" />
+          <CompareBars title="経常収支比率" unit="％" items={cmpItems((r) => r.keijo)} note="高いほど自由に使えるお金が少ない" />
+          <CompareBars title="実質公債費比率" unit="％" items={cmpItems((r) => r.kosaihi)} refLine={{ value: 18, label: '18%（借金に許可が必要になる目安）' }} />
+        </div>
+        <p class="note-small">人口は各市の住民基本台帳人口。財政力指数・経常収支比率・実質公債費比率は総務省「主要財政指標一覧」の値です。</p>
       </section>
 
       <section id="facts">
@@ -136,6 +164,8 @@ const toc = [
           <li>地方税：{before.year}年度 {fmtOku(before.localTax)}億円 → 2011年度 {fmtOku(rows.find((r) => r.year === 2011)!.localTax)}億円 → {latest.year}年度 {fmtOku(latest.localTax)}億円</li>
           <li>地方債現在高：{rows[0].year}年度 {fmtOku(rows[0].bondBalance)}億円 → {latest.year}年度 {fmtOku(latest.bondBalance)}億円</li>
           <li>実質公債費比率：{rows[0].year}年度 {rows[0].kosaihi}% → {latest.year}年度 {latest.kosaihi}%</li>
+          <li>経常収支比率：{before.year}年度 {before.keijo}% → {latest.year}年度 {latest.keijo}%</li>
+          <li>{cmpYear}年度の1人あたり歳出：南相馬市 {perCapitaMan(latest.expTotal, latest.population)!.toFixed(1)}万円、相馬市 {perCapitaMan(cmpRows[1].r.expTotal, cmpRows[1].r.population)!.toFixed(1)}万円</li>
         </ul>
       </section>
 
@@ -145,17 +175,18 @@ const toc = [
           <li>総務費・農林水産業費のうち、復興関連の事業がどれくらいを占め、今後どう減っていくのか</li>
           <li>震災後に整備した施設の、毎年の運営費・修繕費と、将来の更新費用（公共施設等総合管理計画と照らし合わせる）</li>
           <li>人口の内訳（年齢別、地区別）と、転入・転出の動き。決算カードには載っていないので、別の統計で補う</li>
-          <li>相馬市・県内の類似市と比べたときの位置（決算カードの類似団体比較を使う）</li>
+          <li>近くの市との差が、復興関連の事業によるものか、それ以外の構造的なものか（総務省の類似団体比較カードで、全国の同規模自治体とも比べる）</li>
         </ul>
       </section>
 
       <section id="method">
         <h2>データと注意点</h2>
-        <p>数字はすべて<a href={ts.source.url} target="_blank" rel="noopener">総務省が公表している市町村決算カード（普通会計）↗</a>から、年度ごとに南相馬市の欄を抜き出したものです。金額は千円単位の数値を億円に換算し、小数第1位までにしています。</p>
+        <p>金額は<a href={ts.source.url} target="_blank" rel="noopener">総務省が公表している市町村決算カード（普通会計）↗</a>から、年度ごとに各市の欄を抜き出したものです。財政力指数・経常収支比率・実質公債費比率・将来負担比率は<a href="https://www.soumu.go.jp/iken/shihyo_ichiran.html" target="_blank" rel="noopener">主要財政指標一覧↗</a>の値で、決算カードから読み取った値と全年度で一致することを確認しています。金額は千円単位の数値を億円に換算し、小数第1位までにしています。</p>
         <ol class="action-list">
           <li><h3>人口</h3><p>住民基本台帳人口です。年度によって基準日が1月1日または3月31日と異なります。国勢調査の人口とは別です。</p></li>
           <li><h3>普通会計</h3><p>一般会計と一部の特別会計を合わせた、自治体を比べるための会計区分です。国民健康保険や下水道などの事業会計は含みません。</p></li>
           <li><h3>震災後の数字の見方</h3><p>2011年度以降の歳出には、国から受けた復興関連の交付金を基金に積み立てたり、翌年度に繰り越したりした分が含まれます。金額の大きさがそのまま「その年に使ったお金」とは限りません。</p></li>
+          <li><h3>比べる市の選び方</h3><p>隣接する相馬市と、福島県内で人口が3〜7万人の市を選びました。人口1人あたりの金額は、その年度の住民基本台帳人口で割っています。復興事業の規模や地理条件が違うため、差の理由は一つずつ確かめる必要があります。</p></li>
           <li><h3>抜き出しの方法</h3><p>PDFの決算カードから機械的に読み取っています。読み取りの誤りがあれば、元の決算カードを正とします。各年度の元資料は<a href="/resources/#sources">資料集</a>から確認できるようにしていく予定です。</p></li>
         </ol>
       </section>

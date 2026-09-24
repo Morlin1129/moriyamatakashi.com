@@ -50,10 +50,10 @@ def rows_of(page):
     return out
 
 
-def find_page(pdf):
+def find_page(pdf, city='南相馬市'):
     for i, page in enumerate(pdf.pages):
         text = (page.extract_text() or '').replace(' ', '')
-        if '南相馬市' in text and '歳出合計' in text and '財政力指数' in text:
+        if city in text and '歳出合計' in text and '財政力指数' in text:
             return i, page
     return None, None
 
@@ -181,7 +181,7 @@ def parse(page):
             data[key] = to_num(below[0]['text'])
     if 'population' not in data:
         cands = sorted([(round(w['top']), w['x0'], to_num(w['text'])) for w in words
-                        if w['top'] < 80 and re.match(r'^\d{2,3},\d{3}$', w['text']) and 40000 <= to_num(w['text']) <= 90000])
+                        if w['top'] < 80 and re.match(r'^\d{2,3},\d{3}$', w['text']) and 20000 <= to_num(w["text"]) <= 150000])
         tops = sorted({c[0] for c in cands})
         if len(tops) >= 3:
             data['population'] = [c for c in cands if c[0] == tops[2]][0][2]
@@ -190,15 +190,18 @@ def parse(page):
 
 
 if __name__ == '__main__':
+    import os
+    city = os.environ.get('CITY', '南相馬市')
+    out_path = os.environ.get('OUT', 'cards/parsed.json')
     years = sys.argv[1:] or sorted(FILES)
     result = {}
     for y in years:
         with pdfplumber.open(FILES[y]['file']) as pdf:
-            idx, page = find_page(pdf)
+            idx, page = find_page(pdf, city)
             if page is None:
                 print(y, 'NOT FOUND'); continue
             d = parse(page)
             d['_page'] = idx + 1
             result[y] = d
             print(y, 'p', idx + 1, {k: d.get(k) for k in ['population', 'expTotal', 'minsei', 'norin', 'kyoiku', 'personalTax', 'zaiseiryoku', 'keijo', 'kosaihi', 'shorai']})
-    json.dump(result, open('cards/parsed.json', 'w'), ensure_ascii=False, indent=1)
+    json.dump(result, open(out_path, 'w'), ensure_ascii=False, indent=1)
