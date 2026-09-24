@@ -133,3 +133,6 @@
 .cmp-val{text-align:right;font-variant-numeric:tabular-nums}
 .prose .cmp-bars .mini-chart-note{margin-top:8px}
 .tax-bar-name small{font-size:12px;font-weight:400;color:#5c6f5f;margin-left:2px}
+
+/* hidden 属性は display 指定より優先して非表示にする */
+[hidden]{display:none!important}
