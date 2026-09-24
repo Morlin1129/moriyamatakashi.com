@@ -27,7 +27,7 @@ npm run build
 - `src/pages/`: 各ページ（`index` トップ、`vision` 考え方、`resources` 資料と数字、`profile` プロフィール、`policies/` 取り組み）
 - `src/content/policies/*.yaml`: 取り組み5つの内容。**取り組みの文章・資料リンクを直すときはここだけ編集**すれば、個別ページ・一覧・トップのカード・資料集の一覧に反映されます
 - `src/pages/apps/tax.astro`: ミニアプリ「税金はどこへ行った？ 南相馬版」。決算データは `src/data/kessan-r6.json`
-- `src/pages/apps/health.astro`: ミニアプリ「まちの健康診断」。2008〜2024年度の決算カードから抜き出した `src/data/kessan-timeseries.json` を使う（グラフは `src/components/MiniChart.astro`）
+- `src/pages/apps/health.astro`: ミニアプリ「まちの健康診断」。2008〜2024年度の決算カードから抜き出した `src/data/kessan-timeseries.json`（南相馬市の推移）と `src/data/kessan-compare.json`（県内7市の比較）を使う（グラフは `src/components/MiniChart.astro` と `CompareBars.astro`）
 - `src/components/`: パンくず、目次、資料カード、ご意見バー
 - `src/styles/global.css`: 配色、レイアウト、スマートフォン対応
 - `src/scripts/site.js`: メニュー、お問い合わせダイアログ、資料集の絞り込み

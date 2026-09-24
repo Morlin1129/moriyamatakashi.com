@@ -5,7 +5,7 @@
   "publisher": "総務省",
   "url": "https://www.soumu.go.jp/iken/zaisei/card.html"
  },
- "note": "総務省「市町村決算カード」から抜き出した南相馬市の数値。人口は住民基本台帳人口（年度により1月1日または3月31日時点）。将来負担比率の null は「-」（算定されない）。purposes.other は前年度繰上充用金など。",
+ "note": "総務省「市町村決算カード」から抜き出した南相馬市の数値。人口は住民基本台帳人口（年度により1月1日または3月31日時点）。将来負担比率の null は「-」（算定されない）。purposes.other は前年度繰上充用金など。 財政力指数・経常収支比率・実質公債費比率・将来負担比率・ラスパイレス指数は総務省「主要財政指標一覧」。",
  "rows": [
   {
    "year": 2008,
@@ -39,7 +39,9 @@
    "kosaihi": 16.7,
    "shorai": 129.3,
    "jisshitsu": 3.3,
-   "source": "https://www.soumu.go.jp/iken/zaisei/pdf/1018-15-9_07.pdf"
+   "source": "https://www.soumu.go.jp/iken/zaisei/pdf/1018-15-9_07.pdf",
+   "keijo": 93.2,
+   "lasp": 99.9
   },
   {
    "year": 2009,
@@ -73,7 +75,9 @@
    "kosaihi": 16.5,
    "shorai": 117.1,
    "jisshitsu": 3.6,
-   "source": "https://www.soumu.go.jp/iken/zaisei/pdf/1018-15-10_07.pdf"
+   "source": "https://www.soumu.go.jp/iken/zaisei/pdf/1018-15-10_07.pdf",
+   "keijo": 90.2,
+   "lasp": 99.5
   },
   {
    "year": 2010,
@@ -107,7 +111,9 @@
    "kosaihi": 15.7,
    "shorai": 107.1,
    "jisshitsu": 4.5,
-   "source": "https://www.soumu.go.jp/iken/zaisei/pdf/1018-15-11_07.pdf"
+   "source": "https://www.soumu.go.jp/iken/zaisei/pdf/1018-15-11_07.pdf",
+   "keijo": 85.4,
+   "lasp": 99.1
   },
   {
    "year": 2011,
@@ -141,7 +147,9 @@
    "kosaihi": 15.2,
    "shorai": 82.4,
    "jisshitsu": 11.5,
-   "source": "https://www.soumu.go.jp/iken/zaisei/pdf/1018-15-12_07.pdf"
+   "source": "https://www.soumu.go.jp/iken/zaisei/pdf/1018-15-12_07.pdf",
+   "keijo": 118.1,
+   "lasp": 98.4
   },
   {
    "year": 2012,
@@ -175,7 +183,9 @@
    "kosaihi": 14.4,
    "shorai": 21.0,
    "jisshitsu": 12.0,
-   "source": "https://www.soumu.go.jp/iken/zaisei/pdf/1018-15-13_07.pdf"
+   "source": "https://www.soumu.go.jp/iken/zaisei/pdf/1018-15-13_07.pdf",
+   "keijo": 87.1,
+   "lasp": 107.1
   },
   {
    "year": 2013,
@@ -209,7 +219,9 @@
    "kosaihi": 14.1,
    "shorai": null,
    "jisshitsu": 11.5,
-   "source": "https://www.soumu.go.jp/iken/zaisei/pdf/1018-15-14_07.pdf"
+   "source": "https://www.soumu.go.jp/iken/zaisei/pdf/1018-15-14_07.pdf",
+   "keijo": 86.1,
+   "lasp": 103.4
   },
   {
    "year": 2014,
@@ -243,7 +255,9 @@
    "kosaihi": 12.9,
    "shorai": null,
    "jisshitsu": 17.0,
-   "source": "https://www.soumu.go.jp/iken/zaisei/pdf/1018-15-15_07.pdf"
+   "source": "https://www.soumu.go.jp/iken/zaisei/pdf/1018-15-15_07.pdf",
+   "keijo": 87.8,
+   "lasp": 93.2
   },
   {
    "year": 2015,
@@ -277,7 +291,9 @@
    "kosaihi": 12.3,
    "shorai": null,
    "jisshitsu": 11.2,
-   "source": "https://www.soumu.go.jp/main_content/000476276.pdf"
+   "source": "https://www.soumu.go.jp/main_content/000476276.pdf",
+   "keijo": 87.8,
+   "lasp": 92.6
   },
   {
    "year": 2016,
@@ -311,7 +327,9 @@
    "kosaihi": 10.1,
    "shorai": null,
    "jisshitsu": 8.1,
-   "source": "https://www.soumu.go.jp/main_content/000538900.pdf"
+   "source": "https://www.soumu.go.jp/main_content/000538900.pdf",
+   "keijo": 91.3,
+   "lasp": 94.5
   },
   {
    "year": 2017,
@@ -345,7 +363,9 @@
    "kosaihi": 9.1,
    "shorai": null,
    "jisshitsu": 17.4,
-   "source": "https://www.soumu.go.jp/main_content/000606464.pdf"
+   "source": "https://www.soumu.go.jp/main_content/000606464.pdf",
+   "keijo": 93.8,
+   "lasp": 94.5
   },
   {
    "year": 2018,
@@ -379,7 +399,9 @@
    "kosaihi": 8.3,
    "shorai": null,
    "jisshitsu": 8.0,
-   "source": "https://www.soumu.go.jp/main_content/000676862.pdf"
+   "source": "https://www.soumu.go.jp/main_content/000676862.pdf",
+   "keijo": 90.4,
+   "lasp": 93.3
   },
   {
    "year": 2019,
@@ -413,7 +435,9 @@
    "kosaihi": 9.3,
    "shorai": null,
    "jisshitsu": 7.3,
-   "source": "https://www.soumu.go.jp/main_content/000739961.pdf"
+   "source": "https://www.soumu.go.jp/main_content/000739961.pdf",
+   "keijo": 96.3,
+   "lasp": 94.2
   },
   {
    "year": 2020,
@@ -447,7 +471,9 @@
    "kosaihi": 9.3,
    "shorai": null,
    "jisshitsu": 9.8,
-   "source": "https://www.soumu.go.jp/main_content/000803937.pdf"
+   "source": "https://www.soumu.go.jp/main_content/000803937.pdf",
+   "keijo": 93.4,
+   "lasp": 97.0
   },
   {
    "year": 2021,
@@ -481,7 +507,9 @@
    "kosaihi": 9.1,
    "shorai": null,
    "jisshitsu": 13.0,
-   "source": "https://www.soumu.go.jp/main_content/000873348.pdf"
+   "source": "https://www.soumu.go.jp/main_content/000873348.pdf",
+   "keijo": 91.0,
+   "lasp": 97.6
   },
   {
    "year": 2022,
@@ -515,7 +543,9 @@
    "kosaihi": 8.7,
    "shorai": null,
    "jisshitsu": 11.0,
-   "source": "https://www.soumu.go.jp/main_content/000937045.pdf"
+   "source": "https://www.soumu.go.jp/main_content/000937045.pdf",
+   "keijo": 95.1,
+   "lasp": 97.4
   },
   {
    "year": 2023,
@@ -549,7 +579,9 @@
    "kosaihi": 8.4,
    "shorai": null,
    "jisshitsu": 13.1,
-   "source": "https://www.soumu.go.jp/main_content/000998933.pdf"
+   "source": "https://www.soumu.go.jp/main_content/000998933.pdf",
+   "keijo": 94.8,
+   "lasp": 94.9
   },
   {
    "year": 2024,
@@ -583,7 +615,21 @@
    "kosaihi": 8.4,
    "shorai": null,
    "jisshitsu": 11.9,
-   "source": "https://www.soumu.go.jp/main_content/001063958.pdf"
+   "source": "https://www.soumu.go.jp/main_content/001063958.pdf",
+   "keijo": 94.0,
+   "lasp": 95.5
+  }
+ ],
+ "sources": [
+  {
+   "title": "市町村決算カード（普通会計）",
+   "publisher": "総務省",
+   "url": "https://www.soumu.go.jp/iken/zaisei/card.html"
+  },
+  {
+   "title": "主要財政指標一覧",
+   "publisher": "総務省",
+   "url": "https://www.soumu.go.jp/iken/shihyo_ichiran.html"
   }
  ]
 }

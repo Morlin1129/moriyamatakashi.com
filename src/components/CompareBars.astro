@@ -1,0 +1,31 @@
+---
+// 複数の市を横棒で並べる（単一色。対象の市だけ濃く、他は薄く）
+interface Item { name: string; value: number | null; highlight?: boolean }
+interface Props {
+  title: string;
+  unit: string;
+  items: Item[];
+  decimals?: number;
+  note?: string;
+  refLine?: { value: number; label: string }; // 目安の線（例：18%）
+}
+const { title, unit, items, decimals = 1, note, refLine } = Astro.props;
+const max = Math.max(...items.map((i) => i.value ?? 0), refLine?.value ?? 0) || 1;
+const fmt = (v: number) => v.toLocaleString('ja-JP', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+---
+<figure class="cmp-bars">
+  <figcaption><strong>{title}</strong><span>{unit}</span></figcaption>
+  <ol>
+    {items.map((it) => (
+      <li class:list={[{ 'is-target': it.highlight }]}>
+        <span class="cmp-name">{it.name}</span>
+        <span class="cmp-track">
+          {refLine && <span class="cmp-ref" style={`left:${(refLine.value / max) * 100}%`} title={refLine.label}></span>}
+          {it.value !== null && <span class="cmp-fill" style={`width:${(it.value / max) * 100}%`}></span>}
+        </span>
+        <span class="cmp-val">{it.value === null ? '—' : fmt(it.value)}</span>
+      </li>
+    ))}
+  </ol>
+  {(note || refLine) && <p class="mini-chart-note">{refLine && <span>点線：{refLine.label}　</span>}{note}</p>}
+</figure>
