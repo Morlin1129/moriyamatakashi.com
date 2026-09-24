@@ -74,7 +74,7 @@ const toc = [
         <p>小高区の人の動きです。住民登録の人口と、実際に住んでいる人の数は別の統計で、定義も違います。それぞれの定義と時点は、グラフの下の注記と「データと注意点」に書いています。</p>
         <div class="chart-grid">
           {nums.series.map((s) => (
-            <MiniChart title={s.title} unit={s.unit} kind={s.kind as 'bar' | 'line'} decimals={0} note={s.note} points={s.points} />
+            <MiniChart title={s.title} unit={s.unit} kind={s.kind as 'bar' | 'line'} decimals={0} note={s.note} points={s.points} yearSuffix={s.yearSuffix} />
           ))}
         </div>
       </section>
