@@ -1,4 +1,219 @@
 {
   "note": "小高区の主要事業。status は done（完成・稼働中）/ building（整備中）/ planned（計画中）/ suspended（中断・見直し）。current は現状の数字（表示用の文字列、時点と出典付き）。",
-  "items": []
+  "items": [
+    {
+      "id": "fukko-jutaku",
+      "name": "災害公営住宅（小高区）",
+      "category": "住宅",
+      "status": "done",
+      "start": 2015,
+      "end": 2016,
+      "summary": "東日本大震災で住宅が全壊等した世帯向けに市が整備した災害公営住宅で、小高区には東町・万ヶ迫・上町の3団地計40戸があり、平成28年7月に入居が始まった。",
+      "body": "市の資料によれば、市内には11団地350戸の災害公営住宅が建設され（総事業費約90.6億円、復興交付金）、小高区には東町（農協跡地、木造平屋・木造2階建、2DK14戸・3DK6戸）、万ヶ迫（木造2階建長屋、3DK2戸、市営住宅敷地内）、上町（木造平屋・木造2階建長屋、2DK8戸・3DK10戸）の3団地が整備された。入居開始はいずれも平成28年7月とされている。公営住宅等長寿命化計画（素案）では、建設年度は3団地とも平成27年度、所在地は小高東町団地が小高区東町二丁目29外、小高上町団地が小高区上町一丁目33外、万ヶ廹団地が小高区岡田万ヶ廹28とされている。なお、県が原発避難者向けに整備した「復興公営住宅」は鹿島区・原町区に立地し、小高区にはない。令和7年度予算主要事業説明書によれば、市は小高区の公営住宅について国の目的外使用の承認を得て移住・定住希望者に賃貸しており（管理戸数20戸）、災害公営住宅との関係は資料では確認できていない。団地名の「万ヶ迫」「万ヶ廹」は資料により表記が異なる。",
+      "current": [
+        { "label": "小高東町団地の入居", "value": "管理戸数15戸（▲5）・入居15世帯・空室0", "asOf": "令和7年1月1日現在", "source": "https://www.city.minamisoma.lg.jp/material/files/group/8/c1b5ea14-76df-401b-9041-ef88bc84d6fb.pdf" },
+        { "label": "小高上町団地の入居", "value": "管理戸数18戸・入居15世帯・空室3", "asOf": "令和7年1月1日現在", "source": "https://www.city.minamisoma.lg.jp/material/files/group/8/c1b5ea14-76df-401b-9041-ef88bc84d6fb.pdf" },
+        { "label": "小高万ヶ廹団地の入居", "value": "管理戸数2戸・入居2世帯・空室0", "asOf": "令和7年1月1日現在", "source": "https://www.city.minamisoma.lg.jp/material/files/group/8/c1b5ea14-76df-401b-9041-ef88bc84d6fb.pdf" }
+      ],
+      "sources": [
+        { "title": "南相馬市 南相馬市復興関連事業概要（令和7年4月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/57/fukkoujigyo202504-2.pdf" },
+        { "title": "南相馬市 南相馬市の現況と発展に向けた取組（令和8年3月末時点）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/7/genkyohatten202603.pdf" },
+        { "title": "南相馬市 東日本大震災に係る被害状況及び復旧状況について（令和7年2月7日 災害対策本部員会議資料1）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/8/c1b5ea14-76df-401b-9041-ef88bc84d6fb.pdf" },
+        { "title": "南相馬市 南相馬市公営住宅等長寿命化計画（素案）（平成29年12月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/3/20171227-164213.pdf" },
+        { "title": "南相馬市 令和7年度 予算主要事業説明書", "url": "https://www.city.minamisoma.lg.jp/material/files/group/4/SHUYOUJIGYOUSETUMEISHO.pdf" }
+      ],
+      "verified": true
+    },
+    {
+      "id": "koryu-center",
+      "name": "小高交流センター（小高区復興拠点施設）",
+      "category": "拠点施設",
+      "status": "done",
+      "start": 2015,
+      "end": 2019,
+      "summary": "多世代の交流とにぎわい創出を目的に市が小高区本町に整備した復興拠点施設で、平成31年1月26日に開所した。",
+      "body": "市の資料によれば、整備面積は約5,900平方メートル（駐車場含む）、延べ床面積は約1,900平方メートルで、多世代交流施設（あそびばラシクル）、和室、エクササイズエリア、トレーニングエリア、多目的室、子育てサロン、地域マルシェ、カフェ、チャレンジショップ、歴史文化展示室、屋外の「小高はらっぱ」などからなる。総事業費は約16.9億円（福島再生加速化交付金）。同資料のスケジュールは平成27年度から平成30年度にかけて基本設計・実施設計・建設工事・施設開所を示している。開館時間は9時から21時、定休日は12月29日から1月3日。市のページによれば指定管理制度が導入され、指定管理者導入施設一覧では「南相馬市小高区復興拠点施設」の指定管理者は一般社団法人南相馬ミライエ（令和8年4月1日〜令和10年3月31日）とされている。",
+      "current": [
+        { "label": "来館者数（令和5年度実績）", "value": "83,448人", "asOf": "令和5年度", "source": "https://www.city.minamisoma.lg.jp/material/files/group/4/SHUYOUJIGYOUSETUMEISHO.pdf" },
+        { "label": "来館者数（令和6年度見込）", "value": "86,000人", "asOf": "令和6年度（見込）", "source": "https://www.city.minamisoma.lg.jp/material/files/group/4/SHUYOUJIGYOUSETUMEISHO.pdf" }
+      ],
+      "sources": [
+        { "title": "南相馬市 小高区復興拠点施設「小高交流センター」", "url": "https://www.city.minamisoma.lg.jp/portal/sections/21/2110/2/1/7418.html" },
+        { "title": "南相馬市 南相馬市復興関連事業概要（令和7年4月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/57/fukkoujigyo202504-2.pdf" },
+        { "title": "南相馬市 南相馬市の現況と発展に向けた取組（令和8年3月末時点）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/7/genkyohatten202603.pdf" },
+        { "title": "南相馬市 令和7年度 予算主要事業説明書", "url": "https://www.city.minamisoma.lg.jp/material/files/group/4/SHUYOUJIGYOUSETUMEISHO.pdf" },
+        { "title": "南相馬市 指定管理者導入施設一覧", "url": "https://www.city.minamisoma.lg.jp/portal/sections/11/1150/11501/4/1457.html" }
+      ],
+      "verified": true
+    },
+    {
+      "id": "odaka-store",
+      "name": "小高ストア（南相馬市小高区商業施設）",
+      "category": "商業",
+      "status": "done",
+      "start": 2017,
+      "end": 2018,
+      "summary": "小高区に日常の買い物環境を確保するため市が公設で整備した商業施設で、平成30年12月6日に開所し、指定管理者の有限会社丸上青果が「小高ストア」として運営している。",
+      "body": "市の資料によれば、避難指示解除後も小高区にスーパーマーケットがなく、人口規模から民間事業者の出店見込みが立たなかったため、市が公設で整備した。所在地は小高区上町一丁目56番地、鉄骨造平屋建て、敷地面積1,566.96平方メートル、延床面積431.70平方メートル（物販スペース231.06平方メートル、コミュニティスペース18.00平方メートルなど）、駐車台数18台。事業費は300,161千円（自立・帰還支援雇用創出企業立地補助金、震災復興特別交付税、復旧・復興基金）で、復興関連事業概要では総事業費約3億円とされている。平成29年12月に建設工事に着工し、平成30年12月6日に開所した。運営者は公募型プロポーザルで選定され、指定管理者導入施設一覧では「小高区商業施設」の指定管理者は有限会社丸上青果（令和8年4月1日〜令和10年3月31日）とされている。利用者数や売上は公開資料では確認できていない。",
+      "current": [],
+      "sources": [
+        { "title": "南相馬市 南相馬市復興関連事業概要（令和7年4月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/57/fukkoujigyo202504-2.pdf" },
+        { "title": "南相馬市 「南相馬市小高区商業施設」の概要（資料1、平成30年5月掲載）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/34/20180511-090231.pdf" },
+        { "title": "南相馬市 南相馬市の現況と発展に向けた取組（令和8年3月末時点）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/7/genkyohatten202603.pdf" },
+        { "title": "南相馬市 指定管理者導入施設一覧", "url": "https://www.city.minamisoma.lg.jp/portal/sections/11/1150/11501/4/1457.html" }
+      ],
+      "verified": true
+    },
+    {
+      "id": "frontier-park",
+      "name": "小高復興産業団地（フロンティアパーク）",
+      "category": "産業",
+      "status": "building",
+      "start": 2023,
+      "summary": "小高区岡田字川原田地区に市が整備している産業団地（産業用地約14ha）。令和5年度から造成等が進められており、市のページでは供用開始時期は未定とされている。",
+      "body": "令和5年8月の整備基本計画によれば、候補地は県営ほ場整備事業が進む小高区岡田字川原田地区（約23ha）で、土地利用は産業用地14.2ha、調整池4.2ha、公園・緑地0.8ha、道路1.4ha、緩衝緑地・未造成部2.6haの合計23.2ha、新規雇用者数は312人と試算されている。計画では令和7年度末までに工事を完了し令和8年度当初に供用開始する工程が示されていた。令和7年度予算主要事業説明書によれば、全体事業費（継続費）は6,553,023千円（令和5年度〜令和7年度）で、令和7年度は地盤改良工事・造成工事（各12.8ha）などを行うとされている。復興関連事業概要（令和7年4月）では総事業費約70億円（福島再生加速化交付金）。福島イノベーション・コースト構想推進機構の資料（2025年8月）では状況は造成中、供用開始年度は令和8年度以降、紹介可能区画は3区画（0.9ha、2.0ha、11.3ha）で賃貸のみとされている。市の産業用地情報ページ（2026年5月26日更新）では団地面積約14ha（区画調整中）、供用開始時期は未定、賃貸価格は未定（賃貸のみ）とされ、立地企業の記載はない。",
+      "current": [
+        { "label": "供用開始時期", "value": "未定（区画調整中）", "asOf": "2026年5月26日更新", "source": "https://www.city.minamisoma.lg.jp/portal/sections/16/1620/16204/22499.html" },
+        { "label": "総事業費", "value": "約70億円（福島再生加速化交付金）", "asOf": "令和7年4月", "source": "https://www.city.minamisoma.lg.jp/material/files/group/57/fukkoujigyo202504-2.pdf" },
+        { "label": "紹介可能区画", "value": "3区画（0.9ha・2.0ha・11.3ha、賃貸のみ）", "asOf": "2025年8月", "source": "https://www.fipo.or.jp/wp/wp-content/uploads/2025/08/10.%E5%B0%8F%E9%AB%98%E5%BE%A9%E8%88%88%E7%94%A3%E6%A5%AD%E5%9B%A3%E5%9C%B0%EF%BC%88%E3%83%95%E3%83%AD%E3%83%B3%E3%83%86%E3%82%A3%E3%82%A2%E3%83%91%E3%83%BC%E3%82%AF%EF%BC%89.pdf" }
+      ],
+      "sources": [
+        { "title": "南相馬市 小高復興産業団地（フロンティアパーク）整備基本計画（令和5年8月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/3/20230808_y69t4.pdf" },
+        { "title": "南相馬市 令和7年度 予算主要事業説明書", "url": "https://www.city.minamisoma.lg.jp/material/files/group/4/SHUYOUJIGYOUSETUMEISHO.pdf" },
+        { "title": "南相馬市 南相馬市復興関連事業概要（令和7年4月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/57/fukkoujigyo202504-2.pdf" },
+        { "title": "福島イノベーション・コースト構想推進機構 産業用地情報 小高復興産業団地（フロンティアパーク）（2025年8月）", "url": "https://www.fipo.or.jp/wp/wp-content/uploads/2025/08/10.%E5%B0%8F%E9%AB%98%E5%BE%A9%E8%88%88%E7%94%A3%E6%A5%AD%E5%9B%A3%E5%9C%B0%EF%BC%88%E3%83%95%E3%83%AD%E3%83%B3%E3%83%86%E3%82%A3%E3%82%A2%E3%83%91%E3%83%BC%E3%82%AF%EF%BC%89.pdf" },
+        { "title": "南相馬市 産業用地情報", "url": "https://www.city.minamisoma.lg.jp/portal/sections/16/1620/16204/22499.html" }
+      ],
+      "verified": true
+    },
+    {
+      "id": "iizaki-danchi",
+      "name": "飯崎産業団地",
+      "category": "産業",
+      "status": "done",
+      "start": 2023,
+      "end": 2024,
+      "summary": "小高区飯崎地区（旧金房小学校跡地等）に市が整備した産業団地で、令和6年度から供用が始まり、市のページでは3区画が完売とされている。",
+      "body": "令和5年8月の小高復興産業団地整備基本計画では、飯崎産業団地は産業用地予定面積3.3ha、供用開始時期令和6年度の新設団地として挙げられている。復興関連事業概要（令和7年4月）によれば、整備地は小高区飯崎地区（旧金房小学校跡地等）、用地面積約3.2ha、総事業費約4.3億円（福島再生加速化交付金）で、整備は完了し令和6年度から供用開始とされている。市の産業用地情報ページ（2026年5月26日更新）では、団地面積は3区画合計約3.4ha、募集区画は完売、賃貸のみで、入居企業としてANION株式会社とインターステラテクノロジズ株式会社が記載されている。着手年は公開資料で確認できておらず、start は基本計画に新設予定として記載された年としている。",
+      "current": [
+        { "label": "募集区画", "value": "完売（3区画・合計約3.4ha）", "asOf": "2026年5月26日更新", "source": "https://www.city.minamisoma.lg.jp/portal/sections/16/1620/16204/22499.html" },
+        { "label": "入居企業", "value": "2社（ANION株式会社、インターステラテクノロジズ株式会社）", "asOf": "2026年5月26日更新", "source": "https://www.city.minamisoma.lg.jp/portal/sections/16/1620/16204/22499.html" }
+      ],
+      "sources": [
+        { "title": "南相馬市 産業用地情報", "url": "https://www.city.minamisoma.lg.jp/portal/sections/16/1620/16204/22499.html" },
+        { "title": "南相馬市 南相馬市復興関連事業概要（令和7年4月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/57/fukkoujigyo202504-2.pdf" },
+        { "title": "南相馬市 小高復興産業団地（フロンティアパーク）整備基本計画（令和5年8月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/3/20230808_y69t4.pdf" }
+      ],
+      "verified": true
+    },
+    {
+      "id": "kawabusa-ic",
+      "name": "（仮称）小高スマートインターチェンジ",
+      "category": "交通",
+      "status": "building",
+      "start": 2018,
+      "summary": "常磐自動車道の浪江IC〜南相馬IC間に計画されているスマートIC。平成30年に準備段階調査箇所に選定され、令和元年9月に連結許可・事業化されたが、NEXCO東日本のページでは工事進捗写真は着工後に掲載するとされている。",
+      "body": "市のページによれば、国土交通省が平成30年8月10日に常磐自動車道小高（浪江IC〜南相馬IC間）を準備段階調査箇所に採択し、同年9月25日に市・県・県警・NEXCO東日本・東北地方整備局による準備会が設立された。令和元年8月22日に地区協議会が設立され、令和元年9月20日に国土交通大臣が常磐自動車道と市道大田和インター線及び市道川房インター線との連結を許可、同年9月27日に新規事業化された。市の資料によれば、接続形式は本線直結、全方向（4/4）、全車種24時間の運用形態とされ、南相馬ICまで約32分かかる小高区中心部から約7分でアクセスできるようになるとしている。令和7年度予算主要事業説明書では、市はNEXCOへの工事等負担金（測量設計・施工管理等の市負担分）、事業用地（上り線・下り線、3.6ha）の除草、用地等権利者交渉などを計上している。NEXCO東日本の工事進捗ページ（2025年1月の図を掲載）には、着工後に進捗写真を掲載する旨が記されている。供用予定時期は公開資料では確認できていない。",
+      "current": [],
+      "sources": [
+        { "title": "南相馬市 （仮称）小高スマートインターチェンジ【事業採択】", "url": "https://www.city.minamisoma.lg.jp/portal/life/kotsu_doro_johotsushin/road/10746.html" },
+        { "title": "国土交通省磐城国道事務所・南相馬市 小高スマートインターチェンジの設置に向け準備や検討を行う第1回準備会を開催します（平成30年9月21日）", "url": "https://www.thr.mlit.go.jp/bumon/kisya/kisyah/images/72543_1.pdf" },
+        { "title": "国土交通省磐城国道事務所 「（仮称）小高スマートインターチェンジ」連結許可書の伝達式を開催します（令和元年10月3日）", "url": "https://www.thr.mlit.go.jp/bumon/kisya/kisyah/images/76888_1.pdf" },
+        { "title": "南相馬市 （仮称）小高スマートICの整備効果", "url": "https://www.city.minamisoma.lg.jp/material/files/group/25/20220725_83eh1.pdf" },
+        { "title": "南相馬市 令和7年度 予算主要事業説明書", "url": "https://www.city.minamisoma.lg.jp/material/files/group/4/SHUYOUJIGYOUSETUMEISHO.pdf" },
+        { "title": "NEXCO東日本 （仮称）小高スマートIC 工事進捗状況", "url": "https://www.e-nexco.co.jp/en/special/tohoku4lane/map/fukushima/kodaka_sic/index.html" }
+      ],
+      "verified": true
+    },
+    {
+      "id": "niko-park",
+      "name": "小高区子どもの遊び場「NIKOパーク」",
+      "category": "子育て",
+      "status": "done",
+      "start": 2019,
+      "end": 2021,
+      "summary": "気象に左右されずに遊べる屋内の遊び場として市が小高区関場に整備し、令和3年4月3日にオープンした。",
+      "body": "市の資料によれば、新築のA棟「動」の遊び場（木造2階建て、延床面積988.6平方メートル）と、旧小高幼稚園をリノベーションしたB棟「静」の遊び場（鉄骨造平屋建て、延床面積369.7平方メートル）からなり、屋外遊具と25台分の駐車場を備える。所在地は小高区関場一丁目1番地の1。スケジュールは令和元年度から令和3年度にかけて設計・工事を示し、令和3年4月運用開始予定とされ、市の「現況と発展に向けた取組」では令和3年4月3日オープンとされている。市のページによれば各クールの定員は150名で、指定管理者導入施設一覧では「小高区子どもの遊び場」の指定管理者は株式会社フクシ・エンタープライズ（令和5年4月1日〜令和10年3月31日）とされている。令和4年12月17日には来場者5万人達成記念イベントが開かれた。",
+      "current": [
+        { "label": "累計来場者数", "value": "5万人達成", "asOf": "令和4年12月17日（記念イベント開催日）", "source": "https://www.city.minamisoma.lg.jp/portal/sections/15/1510/15101/4/3/20302.html" }
+      ],
+      "sources": [
+        { "title": "南相馬市 南相馬市復興関連事業概要（令和7年4月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/57/fukkoujigyo202504-2.pdf" },
+        { "title": "南相馬市 南相馬市の現況と発展に向けた取組（令和8年3月末時点）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/7/genkyohatten202603.pdf" },
+        { "title": "南相馬市 屋内遊び場紹介 子どもの遊び場「NIKOパーク」(小高区)", "url": "https://www.city.minamisoma.lg.jp/portal/sections/15/1510/15101/4/3/14971.html" },
+        { "title": "南相馬市 小高区子どもの遊び場NIKOパーク「来場者5万人達成記念イベント」", "url": "https://www.city.minamisoma.lg.jp/portal/sections/15/1510/15101/4/3/20302.html" },
+        { "title": "南相馬市 指定管理者導入施設一覧", "url": "https://www.city.minamisoma.lg.jp/portal/sections/11/1150/11501/4/1457.html" }
+      ],
+      "verified": true
+    },
+    {
+      "id": "kodomoen",
+      "name": "おだか認定こども園",
+      "category": "子育て",
+      "status": "done",
+      "start": 2016,
+      "end": 2020,
+      "summary": "小高幼稚園とおだか保育園を令和2年3月31日で廃園し、保育と教育を合わせ持つ公立の認定こども園として令和2年4月に開園した。",
+      "body": "市の資料によれば、所在地は小高区関場二丁目21番地で、園庭は人工芝で整備されている。スケジュールでは平成28年度から令和2年度にかけて基本設計・実施設計・用地取得・造成工事・建設工事・開園が示され、総事業費は約6.7億円（福島再生加速化交付金、教育振興基金）。利用定員は保育園70名・幼稚園20名、在園児数は保育園63名・幼稚園17名（令和7年4月1日時点）とされている。名称は市の資料により「おだか認定こども園」「小高認定こども園」の表記がある。",
+      "current": [
+        { "label": "利用定員", "value": "保育園70名・幼稚園20名", "asOf": "令和7年4月1日時点", "source": "https://www.city.minamisoma.lg.jp/material/files/group/57/fukkoujigyo202504-2.pdf" },
+        { "label": "在園児数", "value": "保育園63名・幼稚園17名", "asOf": "令和7年4月1日時点", "source": "https://www.city.minamisoma.lg.jp/material/files/group/57/fukkoujigyo202504-2.pdf" }
+      ],
+      "sources": [
+        { "title": "南相馬市 南相馬市復興関連事業概要（令和7年4月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/57/fukkoujigyo202504-2.pdf" },
+        { "title": "南相馬市 東日本大震災に係る被害状況及び復旧状況について（令和7年2月7日 災害対策本部員会議資料1）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/8/c1b5ea14-76df-401b-9041-ef88bc84d6fb.pdf" },
+        { "title": "南相馬市 南相馬市の現況と発展に向けた取組（令和8年3月末時点）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/7/genkyohatten202603.pdf" },
+        { "title": "南相馬市 認可保育施設(保育園(所)・認定こども園・小規模保育施設)について", "url": "https://www.city.minamisoma.lg.jp/portal/sections/15/1520/15201/2/1572.html" }
+      ],
+      "verified": true
+    },
+    {
+      "id": "shinryojo",
+      "name": "小高診療所（市立総合病院附属）",
+      "category": "医療",
+      "status": "done",
+      "start": 2019,
+      "end": 2021,
+      "summary": "市立小高病院の休院後に小高保健福祉センター内で診療していた無床の診療所を、旧小高病院跡地に新築した恒久的な施設で、令和3年12月16日に供用を開始した。",
+      "body": "市のページによれば、令和元年7月に地震被害を受けた病院本館の解体準備のため小高病院を休院し、同年8月から「市立総合病院附属小高診療所（無床）」として小高保健福祉センター内で診療を始め、令和3年12月に小高病院跡地の新しい診療所で診療を開始した。市の資料によれば、所在地は小高区東町三丁目地内（市立小高病院跡地）、敷地面積5,505平方メートル、延床面積565平方メートル（旧棟の一部を含む）、診療科目は内科・外科で、総事業費は約4億円（福島県地域医療復興事業補助金）。スケジュールは令和元年度から令和3年度にかけて設計・敷地造成・建設工事を示している。",
+      "current": [],
+      "sources": [
+        { "title": "南相馬市 小高診療所 沿革", "url": "https://www.city.minamisoma.lg.jp/portal/sections/82/odakashinryojo/1858.html" },
+        { "title": "南相馬市 南相馬市復興関連事業概要（令和7年4月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/57/fukkoujigyo202504-2.pdf" },
+        { "title": "南相馬市 南相馬市の現況と発展に向けた取組（令和8年3月末時点）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/7/genkyohatten202603.pdf" }
+      ],
+      "verified": true
+    },
+    {
+      "id": "engei-danchi",
+      "name": "小高園芸団地",
+      "category": "農業",
+      "status": "done",
+      "start": 2019,
+      "end": 2023,
+      "summary": "小高区の営農再開と帰還促進のため、水稲育苗施設ときゅうり等の栽培・集出荷施設を一体的に整備した園芸団地で、令和3年末から一部稼働、令和5年度から全面稼働した。",
+      "body": "市の資料によれば、所在地は小高区飯崎及び大田和地内、敷地面積38,431.9平方メートルで、鉄骨ハウス（約5,810平方メートル、3連棟×5棟）、パイプハウス（約12,000平方メートル、38棟）、集出荷複合施設（延床面積約1,820平方メートル、鉄骨造2階建て）からなる。スケジュールの表では令和元年度・令和3〜4年度・令和5年度の欄に設計・整備工事・稼働開始が示され、総事業費は約19億円（福島再生加速化交付金）。",
+      "current": [],
+      "sources": [
+        { "title": "南相馬市 南相馬市復興関連事業概要（令和7年4月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/57/fukkoujigyo202504-2.pdf" },
+        { "title": "南相馬市 南相馬市の現況と発展に向けた取組（令和8年3月末時点）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/7/genkyohatten202603.pdf" }
+      ],
+      "verified": true
+    },
+    {
+      "id": "pioneer-village",
+      "name": "小高パイオニアヴィレッジ",
+      "category": "起業支援",
+      "status": "done",
+      "start": 2019,
+      "end": 2019,
+      "summary": "小高区本町にある簡易宿所付きのコワーキングスペースで、運営者のサイトによれば2019年3月に設立された。",
+      "body": "運営者のサイトによれば、所在地は南相馬市小高区本町1-87で、一般社団法人パイオニズムとOWB株式会社が運営し、コワーキングスペース（平日10時〜18時）と簡易宿所を備える。日本財団「NewDay基金」の助成とクラウドファンディングで資金を集め、設計は藤村龍至、施工はトラストワンとされている。市の事業ではなく民間の施設で、着手年や事業費は公開資料で確認できていない。",
+      "current": [],
+      "sources": [
+        { "title": "小高パイオニアヴィレッジ 小高パイオニアヴィレッジについて", "url": "https://village.pionism.or.jp/about/" }
+      ],
+      "verified": true
+    }
+  ]
 }

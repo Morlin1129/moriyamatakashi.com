@@ -163,6 +163,19 @@
       "note": "センターの活動終了時期は市のページに記載がなく、確認していない。"
     },
     {
+      "year": 2016,
+      "month": 7,
+      "kind": "project",
+      "title": "小高区の災害公営住宅（東町・万ヶ迫・上町）で入居が始まる",
+      "summary": "市の資料によれば、小高区に整備された災害公営住宅3団地（東町20戸、万ヶ迫2戸、上町18戸）の入居開始は平成28年7月とされている。",
+      "projectId": "fukko-jutaku",
+      "sources": [
+        { "title": "南相馬市 南相馬市復興関連事業概要（令和7年4月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/57/fukkoujigyo202504-2.pdf" },
+        { "title": "南相馬市 南相馬市の現況と発展に向けた取組（令和8年3月末時点）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/7/genkyohatten202603.pdf" }
+      ],
+      "verified": true
+    },
+    {
       "year": 2017,
       "kind": "plan",
       "title": "小高復興アクション・プラン（素案）が示される",
@@ -215,6 +228,32 @@
       "note": "平成30年より前の都市計画マスタープランの有無・改定歴は市のページに記載がなく、確認していない。"
     },
     {
+      "year": 2018,
+      "month": 8,
+      "kind": "project",
+      "title": "（仮称）小高スマートICが準備段階調査箇所に選定される",
+      "summary": "平成30年8月10日、国土交通省が常磐自動車道小高（浪江IC〜南相馬IC間）を新たな準備段階調査箇所（全国6か所）の一つに採択した。同年9月25日に準備会が設立された。",
+      "projectId": "kawabusa-ic",
+      "sources": [
+        { "title": "南相馬市 （仮称）小高スマートインターチェンジ【事業採択】", "url": "https://www.city.minamisoma.lg.jp/portal/life/kotsu_doro_johotsushin/road/10746.html" },
+        { "title": "国土交通省磐城国道事務所・南相馬市 小高スマートインターチェンジの設置に向け準備や検討を行う第1回準備会を開催します（平成30年9月21日）", "url": "https://www.thr.mlit.go.jp/bumon/kisya/kisyah/images/72543_1.pdf" }
+      ],
+      "verified": true
+    },
+    {
+      "year": 2018,
+      "month": 12,
+      "kind": "project",
+      "title": "小高ストア（小高区商業施設）が開所",
+      "summary": "市が公設で整備した小高区商業施設が平成30年12月6日に開所し、指定管理者が「小高ストア」として営業を始めた。",
+      "projectId": "odaka-store",
+      "sources": [
+        { "title": "南相馬市 南相馬市復興関連事業概要（令和7年4月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/57/fukkoujigyo202504-2.pdf" },
+        { "title": "南相馬市 南相馬市の現況と発展に向けた取組（令和8年3月末時点）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/7/genkyohatten202603.pdf" }
+      ],
+      "verified": true
+    },
+    {
       "year": 2019,
       "month": 1,
       "kind": "plan",
@@ -229,6 +268,59 @@
       "note": "後期基本計画の最終的な策定年月は、掲載ページが開けなかったため確認できていない。ここでは案が審議会に示された時点を項目としている。"
     },
     {
+      "year": 2019,
+      "month": 1,
+      "kind": "project",
+      "title": "小高交流センター（小高区復興拠点施設）が開所",
+      "summary": "市が小高区本町に整備した復興拠点施設「小高交流センター」が平成31年1月26日に開所した。",
+      "projectId": "koryu-center",
+      "sources": [
+        { "title": "南相馬市 小高区復興拠点施設「小高交流センター」", "url": "https://www.city.minamisoma.lg.jp/portal/sections/21/2110/2/1/7418.html" },
+        { "title": "南相馬市 南相馬市復興関連事業概要（令和7年4月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/57/fukkoujigyo202504-2.pdf" },
+        { "title": "南相馬市 南相馬市の現況と発展に向けた取組（令和8年3月末時点）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/7/genkyohatten202603.pdf" }
+      ],
+      "verified": true
+    },
+    {
+      "year": 2019,
+      "month": 3,
+      "kind": "project",
+      "title": "小高パイオニアヴィレッジが設立される",
+      "summary": "運営者のサイトによれば、簡易宿所付きコワーキングスペース「小高パイオニアヴィレッジ」（小高区本町）は2019年3月に設立された。",
+      "projectId": "pioneer-village",
+      "sources": [
+        { "title": "小高パイオニアヴィレッジ 小高パイオニアヴィレッジについて", "url": "https://village.pionism.or.jp/about/" }
+      ],
+      "verified": true
+    },
+    {
+      "year": 2019,
+      "month": 9,
+      "kind": "project",
+      "title": "（仮称）小高スマートICが連結許可を受け事業化される",
+      "summary": "令和元年9月20日に国土交通大臣が常磐自動車道と市道大田和インター線・市道川房インター線との連結を許可し、9月27日に新規事業化された。10月7日に連結許可書の伝達式が市役所で行われた。",
+      "projectId": "kawabusa-ic",
+      "sources": [
+        { "title": "南相馬市 （仮称）小高スマートインターチェンジ【事業採択】", "url": "https://www.city.minamisoma.lg.jp/portal/life/kotsu_doro_johotsushin/road/10746.html" },
+        { "title": "国土交通省磐城国道事務所 「（仮称）小高スマートインターチェンジ」連結許可書の伝達式を開催します（令和元年10月3日）", "url": "https://www.thr.mlit.go.jp/bumon/kisya/kisyah/images/76888_1.pdf" }
+      ],
+      "verified": true
+    },
+    {
+      "year": 2020,
+      "month": 4,
+      "kind": "project",
+      "title": "おだか認定こども園が開園",
+      "summary": "小高幼稚園とおだか保育園を令和2年3月31日で廃園し、令和2年4月に公立のおだか認定こども園が開園した。",
+      "projectId": "kodomoen",
+      "sources": [
+        { "title": "南相馬市 東日本大震災に係る被害状況及び復旧状況について（令和7年2月7日 災害対策本部員会議資料1）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/8/c1b5ea14-76df-401b-9041-ef88bc84d6fb.pdf" },
+        { "title": "南相馬市 南相馬市復興関連事業概要（令和7年4月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/57/fukkoujigyo202504-2.pdf" },
+        { "title": "南相馬市 南相馬市の現況と発展に向けた取組（令和8年3月末時点）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/7/genkyohatten202603.pdf" }
+      ],
+      "verified": true
+    },
+    {
       "year": 2021,
       "month": 4,
       "kind": "event",
@@ -240,6 +332,58 @@
         { "title": "南相馬市 小高区4小学校合同閉校記念事業実行委員会", "url": "https://www.city.minamisoma.lg.jp/portal/childcare/kyoikuiinkai/2/1/30625.html" }
       ],
       "verified": true
+    },
+    {
+      "year": 2021,
+      "month": 4,
+      "kind": "project",
+      "title": "小高区子どもの遊び場「NIKOパーク」がオープン",
+      "summary": "市が小高区関場に整備した屋内の子どもの遊び場「NIKOパーク」が令和3年4月3日にオープンした。",
+      "projectId": "niko-park",
+      "sources": [
+        { "title": "南相馬市 南相馬市の現況と発展に向けた取組（令和8年3月末時点）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/7/genkyohatten202603.pdf" },
+        { "title": "南相馬市 南相馬市復興関連事業概要（令和7年4月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/57/fukkoujigyo202504-2.pdf" }
+      ],
+      "verified": true
+    },
+    {
+      "year": 2021,
+      "month": 12,
+      "kind": "project",
+      "title": "小高診療所が旧小高病院跡地に開所",
+      "summary": "市立小高病院跡地に新築された市立総合病院附属小高診療所（無床）が令和3年12月16日に供用を開始した。",
+      "projectId": "shinryojo",
+      "sources": [
+        { "title": "南相馬市 小高診療所 沿革", "url": "https://www.city.minamisoma.lg.jp/portal/sections/82/odakashinryojo/1858.html" },
+        { "title": "南相馬市 南相馬市復興関連事業概要（令和7年4月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/57/fukkoujigyo202504-2.pdf" },
+        { "title": "南相馬市 南相馬市の現況と発展に向けた取組（令和8年3月末時点）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/7/genkyohatten202603.pdf" }
+      ],
+      "verified": true
+    },
+    {
+      "year": 2023,
+      "kind": "project",
+      "title": "小高復興産業団地（フロンティアパーク）の整備事業が始まる",
+      "summary": "令和7年度予算主要事業説明書によれば、小高復興産業団地の整備事業は令和5年度から進められており、全体事業費（継続費）は6,553,023千円（令和5年度〜令和7年度）とされている。",
+      "projectId": "frontier-park",
+      "sources": [
+        { "title": "南相馬市 令和7年度 予算主要事業説明書", "url": "https://www.city.minamisoma.lg.jp/material/files/group/4/SHUYOUJIGYOUSETUMEISHO.pdf" },
+        { "title": "南相馬市 小高復興産業団地（フロンティアパーク）整備基本計画（令和5年8月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/3/20230808_y69t4.pdf" }
+      ],
+      "verified": true,
+      "note": "年度単位の記載のため month は付けていない。"
+    },
+    {
+      "year": 2023,
+      "kind": "project",
+      "title": "小高園芸団地が全面稼働",
+      "summary": "市の資料によれば、小高園芸団地は令和3年末から一部稼働し、令和5年度から全面稼働した。",
+      "projectId": "engei-danchi",
+      "sources": [
+        { "title": "南相馬市 南相馬市復興関連事業概要（令和7年4月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/57/fukkoujigyo202504-2.pdf" }
+      ],
+      "verified": true,
+      "note": "年度単位の記載のため month は付けていない。"
     },
     {
       "year": 2023,
@@ -278,6 +422,19 @@
       ],
       "verified": true,
       "note": "用途地域変更・特別用途地区の最終的な都市計画決定日は確認していない。"
+    },
+    {
+      "year": 2024,
+      "kind": "project",
+      "title": "飯崎産業団地が供用開始",
+      "summary": "市の資料によれば、小高区飯崎地区（旧金房小学校跡地等）に整備された飯崎産業団地は令和6年度から供用が始まった。",
+      "projectId": "iizaki-danchi",
+      "sources": [
+        { "title": "南相馬市 南相馬市復興関連事業概要（令和7年4月）", "url": "https://www.city.minamisoma.lg.jp/material/files/group/57/fukkoujigyo202504-2.pdf" },
+        { "title": "南相馬市 産業用地情報", "url": "https://www.city.minamisoma.lg.jp/portal/sections/16/1620/16204/22499.html" }
+      ],
+      "verified": true,
+      "note": "年度単位の記載のため month は付けていない。"
     },
     {
       "year": 2025,
