@@ -38,7 +38,7 @@ const toc = [
       <section id="sources">
         <h2>資料を探す</h2>
         <p>取り組みを考えるうえで参照している南相馬市の公開資料です。</p>
-        <div class="filter-chips" role="group" aria-label="取り組みで絞り込む">
+        <div class="filter-chips" role="group" aria-label="取り組みで絞り込む" data-target="#resource-list">
           <button type="button" class="chip is-active" data-filter="all" aria-pressed="true">すべて</button>
           {policies.map((p) => <button type="button" class="chip" data-filter={p.id} aria-pressed="false">{p.data.badge}</button>)}
         </div>

@@ -166,3 +166,4 @@
 .pc-current small{display:block;font-size:11px;font-weight:400;color:#5c6f5f}
 .pc-current small a{color:var(--green)}
 @media(max-width:760px){.project-grid{grid-template-columns:1fr}.timeline{padding-left:18px}.timeline li:before{left:-26px}.timeline li{padding:14px 16px 4px}}
+.prose .source-list{font-size:14px;padding-left:1.2em}.prose .source-list li{margin-bottom:6px}.source-list a{color:var(--green)}.link-button{background:none;border:0;padding:0;font:inherit;color:var(--green);text-decoration:underline;cursor:pointer}
