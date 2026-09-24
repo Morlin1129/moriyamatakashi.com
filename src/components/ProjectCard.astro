@@ -26,7 +26,7 @@ const period = p.end ? `${p.start}年〜${p.end}年` : `${p.start}年〜`;
       {p.current.map((c) => (
         <div>
           <dt>{c.label}</dt>
-          <dd>{c.value}<small>{c.asOf}時点 · <a href={c.source} target="_blank" rel="noopener">出典↗</a></small></dd>
+          <dd>{c.value}<small>{c.asOf}時点 · <a href={c.source} target="_blank" rel="noopener" aria-label={`${c.label}の出典`}>出典↗</a></small></dd>
         </div>
       ))}
     </dl>

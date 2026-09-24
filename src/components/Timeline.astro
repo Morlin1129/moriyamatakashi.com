@@ -19,7 +19,7 @@ const sorted = [...items].sort((a, b) => a.year - b.year || (a.month ?? 0) - (b.
 const when = (it: TimelineItem) => (it.month ? `${it.year}年${it.month}月` : `${it.year}年`);
 const iso = (it: TimelineItem) => (it.month ? `${it.year}-${String(it.month).padStart(2, '0')}` : String(it.year));
 ---
-<ol class="timeline" id={id}>
+<ol class="timeline" id={id} role="list">
   {sorted.map((it) => {
     const k = KIND[it.kind];
     const hasProject = it.projectId !== undefined && projectIds.has(it.projectId);
