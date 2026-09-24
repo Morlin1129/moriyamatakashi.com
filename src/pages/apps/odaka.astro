@@ -17,7 +17,7 @@ const projectIds = new Set(projects.map((p) => p.id));
 for (const it of items) {
   if (it.projectId && !projectIds.has(it.projectId)) console.warn(`[odaka] 年表「${it.title}」の projectId ${it.projectId} が odaka-projects.json にありません`);
 }
-const years = items.map((i) => i.year);
+const years = [...items.map((i) => i.year), ...nums.series.flatMap((s) => s.points.map((p) => p.year))];
 const firstYear = Math.min(...years);
 const lastYear = Math.max(...years);
 const unverified = [...items.filter((i) => !i.verified).map((i) => i.title), ...projects.filter((p) => !p.verified).map((p) => p.name)];
@@ -63,7 +63,7 @@ const toc = [
 
       <section id="projects">
         <h2>主要事業の今</h2>
-        <p>小高区の主な事業について、完成したものは現状の数字を、まだ完成していないものは状況を書いています。数字は公開資料に載っているものだけを、時点と出典付きで載せています。</p>
+        <p>小高区の主な事業について、完成したものは公開資料に数字があれば現状の数字を、なければその旨を、まだ完成していないものは状況を書いています。数字は公開資料に載っているものだけを、時点と出典付きで載せています。</p>
         <div class="project-grid">
           {projects.map((p) => <ProjectCard project={p} />)}
         </div>
@@ -94,7 +94,7 @@ const toc = [
         <h2>データと注意点</h2>
         <p>年表と事業の内容は、南相馬市・福島県・復興庁などが公開している資料から書き起こしています。資料に書かれていることを要約したもので、評価や解釈は含めていません。数字は公開資料の値をそのまま使い、資料にない年は空けています。</p>
         <ol class="action-list">
-          <li><h3>資料未確認の項目</h3><p>市の公開ページで元の資料を見つけられなかった項目は、「資料未確認」と表示したうえで年表に載せています。記憶や伝聞にもとづく暫定の記述なので、資料が見つかり次第、直します。</p></li>
+          <li><h3>資料未確認の項目</h3><p>市の公開ページで元の資料を見つけられなかった項目は、「資料未確認」と表示したうえで年表に載せています。検索結果の抜粋など、元の資料を開けていない情報にもとづく暫定の記述なので、資料が見つかり次第、直します。</p></li>
           <li><h3>人口の2つの数字</h3><p>住民登録人口は住民基本台帳にもとづく数で、避難先で暮らす人も含みます。居住者数は市が別に把握している、実際に小高区で暮らしている人の数です。時点や集計方法は資料ごとに違うため、各グラフの注記を見てください。</p></li>
           <li><h3>更新のしかた</h3><p>このページの内容はすべて JSON ファイルに置いています。誤りや新しい資料があれば、<button type="button" class="link-button" data-open="contact">お問い合わせ</button>からお知らせください。</p></li>
         </ol>

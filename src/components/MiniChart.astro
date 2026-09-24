@@ -9,7 +9,7 @@ interface Props {
   decimals?: number;
   note?: string;
   markYear?: number;
-  yearSuffix?: string; // 年の後ろに付ける語。年度データなら「年度」、暦年なら「年」
+  yearSuffix?: '年' | '年度'; // 年の後ろに付ける語。年度データなら「年度」、暦年なら「年」
 }
 const { title, points, unit, kind = 'bar', decimals = 1, note, markYear = 2011, yearSuffix = '年度' } = Astro.props;
 // ツールチップの見出し。label が「2016年」のように年そのものなら括弧書きを重ねない
@@ -42,7 +42,7 @@ const id = `c${Math.random().toString(36).slice(2, 8)}`;
   <figcaption><strong>{title}</strong><span>{unit}</span></figcaption>
   <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby={`${id}-t`} aria-describedby={`${id}-d`}>
     <title id={`${id}-t`}>{title}（{unit}）</title>
-    <desc id={`${id}-d`}>{points.filter((p) => p.value !== null).map((p) => `${p.year}${yearSuffix} ${fmt(p.value!)}`).join('、')}</desc>
+    <desc id={`${id}-d`}>{points.filter((p) => p.value !== null).map((p) => `${when(p)} ${fmt(p.value!)}`).join('、')}</desc>
     <line class="mc-base" x1={padL} x2={W - padR} y1={padT + plotH} y2={padT + plotH} />
     {markIndex >= 0 && (
       <g class="mc-mark">

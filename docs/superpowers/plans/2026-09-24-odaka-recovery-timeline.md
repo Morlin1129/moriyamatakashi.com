@@ -997,6 +997,14 @@ Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"
 
 ---
 
+## 実装時の変更点（計画からの差分）
+
+- 年表・事業カードの CSS は詳細度を `.prose .timeline p.tl-note` のように要素付きに上げ、出典リンクは `nowrap` をやめて flex で折り返す。長い URL であふれないよう `min-width:0;overflow-wrap:anywhere` のガードを追加。
+- `MiniChart.astro` に `yearSuffix?: '年' | '年度'` を追加（既定は「年度」で既存ページは不変）。数字の系列 JSON にも `yearSuffix` を持たせる。
+- トップページの資料カード一覧は、導入＋カード3枚の4列から「導入が2行またぎ＋カード2×2」に組み替えた（4枚目のカードが崩れたため）。
+- 数字の系列は「事業所・事業再開数」の公開値が見つからず3本（住民登録人口・居住者数・移住者数）。未収録であることはページの「まだ確かめたいこと」に明記。
+- テストに、要約は一文・本文と注記に URL なし・`asOf` の接尾辞禁止・`yearSuffix` の列挙を追加。
+
 ## 完了の条件
 
 - `npm test` と `npm run build` が通る。

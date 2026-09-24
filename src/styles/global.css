@@ -147,7 +147,8 @@
 .tl-unverified{background:#fbe9e5;color:#8a4b3a}
 .prose .timeline h3{font-size:17px;margin:0 0 6px;line-height:1.6}
 .prose .timeline p{font-size:15px;line-height:1.85;margin-bottom:.6em}
-.prose .timeline p.tl-note{font-size:13px;color:#8a4b3a}
+.prose .timeline p.tl-note{font-size:13px;color:#5c6f5f}
+.prose .timeline p.tl-detail,.prose .project-card p.pc-detail{font-size:14px;color:#3f4d42}
 .prose .timeline p.tl-links,.prose .project-card p.pc-links{font-size:13px;display:flex;flex-wrap:wrap;gap:6px 14px}
 .tl-links a,.pc-links a{color:var(--green)}
 /* 小高 復興のあゆみ: 事業カード */

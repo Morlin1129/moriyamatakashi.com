@@ -34,8 +34,8 @@
       "summary": "多世代の交流とにぎわい創出を目的に市が小高区本町に整備した復興拠点施設で、2019年1月26日に開所した。",
       "body": "市の資料によれば、整備面積は約5,900平方メートル（駐車場含む）、延べ床面積は約1,900平方メートルで、多世代交流施設（あそびばラシクル）、和室、エクササイズエリア、トレーニングエリア、多目的室、子育てサロン、地域マルシェ、カフェ、チャレンジショップ、歴史文化展示室、屋外の「小高はらっぱ」などからなる。総事業費は約16.9億円（福島再生加速化交付金）。同資料のスケジュールは2015年度から2018年度にかけて基本設計・実施設計・建設工事・施設開所を示している。開館時間は9時から21時、定休日は12月29日から1月3日。市のページによれば指定管理制度が導入され、指定管理者導入施設一覧では「南相馬市小高区復興拠点施設」の指定管理者は一般社団法人南相馬ミライエ（2026年4月1日〜2028年3月31日）とされている。",
       "current": [
-        { "label": "年間来館者数", "value": "83,448人", "asOf": "2023年度（実績）", "source": "https://www.city.minamisoma.lg.jp/material/files/group/4/SHUYOUJIGYOUSETUMEISHO.pdf" },
-        { "label": "年間来館者数", "value": "86,000人", "asOf": "2024年度（見込）", "source": "https://www.city.minamisoma.lg.jp/material/files/group/4/SHUYOUJIGYOUSETUMEISHO.pdf" }
+        { "label": "年間来館者数（実績）", "value": "83,448人", "asOf": "2023年度", "source": "https://www.city.minamisoma.lg.jp/material/files/group/4/SHUYOUJIGYOUSETUMEISHO.pdf" },
+        { "label": "年間来館者数（見込）", "value": "86,000人", "asOf": "2024年度", "source": "https://www.city.minamisoma.lg.jp/material/files/group/4/SHUYOUJIGYOUSETUMEISHO.pdf" }
       ],
       "sources": [
         { "title": "南相馬市 小高区復興拠点施設「小高交流センター」", "url": "https://www.city.minamisoma.lg.jp/portal/sections/21/2110/2/1/7418.html" },
