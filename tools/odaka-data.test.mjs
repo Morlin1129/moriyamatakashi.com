@@ -104,3 +104,32 @@ test('数字: 各系列に単位・出典・点があり、値は数値か null'
     assert.ok(hasValue, `${label}: 値が一つもない`);
   });
 });
+
+// 表記の規約。カード側で「時点」を付けるので asOf は日付か期間だけを書く。要約は一文、本文と注記に URL は書かない。
+const checkProse = (it, label) => {
+  for (const key of ['summary', 'body', 'note']) {
+    if (it[key] !== undefined) assert.ok(!it[key].includes('http'), `${label}: ${key} に URL が含まれている（出典は sources に書く）`);
+  }
+  const periods = (it.summary.match(/。/g) ?? []).length;
+  assert.ok(periods <= 1, `${label}: summary が二文以上ある（「。」が ${periods} 個）。二文目以降は body に書く`);
+};
+
+test('年表: summary は一文で、summary・body・note に URL がない', () => {
+  timeline.items.forEach((it, i) => checkProse(it, `年表[${i}]「${it.title}」`));
+});
+
+test('事業: summary は一文で、summary・body・note に URL がなく、current の asOf に「時点」などを付けない', () => {
+  projects.items.forEach((p, i) => {
+    const label = `事業[${i}]「${p.name}」`;
+    checkProse(p, label);
+    for (const c of p.current) {
+      assert.ok(!/(時点|現在|更新)$/.test(c.asOf), `${label}: current「${c.label}」の asOf「${c.asOf}」に「時点」「現在」「更新」を付けない（表示側で付ける）`);
+    }
+  });
+});
+
+test('数字: yearSuffix は「年」か「年度」', () => {
+  numbers.series.forEach((s, i) => {
+    assert.ok(['年', '年度'].includes(s.yearSuffix), `系列[${i}]「${s.title}」: yearSuffix が「年」「年度」のどちらでもない (${s.yearSuffix})`);
+  });
+});
