@@ -166,4 +166,9 @@
 .pc-current small{display:block;font-size:11px;font-weight:400;color:#5c6f5f}
 .pc-current small a{color:var(--green)}
 @media(max-width:760px){.project-grid{grid-template-columns:1fr}.timeline{padding-left:18px}.timeline li:before{left:-26px}.timeline li{padding:14px 16px 4px}}
+
+/* ミニアプリ一覧: 年表のアート */
+.resource-art.line:before{content:'';position:absolute;left:14%;right:14%;top:50%;height:3px;background:#c7d2c4;transform:translateY(-50%)}
+.resource-art.line i{position:absolute;top:50%;width:16px;height:16px;border-radius:50%;background:var(--green);border:3px solid #fff;transform:translate(-50%,-50%)}
+.resource-art.line i:nth-child(2){left:20%}.resource-art.line i:nth-child(3){left:44%;background:#b8862b}.resource-art.line i:nth-child(4){left:66%}.resource-art.line i:nth-child(5){left:84%;background:#5c6f5f}
 .prose .source-list{font-size:14px;padding-left:1.2em}.prose .source-list li{margin-bottom:6px}.source-list a{color:var(--green)}.link-button{background:none;border:0;padding:0;font:inherit;color:var(--green);text-decoration:underline;cursor:pointer}
