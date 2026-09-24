@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import PolicyIcon from '../components/PolicyIcon.astro';
 
 const policies = (await getCollection('policies')).sort((a, b) => a.data.order - b.data.order);
 
@@ -42,17 +41,16 @@ const steps = [
   <section id="policies" class="policies">
     <div class="wrap">
       <h2>だから、これをやります。</h2>
-      <ol class="plain-list">
+      <div class="policy-grid">
         {policies.map((p) => (
-          <li>
-            <a href={`/policies/${p.id}/`}>
-              <PolicyIcon name={p.data.icon} />
-              <span>{p.data.plain}</span>
-              <span class="plain-arrow" aria-hidden="true">→</span>
-            </a>
-          </li>
+          <a class="policy" href={`/policies/${p.id}/`}>
+            <span class={`crop crop${p.data.image.crop}`} role="img" aria-label={p.data.image.alt}></span>
+            <span class="policy-tag">{p.data.badge}</span>
+            <h3>{p.data.plain}</h3>
+            <span class="short-rule"></span>
+          </a>
         ))}
-      </ol>
+      </div>
       <p class="small-link"><a href="/resources/">数字や資料で見る →</a></p>
     </div>
   </section>

@@ -37,9 +37,9 @@
 
 ### 3. だから、これをやります。
 
-5つの取り組みを「アイコン＋一文」のリストで並べる。写真・バッジ・長いタイトルは使わない。各行は下層の取り組みページへのリンク。
+5つの取り組みを、以前のトップにあった写真＋バッジの小さいカード（PC 5列、スマホ 2列）で並べる。見出し文だけを `title` から `plain` に差し替え、写真とバッジ（分野名）は残す。各カードは下層の取り組みページへのリンク。
 
-アイコンは5つの単色（サイトの緑）インラインSVG線画（子ども／買い物かご／建物と人／市役所／建物とお金）。`src/components/PolicyIcon.astro` に `name` プロパティで切り替える形でまとめる。YAML には `icon` フィールド（`children` / `odaka` / `economy` / `city-hall` / `future`）を追加してアイコン名を持たせる。
+（2026-09-24 追記: 当初は単色アイコン＋一文のリストを予定したが、写真のほうが一目で分かり、既存カードの流用で済むため変更。）
 
 並び順（現役世代向けに変更）と一文:
 
@@ -90,12 +90,11 @@
 
 ## コードの変更点
 
-- `src/content.config.ts`: `policies` スキーマに `plain: z.string()` と `icon: z.string()` を追加。
-- `src/components/PolicyIcon.astro`: 新規。`name` に応じたインラインSVGを出す。
-- `src/content/policies/*.yaml`: 各ファイルに `plain` と `icon` を追加。`order` はトップの並び順に合わせて付け直す（children=1, odaka=2, economy=3, city-hall=4, future=5）。`title`・`titleLines`・`lead` は変えない。
+- `src/content.config.ts`: `policies` スキーマに `plain: z.string()` を追加。
+- `src/content/policies/*.yaml`: 各ファイルに `plain` を追加。`order` はトップの並び順に合わせて付け直す（children=1, odaka=2, economy=3, city-hall=4, future=5）。`title`・`titleLines`・`lead` は変えない。
 - `src/pages/index.astro`: 上記5セクションで書き直す。
 - `src/pages/vision.astro`: 5ステップ→3ステップ。
-- `src/styles/global.css`: トップ専用で使わなくなるスタイル（`.vision*`, `.resources*`, `.resource-*`, `.notes*`, `.note*`, `.profile*`, `.policy-grid`, `.policy*`, `.landscape` の一部, 5列の `.process-inner`, `.step-arrow` など）を削除し、新セクション（声の引用リスト、アイコン付き取り組みリスト、3ステップ）のスタイルを追加。既存の `--section-pad` で上下余白を揃える。下層ページで使われているクラス（`.step-list`, `.policy-card`, `.crop` など）は残す。
+- `src/styles/global.css`: トップ専用で使わなくなるスタイル（`.vision*`, `.resources*`, `.resource-*`, `.notes*`, `.note*`, `.profile*`, `.landscape` の一部, 5列の `.process-inner`, `.step-arrow` など）を削除し、新セクション（声の引用リスト、3ステップ）のスタイルを追加。既存の `--section-pad` で上下余白を揃える。下層ページで使われているクラス（`.step-list`, `.policy-card`, `.crop` など）は残す。
 - ヘッダー・フッターのナビはトップ内アンカーを持たないため変更なし。
 - `order` を変えると取り組み一覧ページ・前後ページャの順も変わる。これは意図した変更とする。
 
