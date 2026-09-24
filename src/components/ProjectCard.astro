@@ -9,7 +9,7 @@ const STATUS: Record<Project['status'], string> = {
   planned: '計画中',
   suspended: '中断・見直し',
 };
-const period = p.end ? `${p.start}年〜${p.end}年` : `${p.start}年〜`;
+const period = !p.end ? `${p.start}年〜` : p.end === p.start ? `${p.start}年` : `${p.start}年〜${p.end}年`;
 ---
 <article class={`project-card is-${p.status}`} id={`project-${p.id}`}>
   <p class="pc-tags">

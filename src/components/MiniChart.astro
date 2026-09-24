@@ -9,8 +9,11 @@ interface Props {
   decimals?: number;
   note?: string;
   markYear?: number;
+  yearSuffix?: string; // 年の後ろに付ける語。年度データなら「年度」、暦年なら「年」
 }
-const { title, points, unit, kind = 'bar', decimals = 1, note, markYear = 2011 } = Astro.props;
+const { title, points, unit, kind = 'bar', decimals = 1, note, markYear = 2011, yearSuffix = '年度' } = Astro.props;
+// ツールチップの見出し。label が「2016年」のように年そのものなら括弧書きを重ねない
+const when = (p: Point) => (p.label === `${p.year}${yearSuffix}` ? p.label : `${p.label}（${p.year}${yearSuffix}）`);
 
 const W = 320, H = 150, padL = 8, padR = 8, padT = 22, padB = 24;
 const plotW = W - padL - padR, plotH = H - padT - padB;
@@ -39,7 +42,7 @@ const id = `c${Math.random().toString(36).slice(2, 8)}`;
   <figcaption><strong>{title}</strong><span>{unit}</span></figcaption>
   <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby={`${id}-t`} aria-describedby={`${id}-d`}>
     <title id={`${id}-t`}>{title}（{unit}）</title>
-    <desc id={`${id}-d`}>{points.filter((p) => p.value !== null).map((p) => `${p.year}年度 ${fmt(p.value!)}`).join('、')}</desc>
+    <desc id={`${id}-d`}>{points.filter((p) => p.value !== null).map((p) => `${p.year}${yearSuffix} ${fmt(p.value!)}`).join('、')}</desc>
     <line class="mc-base" x1={padL} x2={W - padR} y1={padT + plotH} y2={padT + plotH} />
     {markIndex >= 0 && (
       <g class="mc-mark">
@@ -50,7 +53,7 @@ const id = `c${Math.random().toString(36).slice(2, 8)}`;
     {kind === 'bar'
       ? points.map((p, i) => p.value !== null && (
           <rect class="mc-bar" x={x(i) - barW / 2} y={y(p.value)} width={barW} height={Math.max(0, padT + plotH - y(p.value))} rx="2">
-            <title>{p.label}（{p.year}年度）：{fmt(p.value)} {unit}</title>
+            <title>{when(p)}：{fmt(p.value)} {unit}</title>
           </rect>
         ))
       : (
@@ -58,7 +61,7 @@ const id = `c${Math.random().toString(36).slice(2, 8)}`;
             <path class="mc-line" d={linePath} />
             {points.map((p, i) => p.value !== null && (
               <circle class="mc-dot" cx={x(i)} cy={y(p.value)} r="6">
-                <title>{p.label}（{p.year}年度）：{fmt(p.value)} {unit}</title>
+                <title>{when(p)}：{fmt(p.value)} {unit}</title>
               </circle>
             ))}
           </>
