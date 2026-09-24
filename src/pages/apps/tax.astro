@@ -45,7 +45,7 @@ const toc = [
           <button type="button" role="tab" class="chip" data-mode="household" aria-selected="false">家計に置き換えて見る</button>
         </div>
         <p class="tax-mode-note" data-mode-note="tax">あなたが払う市民税（市民税分の概算）が、1日あたり何にいくら使われているかを表示します。</p>
-        <p class="tax-mode-note" data-mode-note="household" hidden>市の1年分の歳出（約{(total / 100000).toFixed(1)}億円）を、入力した年収の家計に縮めて表示します。それぞれの使い道を、家計の項目（光熱水費、保育料、医療費、ローンの返済など）に置き換えて見られます。</p>
+        <p class="tax-mode-note" data-mode-note="household" hidden>市の1年分の歳出（約{(total / 100000).toFixed(1)}億円）を、入力した年収の家計に縮めて表示します。使い道は、家計の項目（食費、光熱水費、教育費、医療費、ローン返済など）に置き換えて表示します。</p>
         <form class="tax-form" id="tax-form">
           <label>
             <span>年収（給与収入・税込）</span>
@@ -68,9 +68,9 @@ const toc = [
           <ol class="tax-bars" id="tax-bars">
             {purposes.map((p) => (
               <li data-id={p.id}>
-                <div class="tax-bar-head"><span class="tax-bar-name">{p.name}</span><span class="tax-bar-amount"><strong data-day>—</strong> <span data-unit>円／日</span><small>（<span data-year>—</span> <span data-unit2>円／年</span>）</small></span></div>
+                <div class="tax-bar-head"><span class="tax-bar-name"><span data-only="tax">{p.name}</span><span data-only="household" hidden>{p.householdName}<small>（{p.name}）</small></span></span><span class="tax-bar-amount"><strong data-day>—</strong> <span data-unit>円／日</span><small>（<span data-year>—</span> <span data-unit2>円／年</span>）</small></span></div>
                 <div class="tax-bar-track"><div class="tax-bar-fill" style={`width:${(p.share * 100).toFixed(1)}%`}></div></div>
-                <p class="tax-bar-plain"><span data-only="tax">{p.plain}</span><span data-only="household" hidden><b>家計でいうと：</b>{p.household}</span><span class="tax-bar-share">歳出の {(p.share * 100).toFixed(1)}%</span></p>
+                <p class="tax-bar-plain"><span data-only="tax">{p.plain}</span><span data-only="household" hidden>{p.household}</span><span class="tax-bar-share">歳出の {(p.share * 100).toFixed(1)}%</span></p>
               </li>
             ))}
           </ol>
