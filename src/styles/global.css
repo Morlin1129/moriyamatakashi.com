@@ -14,9 +14,25 @@
 .vision-photo p{position:absolute;z-index:2;bottom:35px;right:5%;padding:12px 17px;background:#fffdf0ec;font-size:20px;transform:rotate(-5deg)}
 .voices,.policies,.process{padding:var(--section-pad) 0}
 .voices h2,.policies h2,.process h2,.contact-strip h2{font-size:clamp(24px,2.4vw,32px);margin-bottom:28px}
-.voice-list{list-style:none;padding:0;margin:0 0 28px;display:grid;gap:14px;max-width:760px}
-.voice-list li{background:#fff;border-left:4px solid var(--green);border-radius:4px;padding:16px 20px;font-size:17px;line-height:1.8;box-shadow:0 2px 10px #20492b0f}
-.voices-close{font-size:17px;line-height:1.9;font-weight:600}
+.eyebrow{display:flex;align-items:center;gap:22px;font-size:15px;font-weight:700;color:var(--green);margin-bottom:14px}
+.eyebrow:before{content:'';width:48px;height:3px;background:var(--green);border-radius:2px}
+.voices h2{font-size:clamp(28px,3.2vw,40px);margin-bottom:36px}
+.voice-list{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.voice-list li{background:#fff;border:1px solid #dde4d8;border-radius:10px;padding:36px 28px 40px}
+.voice-icon{display:block;width:46px;height:46px;margin-bottom:26px;color:var(--green);fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round}
+.voice-icon circle{fill:currentColor;stroke:none}
+.voice-list p{font-size:clamp(16px,1.4vw,19px);line-height:1.85;padding-left:.5em;text-indent:-.5em}
+.voice-list b{color:var(--green);font-weight:700}
+.voices-close{display:flex;align-items:center;justify-content:space-between;gap:32px;margin-top:48px;padding-top:44px;border-top:1px solid #d9e0d5}
+.voices-close p{font-size:26px;line-height:1.7;font-weight:700}
+.voices-close strong{color:var(--green)}
+.button.outline{background:transparent;color:var(--green);border:1.5px solid var(--green);box-shadow:none;font-weight:700;gap:14px;padding:16px 40px;min-height:60px;border-radius:10px}
+.button.outline:hover{background:#eef4ea;transform:translateY(-2px)}
+@media(max-width:1100px){
+.voice-list{grid-template-columns:1fr}
+.voice-list br{display:none}
+.voice-list p{font-size:17px}
+}
 .policies{position:relative;background:linear-gradient(130deg,#edf2e7,#deeadb);clip-path:polygon(0 0,25% 1.2%,60% 0,100% 1.5%,100% 100%,0 100%)}
 .policy-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
 .policy{display:block;padding:0 0 18px;text-align:left;border:0;background:#fffdf8;border-radius:5px;overflow:hidden;transition:transform .2s,box-shadow .2s}
@@ -48,8 +64,14 @@
 .vision-photo:before{background:linear-gradient(0deg,var(--paper),transparent 20%)}
 .vision-photo p{font-size:18px;bottom:30px}
 .voices h2,.policies h2,.process h2,.contact-strip h2{font-size:24px;margin-bottom:20px}
-.voice-list li{font-size:15px;padding:14px 16px}
-.voices-close{font-size:15px}
+.voices h2{font-size:28px;margin-bottom:26px}
+.voice-list{grid-template-columns:1fr;gap:14px}
+.voice-list li{padding:26px 22px 28px}
+.voice-icon{width:38px;height:38px;margin-bottom:18px}
+.voice-list p{font-size:16px}
+.voices-close{flex-direction:column;align-items:flex-start;gap:24px;margin-top:36px;padding-top:32px}
+.voices-close p{font-size:21px}
+.voices-close .button{width:100%}
 .policy-grid{grid-template-columns:repeat(2,1fr);gap:15px}
 .policy:last-child{grid-column:1/-1;width:calc(50% - 7px);justify-self:center}
 .policy h3{font-size:15px;padding-left:12px}
