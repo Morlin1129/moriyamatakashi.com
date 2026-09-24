@@ -7,6 +7,18 @@ import kessan from '../../data/kessan-r6.json';
 
 const total = kessan.purposes.reduce((sum, p) => sum + p.amount, 0);
 const purposes = kessan.purposes.map((p) => ({ ...p, share: p.amount / total })).sort((a, b) => b.amount - a.amount);
+// 家計モード用：事業経費（農林水産業費＋商工費）などを統合した一覧
+const merged = new Set(kessan.householdMerges.flatMap((m) => m.ids));
+const householdPurposes = [
+  ...purposes.filter((p) => !merged.has(p.id)).map((p) => ({ id: p.id, name: p.name, householdName: p.householdName, household: p.household, amount: p.amount })),
+  ...kessan.householdMerges.map((m) => ({
+    id: m.id,
+    name: m.ids.map((id) => kessan.purposes.find((p) => p.id === id)!.name).join('＋'),
+    householdName: m.householdName,
+    household: m.household,
+    amount: m.ids.reduce((sum, id) => sum + kessan.purposes.find((p) => p.id === id)!.amount, 0),
+  })),
+].map((p) => ({ ...p, share: p.amount / total })).sort((a, b) => b.amount - a.amount);
 const fmt = (n: number) => n.toLocaleString('ja-JP');
 
 // 個人市民税の税率（令和6年度〜）。出典は本文の「計算のしかた」に記載
@@ -16,6 +28,8 @@ const TAX = {
   basicDeduction: 430000, // 基礎控除（住民税）
   socialInsuranceRate: 0.15, // 社会保険料の概算（収入に対する割合）
 };
+
+const HOUSEHOLD_MONTHLY = 300000; // 家計モードで置き換える家庭の手取り月収
 
 const toc = [
   { id: 'calc', label: '計算してみる' },
@@ -42,17 +56,17 @@ const toc = [
         <h2>計算してみる</h2>
         <div class="tax-switch" role="tablist" aria-label="表示の切り替え">
           <button type="button" role="tab" class="chip is-active" data-mode="tax" aria-selected="true">あなたの市民税で見る</button>
-          <button type="button" role="tab" class="chip" data-mode="household" aria-selected="false">家計に置き換えて見る</button>
+          <button type="button" role="tab" class="chip" data-mode="household" aria-selected="false">手取り月{HOUSEHOLD_MONTHLY / 10000}万円の家庭に置き換えたら</button>
         </div>
         <p class="tax-mode-note" data-mode-note="tax">あなたが払う市民税（市民税分の概算）が、1日あたり何にいくら使われているかを表示します。</p>
-        <p class="tax-mode-note" data-mode-note="household" hidden>市の1年分の歳出（約{(total / 100000).toFixed(1)}億円）を、入力した年収の家計に縮めて表示します。それぞれの使い道を、家計の項目（光熱水費、保育料、医療費、ローンの返済など）に置き換えて見られます。</p>
-        <form class="tax-form" id="tax-form">
+        <p class="tax-mode-note" data-mode-note="household" hidden>市の1年分の歳出（約{(total / 100000).toFixed(1)}億円）を、手取り月収{HOUSEHOLD_MONTHLY / 10000}万円の家庭の家計に縮めて表示します。使い道は、家計の項目（食費、光熱水費、教育費、医療費、ローン返済など）に置き換えています。</p>
+        <form class="tax-form" id="tax-form" data-only="tax">
           <label>
             <span>年収（給与収入・税込）</span>
             <span class="tax-input"><input type="number" id="income" name="income" inputmode="numeric" min="0" step="10000" value="4000000" /><span>円</span></span>
           </label>
           <input type="range" id="income-range" min="0" max="15000000" step="100000" value="4000000" aria-label="年収をスライダーで調整" />
-          <label data-only="tax">
+          <label>
             <span>扶養している家族の人数</span>
             <select id="dependents" name="dependents">
               <option value="0">0人</option><option value="1">1人</option><option value="2">2人</option><option value="3">3人</option><option value="4">4人</option>
@@ -62,15 +76,24 @@ const toc = [
         <div class="tax-result" id="tax-result" aria-live="polite">
           <div class="tax-total">
             <p data-only="tax">あなたの市民税は、1年で <strong id="tax-year">—</strong> 円、<span class="nowrap">1日あたり <strong id="tax-day">—</strong> 円</span></p>
-            <p data-only="household" hidden>市の歳出を年収 <strong id="hh-income">—</strong> 円の家計に置き換えると、<span class="nowrap">1か月 <strong id="hh-month">—</strong> 円</span> の使い道はこうなります</p>
+            <p data-only="household" hidden>もし南相馬市が、手取り月 <strong id="hh-month">—</strong> 万円の家庭だったら、<span class="nowrap">1か月の使い道はこうなります</span></p>
             <p class="tax-note" id="tax-message"></p>
           </div>
-          <ol class="tax-bars" id="tax-bars">
+          <ol class="tax-bars" id="tax-bars" data-only="tax">
             {purposes.map((p) => (
               <li data-id={p.id}>
-                <div class="tax-bar-head"><span class="tax-bar-name">{p.name}</span><span class="tax-bar-amount"><strong data-day>—</strong> <span data-unit>円／日</span><small>（<span data-year>—</span> <span data-unit2>円／年</span>）</small></span></div>
+                <div class="tax-bar-head"><span class="tax-bar-name">{p.name}</span><span class="tax-bar-amount"><strong data-day>—</strong> 円／日<small>（<span data-year>—</span> 円／年）</small></span></div>
                 <div class="tax-bar-track"><div class="tax-bar-fill" style={`width:${(p.share * 100).toFixed(1)}%`}></div></div>
-                <p class="tax-bar-plain"><span data-only="tax">{p.plain}</span><span data-only="household" hidden><b>家計でいうと：</b>{p.household}</span><span class="tax-bar-share">歳出の {(p.share * 100).toFixed(1)}%</span></p>
+                <p class="tax-bar-plain">{p.plain}<span class="tax-bar-share">歳出の {(p.share * 100).toFixed(1)}%</span></p>
+              </li>
+            ))}
+          </ol>
+          <ol class="tax-bars" id="hh-bars" data-only="household" hidden>
+            {householdPurposes.map((p) => (
+              <li data-id={p.id}>
+                <div class="tax-bar-head"><span class="tax-bar-name">{p.householdName}<small>（{p.name}）</small></span><span class="tax-bar-amount"><strong data-day>—</strong> 円／月<small>（<span data-year>—</span> 円／年）</small></span></div>
+                <div class="tax-bar-track"><div class="tax-bar-fill" style={`width:${(p.share * 100).toFixed(1)}%`}></div></div>
+                <p class="tax-bar-plain">{p.household}<span class="tax-bar-share">歳出の {(p.share * 100).toFixed(1)}%</span></p>
               </li>
             ))}
           </ol>
@@ -110,7 +133,7 @@ const toc = [
   <CtaBar />
 </Base>
 
-<script define:vars={{ purposes: purposes.map((p) => ({ id: p.id, share: p.share })), TAX }}>
+<script define:vars={{ purposes: purposes.map((p) => ({ id: p.id, share: p.share })), householdPurposes: householdPurposes.map((p) => ({ id: p.id, share: p.share })), TAX, HOUSEHOLD_MONTHLY }}>
   const income = document.getElementById('income');
   const range = document.getElementById('income-range');
   const dependents = document.getElementById('dependents');
@@ -157,8 +180,6 @@ const toc = [
     });
     document.querySelectorAll('[data-mode-note]').forEach((p) => { p.hidden = p.dataset.modeNote !== mode; });
     document.querySelectorAll('[data-only]').forEach((el) => { el.hidden = el.dataset.only !== mode; });
-    document.querySelectorAll('[data-unit]').forEach((el) => { el.textContent = mode === 'tax' ? '円／日' : '円／月'; });
-    document.querySelectorAll('[data-unit2]').forEach((el) => { el.textContent = '円／年'; });
     render();
   };
   document.querySelectorAll('.tax-switch [data-mode]').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
@@ -167,13 +188,12 @@ const toc = [
     const salary = Math.max(0, Number(income.value) || 0);
     const n = Number(dependents.value) || 0;
     if (mode === 'household') {
-      // 市の歳出全体を、入力した年収の家計に縮める
-      document.getElementById('hh-income').textContent = fmt(salary);
-      document.getElementById('hh-month').textContent = fmt(salary / 12);
-      purposes.forEach((p) => {
-        const li = document.querySelector(`#tax-bars li[data-id="${p.id}"]`);
-        li.querySelector('[data-day]').textContent = fmt(salary * p.share / 12);
-        li.querySelector('[data-year]').textContent = fmt(salary * p.share);
+      // 市の歳出全体を、決まった年収の家庭の家計に縮める
+      document.getElementById('hh-month').textContent = fmt(HOUSEHOLD_MONTHLY / 10000);
+      householdPurposes.forEach((p) => {
+        const li = document.querySelector(`#hh-bars li[data-id="${p.id}"]`);
+        li.querySelector('[data-day]').textContent = fmt(HOUSEHOLD_MONTHLY * p.share);
+        li.querySelector('[data-year]').textContent = fmt(HOUSEHOLD_MONTHLY * 12 * p.share);
       });
       return;
     }
