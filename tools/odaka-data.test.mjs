@@ -13,28 +13,28 @@ const STATUSES = ['done', 'building', 'planned', 'suspended'];
 const isUrl = (u) => typeof u === 'string' && /^https?:\/\//.test(u);
 const nonEmpty = (s) => typeof s === 'string' && s.trim().length > 0;
 
-const checkSources = (sources, label) => {
+const checkSources = (sources, label, verified) => {
   assert.ok(Array.isArray(sources), `${label}: sources が配列でない`);
   for (const s of sources) {
     assert.ok(nonEmpty(s.title), `${label}: 出典の title が空`);
     assert.ok(isUrl(s.url), `${label}: 出典の url が不正 (${s.url})`);
   }
+  if (verified) assert.ok(sources.length > 0, `${label}: 確認済みなのに出典がない`);
 };
 
 test('年表: 各項目に必要な値があり、確認済みなら出典がある', () => {
-  assert.ok(Array.isArray(timeline.items));
-  for (const it of timeline.items) {
-    const label = `年表「${it.title}」`;
-    assert.equal(typeof it.year, 'number', `${label}: year が数値でない`);
-    if (it.month !== undefined) assert.ok(it.month >= 1 && it.month <= 12, `${label}: month が 1〜12 でない`);
+  assert.ok(Array.isArray(timeline.items), `年表: items が配列でない`);
+  timeline.items.forEach((it, i) => {
+    const label = `年表[${i}]「${it.title}」`;
+    assert.ok(Number.isInteger(it.year), `${label}: year が整数でない`);
+    if (it.month !== undefined) assert.ok(Number.isInteger(it.month) && it.month >= 1 && it.month <= 12, `${label}: month が 1〜12 の整数でない`);
     assert.ok(KINDS.includes(it.kind), `${label}: kind が不正 (${it.kind})`);
     assert.ok(nonEmpty(it.title), `${label}: title が空`);
     assert.ok(nonEmpty(it.summary), `${label}: summary が空`);
     assert.equal(typeof it.verified, 'boolean', `${label}: verified が真偽値でない`);
-    checkSources(it.sources, label);
-    if (it.verified) assert.ok(it.sources.length > 0, `${label}: 確認済みなのに出典がない`);
-    else assert.ok(nonEmpty(it.note), `${label}: 未確認なのに note がない`);
-  }
+    checkSources(it.sources, label, it.verified);
+    if (!it.verified) assert.ok(nonEmpty(it.note), `${label}: 未確認なのに note がない`);
+  });
 });
 
 test('年表: 年月の昇順に並んでいる', () => {
@@ -52,50 +52,55 @@ test('年表: projectId は事業に存在する', () => {
 });
 
 test('事業: id は一意で、状態と出典がそろっている', () => {
-  assert.ok(Array.isArray(projects.items));
+  assert.ok(Array.isArray(projects.items), `事業: items が配列でない`);
   const seen = new Set();
-  for (const p of projects.items) {
-    const label = `事業「${p.name}」`;
+  projects.items.forEach((p, i) => {
+    const label = `事業[${i}]「${p.name}」`;
     assert.ok(/^[a-z0-9-]+$/.test(p.id), `${label}: id は小文字英数字とハイフンのみ (${p.id})`);
     assert.ok(!seen.has(p.id), `${label}: id が重複`);
     seen.add(p.id);
-    assert.ok(nonEmpty(p.name) && nonEmpty(p.category) && nonEmpty(p.summary), `${label}: name/category/summary が空`);
+    assert.ok(nonEmpty(p.name), `${label}: name が空`);
+    assert.ok(nonEmpty(p.category), `${label}: category が空`);
+    assert.ok(nonEmpty(p.summary), `${label}: summary が空`);
     assert.ok(STATUSES.includes(p.status), `${label}: status が不正 (${p.status})`);
-    assert.equal(typeof p.start, 'number', `${label}: start が数値でない`);
-    if (p.end !== undefined) assert.ok(p.end >= p.start, `${label}: end が start より前`);
+    assert.ok(Number.isInteger(p.start), `${label}: start が整数でない`);
+    if (p.end !== undefined) assert.ok(Number.isInteger(p.end) && p.end >= p.start, `${label}: end が整数でないか start より前`);
     assert.equal(typeof p.verified, 'boolean', `${label}: verified が真偽値でない`);
-    checkSources(p.sources, label);
-    if (p.verified) assert.ok(p.sources.length > 0, `${label}: 確認済みなのに出典がない`);
+    checkSources(p.sources, label, p.verified);
     assert.ok(Array.isArray(p.current), `${label}: current が配列でない`);
     for (const c of p.current) {
-      assert.ok(nonEmpty(c.label) && nonEmpty(c.value) && nonEmpty(c.asOf), `${label}: current の label/value/asOf が空`);
+      assert.ok(nonEmpty(c.label), `${label}: current の label が空`);
+      assert.ok(nonEmpty(c.value), `${label}: current の value が空`);
+      assert.ok(nonEmpty(c.asOf), `${label}: current の asOf が空`);
       assert.ok(isUrl(c.source), `${label}: current の source が不正`);
     }
     if (p.status !== 'done' && p.current.length === 0) assert.ok(nonEmpty(p.body), `${label}: 未完成で current が空なら body に状況を書く`);
-  }
+  });
 });
 
 test('数字: 各系列に単位・出典・点があり、値は数値か null', () => {
-  assert.ok(Array.isArray(numbers.series));
+  assert.ok(Array.isArray(numbers.series), `数字: series が配列でない`);
   const ids = new Set();
-  for (const s of numbers.series) {
-    const label = `系列「${s.title}」`;
-    assert.ok(nonEmpty(s.id) && !ids.has(s.id), `${label}: id が空か重複`);
+  numbers.series.forEach((s, i) => {
+    const label = `系列[${i}]「${s.title}」`;
+    assert.ok(nonEmpty(s.id), `${label}: id が空`);
+    assert.ok(!ids.has(s.id), `${label}: id が重複`);
     ids.add(s.id);
     assert.ok(nonEmpty(s.title), `${label}: title が空`);
     assert.equal(typeof s.unit, 'string', `${label}: unit が文字列でない`);
     assert.ok(['bar', 'line'].includes(s.kind), `${label}: kind が bar/line でない`);
-    assert.ok(nonEmpty(s.source?.title) && isUrl(s.source?.url), `${label}: source が不正`);
+    assert.ok(typeof s.source === 'object' && s.source !== null, `${label}: source が不正`);
+    checkSources([s.source], label, true);
     assert.ok(Array.isArray(s.points) && s.points.length > 0, `${label}: points が空`);
     let hasValue = false;
-    for (let i = 0; i < s.points.length; i++) {
-      const p = s.points[i];
-      assert.equal(typeof p.year, 'number', `${label}: points[${i}].year が数値でない`);
-      assert.ok(nonEmpty(p.label), `${label}: points[${i}].label が空`);
-      assert.ok(p.value === null || typeof p.value === 'number', `${label}: points[${i}].value が数値でも null でもない`);
-      if (i > 0) assert.ok(s.points[i - 1].year < p.year, `${label}: year が昇順でない`);
+    for (let j = 0; j < s.points.length; j++) {
+      const p = s.points[j];
+      assert.ok(Number.isInteger(p.year), `${label}: points[${j}].year が整数でない`);
+      assert.ok(nonEmpty(p.label), `${label}: points[${j}].label が空`);
+      assert.ok(p.value === null || typeof p.value === 'number', `${label}: points[${j}].value が数値でも null でもない`);
+      if (j > 0) assert.ok(s.points[j - 1].year < p.year, `${label}: year が昇順でない`);
       if (p.value !== null) hasValue = true;
     }
     assert.ok(hasValue, `${label}: 値が一つもない`);
-  }
+  });
 });
