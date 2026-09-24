@@ -149,3 +149,20 @@
 .prose .tl-note,.prose .pc-note{font-size:13px;color:#8a4b3a}
 .prose .tl-links,.prose .pc-links{font-size:13px}
 .tl-links a,.pc-links a{color:var(--green);margin-right:14px;white-space:nowrap}
+/* 小高 復興のあゆみ: 事業カード */
+.project-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:0 0 1.2em}
+.project-card{background:#fff;border-radius:8px;padding:18px 20px 8px;box-shadow:0 2px 10px #20492b0d;scroll-margin-top:24px}
+.project-card.is-done .pc-status{background:#e8efe3;color:var(--green)}
+.project-card.is-building .pc-status{background:#f6efdc;color:#7a5a12}
+.project-card.is-planned .pc-status{background:#eceeea;color:#3f4d42}
+.project-card.is-suspended .pc-status{background:#fbe9e5;color:#8a4b3a}
+.prose .project-card h3{font-size:18px;margin:0 0 2px;line-height:1.6}
+.prose .project-card p{font-size:15px;line-height:1.85;margin-bottom:.6em}
+.prose .pc-period{font-size:13px;color:#5c6f5f}
+.pc-current{margin:0 0 .8em;padding:12px 14px;background:#f3f7f0;border:1px solid #dfe8d8;border-radius:6px;display:grid;gap:8px}
+.pc-current div{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.pc-current dt{font-size:13px;color:#5c6f5f}
+.pc-current dd{margin:0;font-weight:700;text-align:right}
+.pc-current small{display:block;font-size:11px;font-weight:400;color:#5c6f5f}
+.pc-current small a{color:var(--green)}
+@media(max-width:760px){.project-grid{grid-template-columns:1fr}.timeline{padding-left:18px}.timeline li:before{left:-26px}.timeline li{padding:14px 16px 4px}}

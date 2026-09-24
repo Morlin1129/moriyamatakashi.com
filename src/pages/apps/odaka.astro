@@ -1,11 +1,15 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Timeline from '../../components/Timeline.astro';
-import type { TimelineItem } from '../../data/odaka-types';
+import ProjectCard from '../../components/ProjectCard.astro';
+import type { TimelineItem, Project } from '../../data/odaka-types';
 import tl from '../../data/odaka-timeline.json';
 import pj from '../../data/odaka-projects.json';
 const projectIds = new Set(pj.items.map((p) => p.id));
 ---
 <Base title="小高 復興のあゆみ" description="仮" current="resources">
-  <div class="page-body wrap"><article class="prose"><Timeline items={tl.items as TimelineItem[]} projectIds={projectIds} /></article></div>
+  <div class="page-body wrap"><article class="prose">
+    <Timeline items={tl.items as TimelineItem[]} projectIds={projectIds} />
+    <div class="project-grid">{pj.items.map((p) => <ProjectCard project={p as Project} />)}</div>
+  </article></div>
 </Base>

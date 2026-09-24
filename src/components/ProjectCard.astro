@@ -1,0 +1,37 @@
+---
+// 主要事業のカード。年表から #project-<id> でリンクされる。
+import type { Project } from '../data/odaka-types';
+interface Props { project: Project }
+const { project: p } = Astro.props;
+const STATUS: Record<Project['status'], string> = {
+  done: '完成・稼働中',
+  building: '整備中',
+  planned: '計画中',
+  suspended: '中断・見直し',
+};
+const period = p.end ? `${p.start}年〜${p.end}年` : `${p.start}年〜`;
+---
+<article class={`project-card is-${p.status}`} id={`project-${p.id}`}>
+  <p class="pc-tags">
+    <span class="pc-cat">{p.category}</span>
+    <span class="pc-status">{STATUS[p.status]}</span>
+    {!p.verified && <span class="tl-unverified">資料未確認</span>}
+  </p>
+  <h3>{p.name}</h3>
+  <p class="pc-period">{period}</p>
+  <p>{p.summary}</p>
+  {p.body && <p class="pc-detail">{p.body}</p>}
+  {p.current.length > 0 && (
+    <dl class="pc-current">
+      {p.current.map((c) => (
+        <div>
+          <dt>{c.label}</dt>
+          <dd>{c.value}<small>{c.asOf}時点 · <a href={c.source} target="_blank" rel="noopener">出典↗</a></small></dd>
+        </div>
+      ))}
+    </dl>
+  )}
+  {p.sources.length > 0 && (
+    <p class="pc-links">{p.sources.map((s) => <a href={s.url} target="_blank" rel="noopener">{s.title}↗</a>)}</p>
+  )}
+</article>
