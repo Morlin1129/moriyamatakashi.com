@@ -1,0 +1,48 @@
+---
+// 年表。計画・調査・事業・出来事を1本の時間軸に並べる。
+// li の data-cat は絞り込み用（plan = 計画・調査, project = 事業, event = 出来事）。
+import type { TimelineItem } from '../data/odaka-types';
+interface Props {
+  items: TimelineItem[];
+  projectIds: Set<string>; // 存在する事業の id。アンカーを付けるかの判定に使う
+  id?: string;
+}
+const { items, projectIds, id = 'timeline-list' } = Astro.props;
+
+const KIND: Record<TimelineItem['kind'], { label: string; cat: string }> = {
+  plan: { label: '計画', cat: 'plan' },
+  survey: { label: '調査', cat: 'plan' },
+  project: { label: '事業', cat: 'project' },
+  event: { label: '出来事', cat: 'event' },
+};
+const sorted = [...items].sort((a, b) => a.year - b.year || (a.month ?? 0) - (b.month ?? 0));
+const when = (it: TimelineItem) => (it.month ? `${it.year}年${it.month}月` : `${it.year}年`);
+const iso = (it: TimelineItem) => (it.month ? `${it.year}-${String(it.month).padStart(2, '0')}` : String(it.year));
+---
+<ol class="timeline" id={id}>
+  {sorted.map((it) => {
+    const k = KIND[it.kind];
+    const hasProject = it.projectId !== undefined && projectIds.has(it.projectId);
+    return (
+      <li data-cat={k.cat} class={`tl-${it.kind}`}>
+        <time datetime={iso(it)}>{when(it)}</time>
+        <div class="tl-body">
+          <p class="tl-tags">
+            <span class={`tl-kind tl-kind-${it.kind}`}>{k.label}</span>
+            {!it.verified && <span class="tl-unverified">資料未確認</span>}
+          </p>
+          <h3>{it.title}</h3>
+          <p>{it.summary}</p>
+          {it.body && <p class="tl-detail">{it.body}</p>}
+          {it.note && <p class="tl-note">{it.note}</p>}
+          {(it.sources.length > 0 || hasProject) && (
+            <p class="tl-links">
+              {it.sources.map((s) => <a href={s.url} target="_blank" rel="noopener">{s.title}↗</a>)}
+              {hasProject && <a href={`#project-${it.projectId}`}>この事業の今を見る →</a>}
+            </p>
+          )}
+        </div>
+      </li>
+    );
+  })}
+</ol>
