@@ -8,6 +8,8 @@ const policies = defineCollection({
   schema: z.object({
     order: z.number(),
     badge: z.string(),
+    plain: z.string(),
+    icon: z.enum(['children', 'odaka', 'economy', 'city-hall', 'future']),
     title: z.string(),
     titleLines: z.array(z.string()),
     lead: z.string(),
