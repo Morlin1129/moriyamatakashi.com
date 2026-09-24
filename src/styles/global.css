@@ -132,3 +132,4 @@
 .cmp-ref{position:absolute;top:-3px;bottom:-3px;border-left:2px dashed #bd9b46}
 .cmp-val{text-align:right;font-variant-numeric:tabular-nums}
 .prose .cmp-bars .mini-chart-note{margin-top:8px}
+.tax-bar-name small{font-size:12px;font-weight:400;color:#5c6f5f;margin-left:2px}
