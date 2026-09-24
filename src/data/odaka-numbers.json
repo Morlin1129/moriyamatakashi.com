@@ -167,7 +167,7 @@
       "title": "小高区への移住者数",
       "unit": "人",
       "kind": "bar",
-      "note": "市の予算主要事業説明書で、小高区地域振興課の中事業「おだかぐらしファンづくり事業」および「旧避難指示区域移住相談窓口事業」の成果指標「小高区への移住者数」として示された年度実績。年は年度（4月〜翌3月）。値は各年度の予算主要事業説明書から転記した: 2023年度（令和5年度）実績52人は令和7年度予算主要事業説明書（https://www.city.minamisoma.lg.jp/material/files/group/4/SHUYOUJIGYOUSETUMEISHO.pdf）、2024年度（令和6年度）実績51人は令和8年度予算主要事業説明書（https://www.city.minamisoma.lg.jp/material/files/group/4/toushoshuyou.pdf）。出典ページは各年度の予算ページと説明書PDFを列挙する索引。誰を移住者として数えるかの定義は資料に明記されていない。令和6年度以前の説明書にはこの指標がなく、2025年度は見込（64人）のみで実績未公表のため、確認できたのは2年分のみ。",
+      "note": "市の予算主要事業説明書で、小高区地域振興課の中事業「おだかぐらしファンづくり事業」および「旧避難指示区域移住相談窓口事業」の成果指標「小高区への移住者数」として示された年度実績。年は年度（4月〜翌3月）。値は各年度の予算主要事業説明書から転記した: 2023年度（令和5年度）実績52人は令和7年度予算主要事業説明書（https://www.city.minamisoma.lg.jp/material/files/group/4/SHUYOUJIGYOUSETUMEISHO.pdf）、2024年度（令和6年度）実績51人は令和8年度予算主要事業説明書（https://www.city.minamisoma.lg.jp/material/files/group/4/toushoshuyou.pdf）。出典ページは各年度の予算ページを列挙する索引で、説明書PDFは各年度の予算ページからリンクされている。誰を移住者として数えるかの定義は資料に明記されていない。令和6年度以前の説明書にはこの指標がなく、2025年度は見込（64人）のみで実績未公表のため、確認できたのは2年分のみ。",
       "source": {
         "title": "南相馬市 予算（主要事業説明書）",
         "url": "https://www.city.minamisoma.lg.jp/portal/sections/11/1130/11301/zaiseijokyo/11/5/index.html"
