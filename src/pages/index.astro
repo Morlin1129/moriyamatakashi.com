@@ -4,10 +4,11 @@ import Base from '../layouts/Base.astro';
 
 const policies = (await getCollection('policies')).sort((a, b) => a.data.order - b.data.order);
 
+// 強調したい語句は <b> で囲む（カード内で緑の太字になる）。<br /> は広い画面だけ効き、狭い画面では自然に折り返す
 const voices = [
-  '意見交換会で声を上げても、届いている気がしない',
-  '地域に不満はない。でも休みの日は、つい市外に遊びに行ってしまう',
-  '新しい会社の誘致は熱心だけど、ここで根を張ってやる人への応援が少ない',
+  '「<b>意見交換会</b>で声を上げても、<br />届いている気がしない」',
+  '「地域に不満はない。<br />でも休みの日は、<b>つい市外に<br />遊びに行ってしまう</b>」',
+  '「新しい会社の誘致は熱心だけど、<br />ここで根を張ってやる人への<br /><b>応援が少ない</b>」',
 ];
 
 const steps = [
@@ -43,11 +44,23 @@ const steps = [
 
   <section id="voices" class="voices">
     <div class="wrap">
+      <p class="eyebrow">まちで聞いた声</p>
       <h2>こんな声を、聞いてきました。</h2>
       <ul class="voice-list">
-        {voices.map((voice) => <li>「{voice}」</li>)}
+        {voices.map((voice) => (
+          <li>
+            <svg class="voice-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+              <path d="M5.7 18.3L4.5 27.5l6-3.5A11 11 0 1 0 5.7 18.3z" />
+              <circle cx="11" cy="14.5" r="1.4" /><circle cx="16" cy="14.5" r="1.4" /><circle cx="21" cy="14.5" r="1.4" />
+            </svg>
+            <p set:html={voice} />
+          </li>
+        ))}
       </ul>
-      <p class="voices-close">こうした声を、放っておきたくない。<br />ひとつずつ、形にしていきます。</p>
+      <div class="voices-close">
+        <p>こうした声を、放っておきたくない。<br /><strong>ひとつずつ、形にしていきます。</strong></p>
+        <a class="button outline" href="#policies">取り組みを見る <span>→</span></a>
+      </div>
     </div>
   </section>
 
