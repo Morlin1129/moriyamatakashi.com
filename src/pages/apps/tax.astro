@@ -17,6 +17,8 @@ const TAX = {
   socialInsuranceRate: 0.15, // 社会保険料の概算（収入に対する割合）
 };
 
+const HOUSEHOLD_INCOME = 5000000; // 家計モードで置き換える家庭の年収
+
 const toc = [
   { id: 'calc', label: '計算してみる' },
   { id: 'facts', label: '資料に書かれていること' },
@@ -42,17 +44,17 @@ const toc = [
         <h2>計算してみる</h2>
         <div class="tax-switch" role="tablist" aria-label="表示の切り替え">
           <button type="button" role="tab" class="chip is-active" data-mode="tax" aria-selected="true">あなたの市民税で見る</button>
-          <button type="button" role="tab" class="chip" data-mode="household" aria-selected="false">家計に置き換えて見る</button>
+          <button type="button" role="tab" class="chip" data-mode="household" aria-selected="false">年収{HOUSEHOLD_INCOME / 10000}万円の家庭に置き換えたら</button>
         </div>
         <p class="tax-mode-note" data-mode-note="tax">あなたが払う市民税（市民税分の概算）が、1日あたり何にいくら使われているかを表示します。</p>
-        <p class="tax-mode-note" data-mode-note="household" hidden>市の1年分の歳出（約{(total / 100000).toFixed(1)}億円）を、入力した年収の家計に縮めて表示します。使い道は、家計の項目（食費、光熱水費、教育費、医療費、ローン返済など）に置き換えて表示します。</p>
-        <form class="tax-form" id="tax-form">
+        <p class="tax-mode-note" data-mode-note="household" hidden>市の1年分の歳出（約{(total / 100000).toFixed(1)}億円）を、年収{HOUSEHOLD_INCOME / 10000}万円の家庭の家計に縮めて表示します。使い道は、家計の項目（食費、光熱水費、教育費、医療費、ローン返済など）に置き換えています。</p>
+        <form class="tax-form" id="tax-form" data-only="tax">
           <label>
             <span>年収（給与収入・税込）</span>
             <span class="tax-input"><input type="number" id="income" name="income" inputmode="numeric" min="0" step="10000" value="4000000" /><span>円</span></span>
           </label>
           <input type="range" id="income-range" min="0" max="15000000" step="100000" value="4000000" aria-label="年収をスライダーで調整" />
-          <label data-only="tax">
+          <label>
             <span>扶養している家族の人数</span>
             <select id="dependents" name="dependents">
               <option value="0">0人</option><option value="1">1人</option><option value="2">2人</option><option value="3">3人</option><option value="4">4人</option>
@@ -62,7 +64,7 @@ const toc = [
         <div class="tax-result" id="tax-result" aria-live="polite">
           <div class="tax-total">
             <p data-only="tax">あなたの市民税は、1年で <strong id="tax-year">—</strong> 円、<span class="nowrap">1日あたり <strong id="tax-day">—</strong> 円</span></p>
-            <p data-only="household" hidden>市の歳出を年収 <strong id="hh-income">—</strong> 円の家計に置き換えると、<span class="nowrap">1か月 <strong id="hh-month">—</strong> 円</span> の使い道はこうなります</p>
+            <p data-only="household" hidden>もし南相馬市が年収 <strong id="hh-income">—</strong> 万円の家庭だったら、<span class="nowrap">月収 <strong id="hh-month">—</strong> 円</span> の使い道はこうなります</p>
             <p class="tax-note" id="tax-message"></p>
           </div>
           <ol class="tax-bars" id="tax-bars">
@@ -110,7 +112,7 @@ const toc = [
   <CtaBar />
 </Base>
 
-<script define:vars={{ purposes: purposes.map((p) => ({ id: p.id, share: p.share })), TAX }}>
+<script define:vars={{ purposes: purposes.map((p) => ({ id: p.id, share: p.share })), TAX, HOUSEHOLD_INCOME }}>
   const income = document.getElementById('income');
   const range = document.getElementById('income-range');
   const dependents = document.getElementById('dependents');
@@ -167,13 +169,13 @@ const toc = [
     const salary = Math.max(0, Number(income.value) || 0);
     const n = Number(dependents.value) || 0;
     if (mode === 'household') {
-      // 市の歳出全体を、入力した年収の家計に縮める
-      document.getElementById('hh-income').textContent = fmt(salary);
-      document.getElementById('hh-month').textContent = fmt(salary / 12);
+      // 市の歳出全体を、決まった年収の家庭の家計に縮める
+      document.getElementById('hh-income').textContent = fmt(HOUSEHOLD_INCOME / 10000);
+      document.getElementById('hh-month').textContent = fmt(HOUSEHOLD_INCOME / 12);
       purposes.forEach((p) => {
         const li = document.querySelector(`#tax-bars li[data-id="${p.id}"]`);
-        li.querySelector('[data-day]').textContent = fmt(salary * p.share / 12);
-        li.querySelector('[data-year]').textContent = fmt(salary * p.share);
+        li.querySelector('[data-day]').textContent = fmt(HOUSEHOLD_INCOME * p.share / 12);
+        li.querySelector('[data-year]').textContent = fmt(HOUSEHOLD_INCOME * p.share);
       });
       return;
     }
