@@ -14,3 +14,11 @@
 財政力指数・経常収支比率・実質公債費比率・将来負担比率は、総務省「主要財政指標一覧」（https://www.soumu.go.jp/iken/shihyo_ichiran.html）の全市町村Excelから取ると確実です。決算カードから読んだ値と一致することは確認済みです。
 
 PDFのレイアウトは年度で少し違うため、読み取りは完全ではありません。値が抜けた年は null になります。元の決算カードを正としてください。
+
+## odaka-data.test.mjs
+
+`src/data/odaka-timeline.json`・`odaka-projects.json`・`odaka-numbers.json`（ミニアプリ「小高 復興のあゆみ」）の構造を確かめます。出典の有無、`verified` と `note` の対応、年表の並び順、`projectId` の参照先、数字の型を見ます。あわせて、要約（`summary`）は一文、本文・注記（`body`・`note`）に URL を書かない、`current[].asOf` は「時点」「現在」「更新」を付けない裸の日付・期間、数字の `yearSuffix` は「年」か「年度」、という書き方の規約も確かめます。中身の事実関係は見ません。
+
+```sh
+npm test
+```

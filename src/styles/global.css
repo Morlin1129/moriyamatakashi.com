@@ -195,3 +195,46 @@
 
 /* hidden 属性は display 指定より優先して非表示にする */
 [hidden]{display:none!important}
+/* 小高 復興のあゆみ: 年表 */
+.timeline{list-style:none;padding:0 0 0 24px;margin:0 0 1.2em;border-left:2px solid #c7d2c4;display:grid;gap:16px}
+.timeline li{position:relative;background:#fff;border-radius:8px;padding:16px 20px 6px;box-shadow:0 2px 10px #20492b0d}
+.timeline li:before{content:'';position:absolute;left:-32px;top:18px;width:12px;height:12px;border-radius:50%;background:var(--green);border:2px solid var(--paper)}
+.timeline li.tl-project:before{background:#b8862b}
+.timeline li.tl-event:before{background:#5c6f5f}
+.timeline time{display:block;font-size:13px;color:#5c6f5f;font-weight:700;margin-bottom:4px}
+.prose .timeline p.tl-tags,.prose .project-card p.pc-tags{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 6px}
+.tl-kind,.tl-unverified,.pc-cat,.pc-status{display:inline-block;font-size:12px;font-weight:600;line-height:1.5;padding:2px 10px;border-radius:4px;background:#e8efe3;color:var(--green)}
+.tl-kind-project{background:#f6efdc;color:#7a5a12}
+.tl-kind-event{background:#eceeea;color:#3f4d42}
+.tl-unverified{background:#fbe9e5;color:#8a4b3a}
+.prose .timeline h3{font-size:17px;margin:0 0 6px;line-height:1.6}
+.prose .timeline p{font-size:15px;line-height:1.85;margin-bottom:.6em}
+.prose .timeline p.tl-note{font-size:13px;color:#5c6f5f}
+.prose .timeline p.tl-detail,.prose .project-card p.pc-detail{font-size:14px;color:#3f4d42}
+.prose .timeline p.tl-links,.prose .project-card p.pc-links{font-size:13px;display:flex;flex-wrap:wrap;gap:6px 14px}
+.tl-links a,.pc-links a{color:var(--green)}
+/* 小高 復興のあゆみ: 事業カード */
+.project-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:0 0 1.2em}
+.project-card{background:#fff;border-radius:8px;padding:18px 20px 8px;box-shadow:0 2px 10px #20492b0d;scroll-margin-top:24px}
+.project-card.is-done .pc-status{background:#e8efe3;color:var(--green)}
+.project-card.is-building .pc-status{background:#f6efdc;color:#7a5a12}
+.project-card.is-planned .pc-status{background:#eceeea;color:#3f4d42}
+.project-card.is-suspended .pc-status{background:#fbe9e5;color:#8a4b3a}
+.prose .project-card h3{font-size:18px;margin:0 0 2px;line-height:1.6}
+.prose .project-card p{font-size:15px;line-height:1.85;margin-bottom:.6em}
+.prose .project-card p.pc-period{font-size:13px;color:#5c6f5f}
+.pc-current{margin:0 0 .8em;padding:12px 14px;background:#f3f7f0;border:1px solid #dfe8d8;border-radius:6px;display:grid;gap:8px}
+.pc-current div{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.pc-current dt{font-size:13px;color:#5c6f5f}
+.pc-current dd{margin:0;font-weight:700;text-align:right}
+.pc-current small{display:block;font-size:11px;font-weight:400;color:#5c6f5f}
+.pc-current small a{color:var(--green)}
+@media(max-width:760px){.project-grid{grid-template-columns:1fr}.timeline{padding-left:18px}.timeline li:before{left:-26px}.timeline li{padding:14px 16px 4px}}
+
+/* ミニアプリ一覧: 年表のアート */
+.resource-art.line:before{content:'';position:absolute;left:14%;right:14%;top:50%;height:3px;background:#c7d2c4;transform:translateY(-50%)}
+.resource-art.line i{position:absolute;top:50%;width:16px;height:16px;border-radius:50%;background:var(--green);border:3px solid #fff;transform:translate(-50%,-50%)}
+.resource-art.line i:nth-child(2){left:20%}.resource-art.line i:nth-child(3){left:44%;background:#b8862b}.resource-art.line i:nth-child(4){left:66%}.resource-art.line i:nth-child(5){left:84%;background:#5c6f5f}
+.prose .source-list{font-size:14px;padding-left:1.2em}.prose .source-list li{margin-bottom:6px}.source-list a{color:var(--green)}.link-button{background:none;border:0;padding:0;font:inherit;color:var(--green);text-decoration:underline;cursor:pointer}
+/* 小高 復興のあゆみ: 長いURLや英数字列でカードやグラフが横にあふれないようにする */
+.chart-grid>.mini-chart,.timeline>li,.project-card{min-width:0;overflow-wrap:anywhere}

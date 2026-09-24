@@ -1,0 +1,192 @@
+{
+  "note": "小高区の数字。points の value は資料にない年は null。系列ごとの定義と時点は note に書く。",
+  "series": [
+    {
+      "id": "registered",
+      "title": "小高区の住民登録人口",
+      "unit": "人",
+      "yearSuffix": "年",
+      "kind": "line",
+      "note": "住民基本台帳に登録された小高区全体の人口で、各年3月31日時点。市くらし安全課の資料の小高区住民登録人口とは同じ3月末でも最大25人の差があり、理由は資料に明記されていない。",
+      "source": {
+        "title": "南相馬市 【住民基本台帳人口】各区別、大字別の人口及び世帯数",
+        "url": "https://www.city.minamisoma.lg.jp/portal/sections/12/1260/1521.html"
+      },
+      "points": [
+        {
+          "year": 2011,
+          "label": "2011年",
+          "value": 12636
+        },
+        {
+          "year": 2012,
+          "label": "2012年",
+          "value": 11903
+        },
+        {
+          "year": 2013,
+          "label": "2013年",
+          "value": 11596
+        },
+        {
+          "year": 2014,
+          "label": "2014年",
+          "value": 11239
+        },
+        {
+          "year": 2015,
+          "label": "2015年",
+          "value": 10882
+        },
+        {
+          "year": 2016,
+          "label": "2016年",
+          "value": 10109
+        },
+        {
+          "year": 2017,
+          "label": "2017年",
+          "value": 9076
+        },
+        {
+          "year": 2018,
+          "label": "2018年",
+          "value": 8412
+        },
+        {
+          "year": 2019,
+          "label": "2019年",
+          "value": 7785
+        },
+        {
+          "year": 2020,
+          "label": "2020年",
+          "value": 7296
+        },
+        {
+          "year": 2021,
+          "label": "2021年",
+          "value": 6942
+        },
+        {
+          "year": 2022,
+          "label": "2022年",
+          "value": 6703
+        },
+        {
+          "year": 2023,
+          "label": "2023年",
+          "value": 6443
+        },
+        {
+          "year": 2024,
+          "label": "2024年",
+          "value": 6274
+        },
+        {
+          "year": 2025,
+          "label": "2025年",
+          "value": 6053
+        },
+        {
+          "year": 2026,
+          "label": "2026年",
+          "value": 5847
+        }
+      ]
+    },
+    {
+      "id": "residents",
+      "title": "小高区の居住者数",
+      "unit": "人",
+      "yearSuffix": "年",
+      "kind": "line",
+      "note": "市くらし安全課の資料の「小高区居住」の値で、2017年以降は各年3月31日時点、2016年は避難指示解除前日（7月11日）の0人。居住人口は避難者等情報管理システムを基に算出され、住民票の有無で数える定義は資料に明記されていない。",
+      "source": {
+        "title": "南相馬市 旧避難指示区域内住民登録人口と居住人口の推移（令和8年8月31日現在）",
+        "url": "https://www.city.minamisoma.lg.jp/material/files/group/8/kyojyujinnkousuii_080831.pdf"
+      },
+      "points": [
+        {
+          "year": 2016,
+          "label": "2016年7月11日",
+          "value": 0
+        },
+        {
+          "year": 2017,
+          "label": "2017年",
+          "value": 1488
+        },
+        {
+          "year": 2018,
+          "label": "2018年",
+          "value": 2640
+        },
+        {
+          "year": 2019,
+          "label": "2019年",
+          "value": 3497
+        },
+        {
+          "year": 2020,
+          "label": "2020年",
+          "value": 3663
+        },
+        {
+          "year": 2021,
+          "label": "2021年",
+          "value": 3752
+        },
+        {
+          "year": 2022,
+          "label": "2022年",
+          "value": 3801
+        },
+        {
+          "year": 2023,
+          "label": "2023年",
+          "value": 3812
+        },
+        {
+          "year": 2024,
+          "label": "2024年",
+          "value": 3818
+        },
+        {
+          "year": 2025,
+          "label": "2025年",
+          "value": 3788
+        },
+        {
+          "year": 2026,
+          "label": "2026年",
+          "value": 3798
+        }
+      ]
+    },
+    {
+      "id": "migrants",
+      "title": "小高区への移住者数",
+      "unit": "人",
+      "yearSuffix": "年度",
+      "kind": "bar",
+      "note": "市の予算主要事業説明書に成果指標「小高区への移住者数」として示された年度実績で、各年度の予算主要事業説明書から転記。移住者の定義は資料に明記されておらず、2025年度は見込のみのため実績は2年分。",
+      "source": {
+        "title": "南相馬市 予算（主要事業説明書）",
+        "url": "https://www.city.minamisoma.lg.jp/portal/sections/11/1130/11301/zaiseijokyo/11/5/index.html"
+      },
+      "points": [
+        {
+          "year": 2023,
+          "label": "2023年度",
+          "value": 52
+        },
+        {
+          "year": 2024,
+          "label": "2024年度",
+          "value": 51
+        }
+      ]
+    }
+  ]
+}

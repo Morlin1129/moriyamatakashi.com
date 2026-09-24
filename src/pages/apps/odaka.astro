@@ -1,0 +1,109 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import Toc from '../../components/Toc.astro';
+import CtaBar from '../../components/CtaBar.astro';
+import MiniChart from '../../components/MiniChart.astro';
+import Timeline from '../../components/Timeline.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import type { TimelineItem, Project } from '../../data/odaka-types';
+import tl from '../../data/odaka-timeline.json';
+import pj from '../../data/odaka-projects.json';
+import nums from '../../data/odaka-numbers.json';
+
+const items = tl.items as TimelineItem[];
+const projects = pj.items as Project[];
+const projectIds = new Set(projects.map((p) => p.id));
+for (const it of items) {
+  if (it.projectId && !projectIds.has(it.projectId)) console.warn(`[odaka] 年表「${it.title}」の projectId ${it.projectId} が odaka-projects.json にありません`);
+}
+const years = [...items.map((i) => i.year), ...nums.series.flatMap((s) => s.points.map((p) => p.year))];
+const firstYear = Math.min(...years);
+const lastYear = Math.max(...years);
+const unverified = [...items.filter((i) => !i.verified).map((i) => i.title), ...projects.filter((p) => !p.verified).map((p) => p.name)];
+const allSources = [
+  ...items.flatMap((i) => i.sources),
+  ...projects.flatMap((p) => p.sources),
+  ...nums.series.map((s) => s.source),
+].filter((s, i, arr) => arr.findIndex((t) => t.url === s.url) === i);
+
+const toc = [
+  { id: 'timeline', label: '年表' },
+  { id: 'projects', label: '主要事業の今' },
+  { id: 'numbers', label: '数字で見る小高' },
+  { id: 'check', label: 'まだ確かめたいこと' },
+  { id: 'method', label: 'データと注意点' },
+];
+---
+<Base title="小高 復興のあゆみ" description="震災後の小高区で、どんな計画や調査がつくられ、どんな事業が行われ、人口などの数字がどう動いたかを一つの時間軸で見る試作ページ。" current="resources">
+  <Breadcrumb items={[{ label: '資料と数字', href: '/resources/' }, { label: '小高 復興のあゆみ' }]} />
+  <section class="page-hero wrap">
+    <div class="page-hero-copy">
+      <p class="page-badge">ミニアプリ · 試作版</p>
+      <h1><span class="nowrap">小高</span><span class="nowrap">復興のあゆみ</span></h1>
+      <p class="page-lead">震災後の小高区で、どんな計画や調査がつくられ、どんな事業が行われ、人口などの数字がどう動いたかを、{firstYear}年から{lastYear}年まで一つの時間軸に並べました。<br class="pc" />「計画で示された課題が、今の事業にどう反映され、何が残っているか」を確かめるための入口です。</p>
+      <p class="page-subtitle">データ：南相馬市・福島県・復興庁などの公開資料（出典は各項目に記載）</p>
+    </div>
+  </section>
+
+  <div class="page-body wrap">
+    <Toc items={toc} />
+    <article class="prose">
+      <section id="timeline">
+        <h2>年表</h2>
+        <p>計画・調査、事業、出来事を同じ時間軸に並べています。「資料未確認」の項目は、市の公開ページで元の資料を見つけられていないものです。項目の存在自体を含めて、確かめていきます。</p>
+        <div class="filter-chips" role="group" aria-label="種類で絞り込む" data-target="#timeline-list">
+          <button type="button" class="chip is-active" data-filter="all" aria-pressed="true">すべて</button>
+          <button type="button" class="chip" data-filter="plan" aria-pressed="false">計画・調査</button>
+          <button type="button" class="chip" data-filter="project" aria-pressed="false">事業</button>
+          <button type="button" class="chip" data-filter="event" aria-pressed="false">出来事</button>
+        </div>
+        <Timeline items={items} projectIds={projectIds} />
+      </section>
+
+      <section id="projects">
+        <h2>主要事業の今</h2>
+        <p>小高区の主な事業について、完成したものは公開資料に数字があれば現状の数字を、なければその旨を、まだ完成していないものは状況を書いています。数字は公開資料に載っているものだけを、時点と出典付きで載せています。</p>
+        <div class="project-grid">
+          {projects.map((p) => <ProjectCard project={p} />)}
+        </div>
+      </section>
+
+      <section id="numbers">
+        <h2>数字で見る小高</h2>
+        <p>小高区の人の動きです。住民登録の人口と、実際に住んでいる人の数は別の統計で、定義も違います。それぞれの定義と時点は、グラフの下の注記と「データと注意点」に書いています。</p>
+        <div class="chart-grid">
+          {nums.series.map((s) => (
+            <MiniChart title={s.title} unit={s.unit} kind={s.kind as 'bar' | 'line'} decimals={0} note={s.note} points={s.points} yearSuffix={s.yearSuffix} />
+          ))}
+        </div>
+      </section>
+
+      <section id="check">
+        <h2>まだ確かめたいこと</h2>
+        <ul class="check-list">
+          {unverified.length > 0 && <li>資料を確認できていない項目：{unverified.join('、')}。市に資料が残っているか、どこで見られるかを確かめる</li>}
+          <li>小高区で再開・開業した事業所の数。年ごとの公開値が見つかっていないので、市や商工会に確かめる</li>
+          <li>計画や調査で挙げられた課題のうち、その後の事業で対応されたものと、まだ残っているもの</li>
+          <li>完成した施設の利用状況と運営費が、計画時の見込みとどう違うか</li>
+          <li>居住者数と住民登録人口の差が、どんな人（通い、二地域居住など）によるものか</li>
+        </ul>
+      </section>
+
+      <section id="method">
+        <h2>データと注意点</h2>
+        <p>年表と事業の内容は、南相馬市・福島県・復興庁などが公開している資料から書き起こしています。資料に書かれていることを要約したもので、評価や解釈は含めていません。数字は公開資料の値をそのまま使い、資料にない年は空けています。</p>
+        <ol class="action-list">
+          <li><h3>資料未確認の項目</h3><p>市の公開ページで元の資料を見つけられなかった項目は、「資料未確認」と表示したうえで年表に載せています。検索結果の抜粋など、元の資料を開けていない情報にもとづく暫定の記述なので、資料が見つかり次第、直します。</p></li>
+          <li><h3>人口の2つの数字</h3><p>住民登録人口は住民基本台帳にもとづく数で、避難先で暮らす人も含みます。居住者数は市が別に把握している、実際に小高区で暮らしている人の数です。時点や集計方法は資料ごとに違うため、各グラフの注記を見てください。</p></li>
+          <li><h3>更新のしかた</h3><p>このページの内容はすべて JSON ファイルに置いています。誤りや新しい資料があれば、<button type="button" class="link-button" data-open="contact">お問い合わせ</button>からお知らせください。</p></li>
+        </ol>
+        <h3>出典一覧</h3>
+        <ul class="source-list">
+          {allSources.map((s) => <li><a href={s.url} target="_blank" rel="noopener">{s.title}↗</a></li>)}
+        </ul>
+      </section>
+    </article>
+  </div>
+  <CtaBar />
+</Base>
