@@ -8,7 +8,7 @@ export type NavKey = 'vision' | 'policies' | 'resources' | 'profile';
 
 export const NAV: { key: NavKey; label: string; href: string }[] = [
   { key: 'vision', label: '考え方', href: '/vision/' },
-  { key: 'policies', label: '取り組み', href: '/policies/' },
+  { key: 'policies', label: '取り組みたいこと', href: '/policies/' },
   { key: 'resources', label: '資料と数字', href: '/resources/' },
   { key: 'profile', label: 'プロフィール', href: '/profile/' },
 ];
