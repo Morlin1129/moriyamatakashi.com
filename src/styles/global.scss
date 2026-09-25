@@ -1,11 +1,8 @@
-// 全ページ共通のスタイル。
-// ページ固有のものは src/styles/pages/、コンポーネント固有のものは src/styles/components/ に置き、
-// それぞれの .astro のフロントマターから import する（使うページにだけ配信される）。
+// 全ページ共通のスタイルだけを集める。
+// ページやコンポーネントに固有のものは、それぞれの .astro の <style lang="scss"> に置く。
+// トークン（変数・mixin）は astro.config.mjs の additionalData で全ファイルに自動で読み込まれる。
 @use 'base/base';
-@use 'layout/header';
-@use 'layout/footer';
 @use 'components/button';
-@use 'components/dialog';
 @use 'components/art';
 @use 'components/chips';
 @use 'components/prose';

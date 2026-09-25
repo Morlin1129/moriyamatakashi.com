@@ -1,5 +1,4 @@
 ---
-import '../styles/components/toc.scss';
 interface Props {
   items: { id: string; label: string }[];
 }
@@ -9,3 +8,39 @@ const { items } = Astro.props;
   <p>目次</p>
   <ol>{items.map((item) => <li><a href={`#${item.id}`}>{item.label}</a></li>)}</ol>
 </nav>
+
+<style lang="scss">
+.page-toc {
+  position: sticky;
+  top: 24px;
+  font-size: 14px;
+  border-left: 3px solid #cfdcc8;
+  padding: 4px 0 4px 18px;
+
+  p {
+    font-weight: 700;
+    color: $green-soft;
+    margin-bottom: 6px;
+  }
+
+  ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    margin: 6px 0;
+    line-height: 1.6;
+  }
+
+  a:hover {
+    color: $green-link;
+    text-decoration: underline;
+  }
+
+  @include tablet {
+    position: static;
+  }
+}
+</style>

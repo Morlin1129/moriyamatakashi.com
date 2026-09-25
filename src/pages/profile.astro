@@ -3,7 +3,6 @@ import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Toc from '../components/Toc.astro';
 import CtaBar from '../components/CtaBar.astro';
-import '../styles/pages/profile.scss';
 
 const career = [
   ['出身', '大阪市'],
@@ -42,3 +41,41 @@ const career = [
   </div>
   <CtaBar />
 </Base>
+
+<style lang="scss">
+// プロフィール：経歴
+
+.career {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0;
+  margin: 0;
+
+  dt,
+  dd {
+    padding: 12px 0;
+    border-top: 1px solid $line-soft;
+    margin: 0;
+  }
+
+  dt {
+    font-weight: 700;
+    color: $green-soft;
+    padding-right: 28px;
+    white-space: nowrap;
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+
+    dt {
+      padding-bottom: 0;
+    }
+
+    dd {
+      border-top: 0;
+      padding-top: 4px;
+    }
+  }
+}
+</style>

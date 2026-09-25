@@ -1,0 +1,140 @@
+---
+// トップページ：ファーストビュー
+---
+<section class="hero">
+  <img src="/assets/hero.jpg" alt="地域の人とカフェで話す場面のイメージ" class="hero-photo" fetchpriority="high" />
+  <div class="hero-shade"></div>
+  <div class="hero-copy">
+    <h1 class="hand"><span>困りごとを、</span><br /><span>放っておかない。</span></h1>
+    <p class="hero-name">森山貴士 <small>もりやま たかし</small></p>
+    <p>大阪出身。2014年から南相馬・小高で暮らす、一児の父。<br />子育てや仕事の「不便」を、市役所と一緒に直していきます。</p>
+    <a class="button" href="/profile/">くわしいプロフィール <span>→</span></a>
+  </div>
+</section>
+
+<style lang="scss">
+.hero {
+  height: min(720px, 61vw);
+  min-height: 560px;
+  position: relative;
+  isolation: isolate;
+  color: white;
+  overflow: hidden;
+
+  h1 {
+    font-size: clamp(35px, 4.8vw, 66px);
+    line-height: 1.7;
+    color: #1d2720;
+    transform: rotate(-3deg);
+    margin-bottom: 24px;
+
+    span {
+      display: inline-block;
+      background: #fffdf7;
+      padding: 0 15px 4px;
+      box-shadow: 0 2px 10px #14271a0a;
+      max-width: 100%;
+
+      + span {
+        margin-top: 7px;
+      }
+    }
+
+    em {
+      color: var(--green);
+      font-style: normal;
+    }
+  }
+
+  // 下端を紙の色でギザギザに切る
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: -5%;
+    width: 110%;
+    height: 23px;
+    background: var(--paper);
+    clip-path: polygon(0 45%, 30% 90%, 70% 60%, 100% 0, 100% 100%, 0 100%);
+  }
+
+  @include wide {
+    height: 760px;
+  }
+
+  @include mobile {
+    height: 660px;
+    min-height: 0;
+
+    h1 {
+      font-size: clamp(26px, 6.1vw, 42px);
+      line-height: 1.85;
+      margin-bottom: 18px;
+
+      span {
+        padding: 0 9px 3px;
+      }
+    }
+  }
+}
+
+.hero-photo {
+  height: 100%;
+  object-position: center 48%;
+  position: absolute;
+  z-index: -3;
+
+  @include mobile {
+    object-position: 60% center;
+  }
+}
+
+.hero-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: linear-gradient(90deg, #10231cc0, transparent 78%), linear-gradient(0deg, #10231c55, transparent 40%);
+
+  @include mobile {
+    background: linear-gradient(0deg, #172c23bd, transparent 85%);
+  }
+}
+
+.hero-copy {
+  position: absolute;
+  left: 5%;
+  bottom: 70px;
+  max-width: 640px;
+
+  p {
+    font-size: 17px;
+    margin-bottom: 26px;
+    text-shadow: 0 1px 4px #0009;
+    line-height: 1.9;
+  }
+
+  .hero-name {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 0 1px 4px #0009;
+  }
+
+  @include mobile {
+    left: 5%;
+    right: 5%;
+    bottom: 45px;
+
+    p {
+      font-size: 14px;
+      line-height: 1.9;
+    }
+  }
+}
+
+.hero-name small {
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 6px;
+}
+</style>

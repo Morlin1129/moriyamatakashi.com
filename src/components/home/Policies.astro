@@ -1,0 +1,125 @@
+---
+// トップページ：取り組み一覧（5枚のカード）
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  policies: CollectionEntry<'policies'>[];
+}
+const { policies } = Astro.props;
+---
+<section id="policies" class="policies">
+  <div class="wrap">
+    <h2>だから、これをやります。</h2>
+    <div class="policy-grid">
+      {policies.map((p) => (
+        <a class="policy" href={`/policies/${p.id}/`}>
+          <span class={`crop crop${p.data.image.crop}`} role="img" aria-label={p.data.image.alt}></span>
+          <span class="policy-tag">{p.data.badge}</span>
+          <h3>{p.data.plain}</h3>
+          <span class="short-rule"></span>
+        </a>
+      ))}
+    </div>
+    <p class="small-link"><a href="/resources/">数字や資料で見る →</a></p>
+  </div>
+</section>
+
+<style lang="scss">
+.policies {
+  padding: var(--section-pad) 0;
+  position: relative;
+  background: linear-gradient(130deg, #edf2e7, #deeadb);
+  clip-path: polygon(0 0, 25% 1.2%, 60% 0, 100% 1.5%, 100% 100%, 0 100%);
+
+  h2 {
+    font-size: clamp(24px, 2.4vw, 32px);
+    margin-bottom: 28px;
+
+    @include mobile {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.policy-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+
+  @include mobile {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+}
+
+.policy {
+  display: block;
+  padding: 0 0 18px;
+  text-align: left;
+  border: 0;
+  background: #fffdf8;
+  border-radius: 5px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: $shadow-card-hover;
+  }
+
+  h3 {
+    padding: 6px 16px 10px;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  @include mobile {
+    // 5枚目は2列の中央に置く
+    &:last-child {
+      grid-column: 1/-1;
+      width: calc(50% - 7px);
+      justify-self: center;
+    }
+
+    h3 {
+      font-size: 15px;
+      padding-left: 12px;
+    }
+  }
+}
+
+.policy-tag {
+  display: inline-block;
+  margin: 14px 16px 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--green);
+  background: $sage;
+  border-radius: 3px;
+  padding: 1px 8px;
+
+  @include mobile {
+    margin-left: 12px;
+  }
+}
+
+.short-rule {
+  display: block;
+  width: 42px;
+  height: 3px;
+  background: #527a55;
+  border-radius: 50%;
+  margin-left: 16px;
+}
+
+.small-link {
+  margin-top: 24px;
+  font-size: 15px;
+
+  a {
+    color: var(--green);
+    border-bottom: 1px solid $underline;
+  }
+}
+</style>

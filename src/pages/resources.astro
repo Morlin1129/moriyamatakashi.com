@@ -5,7 +5,6 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import Toc from '../components/Toc.astro';
 import ResourceCards from '../components/ResourceCards.astro';
 import CtaBar from '../components/CtaBar.astro';
-import '../styles/pages/resources.scss';
 
 // 資料一覧は取り組みの YAML に書いた resources をまとめたもの
 const policies = (await getCollection('policies')).sort((a, b) => a.data.order - b.data.order);
@@ -82,3 +81,47 @@ const toc = [
   </div>
   <CtaBar />
 </Base>
+
+<style lang="scss">
+// 資料と数字：ミニアプリ一覧
+
+.app-list {
+  display: grid;
+  gap: 18px;
+}
+
+.app-item {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 22px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: $shadow-card;
+
+  .resource-art {
+    margin: 0;
+    height: 150px;
+  }
+
+  h3 {
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.prose .app-item p {
+  font-size: 15px;
+  line-height: 1.85;
+  margin-bottom: 0.6em;
+
+  &.meta {
+    font-size: 13px;
+    color: $muted;
+  }
+}
+</style>
