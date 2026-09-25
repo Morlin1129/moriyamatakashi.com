@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import Toc from '../../components/Toc.astro';
+import ResourceCards from '../../components/ResourceCards.astro';
+import CtaBar from '../../components/CtaBar.astro';
+import { navItem } from '../../data/site';
+
+// 資料一覧は取り組みの YAML に書いた resources をまとめたもの
+const policies = (await getCollection('policies')).sort((a, b) => a.data.order - b.data.order);
+const resources = policies.flatMap((p) => p.data.resources.map((r) => ({ ...r, tag: p.data.badge, cat: p.id })));
+
+const nav = navItem('resources');
+
+const toc = [
+  { id: 'about', label: '資料集で目指すこと' },
+  { id: 'sources', label: '資料を探す' },
+];
+---
+<Base title="資料集" description="政策の根拠にしている南相馬市の公開資料を、取り組みごとに探せる資料集。" current="resources">
+  <Breadcrumb items={[{ label: nav.label, href: nav.href }, { label: '資料集' }]} />
+  <section class="page-hero wrap">
+    <div class="page-hero-copy">
+      <p class="page-badge">資料集</p>
+      <h1>資料を探す</h1>
+      <p class="page-lead">取り組みを考えるうえで参照している南相馬市の公開資料です。</p>
+    </div>
+    <div class="page-hero-media"><div class="resource-art paper"><span>根拠をたどる<br /><b>資料集</b></span></div></div>
+  </section>
+  <div class="page-body wrap">
+    <Toc items={toc} />
+    <article class="prose">
+      <section id="about">
+        <h2>資料集で目指すこと</h2>
+        <p>政策案の背景にある市の計画、統計、議会資料、市民の声を政策ごとに整理し、誰でも根拠をたどれるようにすることを目指しています。</p>
+        <p>「資料に書かれた事実」「自分の見方」「まだ確かめたいこと」を分けて示します。新しい資料や聞き取りを追加したら更新履歴を残し、見方が変わった場合も理由を記録します。個人の声を公開する際は、本人の同意と匿名化を確認します。</p>
+        <p>資料集は現在、構想段階です。最初の試作として、小高の買い物を題材に、過去の住民調査・商業施設の計画・現在の事業などを登録し、要望から実施までの経緯と、今も確かめるべき点が一画面で分かる形を試す予定です。</p>
+      </section>
+      <section id="sources">
+        <h2>資料を探す</h2>
+        <div class="filter-chips" role="group" aria-label="取り組みで絞り込む" data-target="#resource-list">
+          <button type="button" class="chip is-active" data-filter="all" aria-pressed="true">すべて</button>
+          {policies.map((p) => <button type="button" class="chip" data-filter={p.id} aria-pressed="false">{p.data.badge}</button>)}
+        </div>
+        <ResourceCards items={resources} id="resource-list" />
+      </section>
+    </article>
+  </div>
+  <CtaBar />
+</Base>

@@ -1,127 +1,53 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
-import Toc from '../components/Toc.astro';
-import ResourceCards from '../components/ResourceCards.astro';
+import ToolCard from '../components/ToolCard.astro';
 import CtaBar from '../components/CtaBar.astro';
+import { navItem } from '../data/site';
+import { TOOLS } from '../data/tools';
 
-// 資料一覧は取り組みの YAML に書いた resources をまとめたもの
-const policies = (await getCollection('policies')).sort((a, b) => a.data.order - b.data.order);
-const resources = policies.flatMap((p) => p.data.resources.map((r) => ({ ...r, tag: p.data.badge, cat: p.id })));
-
-const toc = [
-  { id: 'about', label: '資料集で目指すこと' },
-  { id: 'sources', label: '資料を探す' },
-  { id: 'apps', label: '数字を触って考える' },
-];
+const nav = navItem('resources');
 ---
-<Base title="資料と数字" description="政策の根拠にしている南相馬市の公開資料と、構想中のミニアプリ。" current="resources">
-  <Breadcrumb items={[{ label: '資料と数字' }]} />
+<Base title={nav.label} description="南相馬の数字を触って考えるミニアプリと、政策の根拠にしている公開資料の資料集。" current="resources">
+  <Breadcrumb items={[{ label: nav.label }]} />
   <section class="page-hero wrap">
     <div class="page-hero-copy">
-      <p class="page-badge">資料と数字</p>
+      <p class="page-badge">{nav.label}</p>
       <h1><span class="nowrap">資料と数字から、</span><span class="nowrap">まちを考える。</span></h1>
       <p class="page-lead">事実と私の見方を分けて、考え方の根拠をたどれるようにします。</p>
     </div>
     <div class="page-hero-media"><div class="resource-art paper"><span>南相馬の<br />これからを考える<br /><b>資料ノート</b></span></div></div>
   </section>
-  <div class="page-body wrap">
-    <Toc items={toc} />
-    <article class="prose">
-      <section id="about">
-        <h2>資料集で目指すこと</h2>
-        <p>政策案の背景にある市の計画、統計、議会資料、市民の声を政策ごとに整理し、誰でも根拠をたどれるようにすることを目指しています。</p>
-        <p>「資料に書かれた事実」「自分の見方」「まだ確かめたいこと」を分けて示します。新しい資料や聞き取りを追加したら更新履歴を残し、見方が変わった場合も理由を記録します。個人の声を公開する際は、本人の同意と匿名化を確認します。</p>
-        <p>資料集は現在、構想段階です。最初の試作として、小高の買い物を題材に、過去の住民調査・商業施設の計画・現在の事業などを登録し、要望から実施までの経緯と、今も確かめるべき点が一画面で分かる形を試す予定です。</p>
-      </section>
-      <section id="sources">
-        <h2>資料を探す</h2>
-        <p>取り組みを考えるうえで参照している南相馬市の公開資料です。</p>
-        <div class="filter-chips" role="group" aria-label="取り組みで絞り込む" data-target="#resource-list">
-          <button type="button" class="chip is-active" data-filter="all" aria-pressed="true">すべて</button>
-          {policies.map((p) => <button type="button" class="chip" data-filter={p.id} aria-pressed="false">{p.data.badge}</button>)}
-        </div>
-        <ResourceCards items={resources} id="resource-list" />
-      </section>
-      <section id="apps">
-        <h2>数字を触って考える</h2>
-        <p>選挙や政策を考える「参考材料」として、事実（データ）を並べて一緒に考えるための道具を検討しています。いずれも試作版を公開しました。数字の出典と計算方法・注意点は各ページ内に示しています。</p>
-        <div class="app-list">
-          <article id="tax" class="app-item">
-            <div class="resource-art bars"><span class="badge">試作版</span><i></i><i></i><i></i><i></i><i></i></div>
-            <div>
-              <h3>税金はどこへ行った？ 南相馬版</h3>
-              <p>年収を入力すると、自分の市民税が「福祉に1日○円、教育に○円…」と表示される道具です。市の予算を「自分ごと」として考える入口にします。</p>
-              <p class="meta">データ：令和6年度 決算カード（目的別歳出）、個人市民税の税率<br />参考：Code for Japan「税金はどこへ行った？」</p>
-              <a class="button" href="/apps/tax/">試作版を使ってみる <span>→</span></a>
-            </div>
-          </article>
-          <article id="dashboard" class="app-item">
-            <div class="resource-art rings"><span class="badge">試作版</span><span class="ring"></span></div>
-            <div>
-              <h3>南相馬 まちの健康診断</h3>
-              <p>人口、歳出の大きさと使い道、歳入の内訳、借金の残高や財政指標を、震災前の2010年度から直近まで並べて見られます。近隣や類似市との比較、年齢別の人口などは今後追加します。</p>
-              <p class="meta">データ：総務省 市町村決算カード（2008〜2024年度）</p>
-              <a class="button" href="/apps/health/">試作版を見る <span>→</span></a>
-            </div>
-          </article>
-          <article id="odaka" class="app-item">
-            <div class="resource-art line"><span class="badge">試作版</span><i></i><i></i><i></i><i></i></div>
-            <div>
-              <h3>小高 復興のあゆみ</h3>
-              <p>震災後の小高区の計画・調査、主要事業の現状、居住人口などの数字を一つの時間軸に並べて見られます。市の公開資料で確認できていない項目は「資料未確認」と表示しています。</p>
-              <p class="meta">データ：南相馬市・福島県・復興庁などの公開資料（出典は各項目に記載）</p>
-              <a class="button" href="/apps/odaka/">試作版を見る <span>→</span></a>
-            </div>
-          </article>
-        </div>
-      </section>
-    </article>
+  <div class="tools-body wrap">
+    <p class="tools-intro">選挙や政策を考える「参考材料」として、事実（データ）を並べて一緒に考えるための道具と、その根拠になる資料をまとめています。数字の出典と計算方法・注意点は各ページ内に示しています。</p>
+    <div class="tool-grid">
+      {TOOLS.map((tool) => <ToolCard tool={tool} />)}
+    </div>
   </div>
   <CtaBar />
 </Base>
 
 <style lang="scss">
-// 資料と数字：ミニアプリ一覧
+// まちを知る：ミニアプリと資料集のカード一覧
 
-.app-list {
-  display: grid;
-  gap: 18px;
+.tools-body {
+  padding-bottom: 64px;
 }
 
-.app-item {
+.tools-intro {
+  max-width: 720px;
+  font-size: 15px;
+  line-height: 1.95;
+  margin-bottom: 28px;
+}
+
+.tool-grid {
   display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 22px;
-  background: #fff;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: $shadow-card;
-
-  .resource-art {
-    margin: 0;
-    height: 150px;
-  }
-
-  h3 {
-    font-size: 18px;
-    margin-bottom: 6px;
-  }
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 
   @include mobile {
     grid-template-columns: 1fr;
-  }
-}
-
-.prose .app-item p {
-  font-size: 15px;
-  line-height: 1.85;
-  margin-bottom: 0.6em;
-
-  &.meta {
-    font-size: 13px;
-    color: $muted;
   }
 }
 </style>

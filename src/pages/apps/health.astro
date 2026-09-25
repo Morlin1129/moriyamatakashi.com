@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import { navItem } from '../../data/site';
 import Toc from '../../components/Toc.astro';
 import CtaBar from '../../components/CtaBar.astro';
 import MiniChart from '../../components/MiniChart.astro';
@@ -60,7 +61,7 @@ const toc = [
 ];
 ---
 <Base title="南相馬 まちの健康診断" description="人口、歳出、目的別の使い道、財政指標を2008年度から2024年度まで並べ、震災前と今を比べる試作ページ。総務省の決算カードをもとにしています。" current="resources">
-  <Breadcrumb items={[{ label: '資料と数字', href: '/resources/' }, { label: 'まちの健康診断' }]} />
+  <Breadcrumb items={[{ label: navItem('resources').label, href: navItem('resources').href }, { label: 'まちの健康診断' }]} />
   <section class="page-hero wrap">
     <div class="page-hero-copy">
       <p class="page-badge">ミニアプリ · 試作版</p>
@@ -188,7 +189,7 @@ const toc = [
           <li><h3>普通会計</h3><p>一般会計と一部の特別会計を合わせた、自治体を比べるための会計区分です。国民健康保険や下水道などの事業会計は含みません。</p></li>
           <li><h3>震災後の数字の見方</h3><p>2011年度以降の歳出には、国から受けた復興関連の交付金を基金に積み立てたり、翌年度に繰り越したりした分が含まれます。金額の大きさがそのまま「その年に使ったお金」とは限りません。</p></li>
           <li><h3>比べる市の選び方</h3><p>隣接する相馬市と、福島県内で人口が3〜7万人の市を選びました。人口1人あたりの金額は、その年度の住民基本台帳人口で割っています。復興事業の規模や地理条件が違うため、差の理由は一つずつ確かめる必要があります。</p></li>
-          <li><h3>抜き出しの方法</h3><p>PDFの決算カードから機械的に読み取っています。読み取りの誤りがあれば、元の決算カードを正とします。各年度の元資料は<a href="/resources/#sources">資料集</a>から確認できるようにしていく予定です。</p></li>
+          <li><h3>抜き出しの方法</h3><p>PDFの決算カードから機械的に読み取っています。読み取りの誤りがあれば、元の決算カードを正とします。各年度の元資料は<a href="/resources/sources/">資料集</a>から確認できるようにしていく予定です。</p></li>
         </ol>
       </section>
     </article>
