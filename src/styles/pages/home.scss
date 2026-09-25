@@ -240,37 +240,140 @@
 }
 
 // 聞いた声
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 14px;
+
+  &:before {
+    content: '';
+    width: 48px;
+    height: 3px;
+    background: var(--green);
+    border-radius: 2px;
+  }
+}
+
+// 上の共通見出しルールより後に置いて、このセクションだけ大きくする
+.voices h2 {
+  font-size: clamp(28px, 3.2vw, 40px);
+  margin-bottom: 36px;
+}
+
 .voice-list {
   list-style: none;
   padding: 0;
-  margin: 0 0 28px;
+  margin: 0;
   display: grid;
-  gap: 14px;
-  max-width: 760px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 
   li {
     background: #fff;
-    border-left: 4px solid var(--green);
-    border-radius: 4px;
-    padding: 16px 20px;
-    font-size: 17px;
-    line-height: 1.8;
-    box-shadow: 0 2px 10px #20492b0f;
+    border: 1px solid #dde4d8;
+    border-radius: 10px;
+    padding: 36px 28px 40px;
+  }
 
-    @include mobile {
-      font-size: 15px;
-      padding: 14px 16px;
+  p {
+    font-size: clamp(16px, 1.4vw, 19px);
+    line-height: 1.85;
+    padding-left: 0.5em;
+    text-indent: -0.5em;
+  }
+
+  b {
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  // <br /> は広い画面だけ効かせる
+  @include narrow-nav {
+    grid-template-columns: 1fr;
+
+    br {
+      display: none;
+    }
+
+    p {
+      font-size: 17px;
+    }
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 14px;
+
+    li {
+      padding: 26px 22px 28px;
+    }
+
+    p {
+      font-size: 16px;
     }
   }
 }
 
-.voices-close {
-  font-size: 17px;
-  line-height: 1.9;
-  font-weight: 600;
+.voice-icon {
+  display: block;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 26px;
+  color: var(--green);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+
+  circle {
+    fill: currentColor;
+    stroke: none;
+  }
 
   @include mobile {
-    font-size: 15px;
+    width: 38px;
+    height: 38px;
+    margin-bottom: 18px;
+  }
+}
+
+.voices-close {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  margin-top: 48px;
+  padding-top: 44px;
+  border-top: 1px solid #d9e0d5;
+
+  p {
+    font-size: 26px;
+    line-height: 1.7;
+    font-weight: 700;
+  }
+
+  strong {
+    color: var(--green);
+  }
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    margin-top: 36px;
+    padding-top: 32px;
+
+    p {
+      font-size: 21px;
+    }
+
+    .button {
+      width: 100%;
+    }
   }
 }
 
@@ -466,5 +569,13 @@
   .contact-strip h2 {
     font-size: 24px;
     margin-bottom: 20px;
+  }
+}
+
+// 「聞いた声」の見出しだけは、上の共通スマホサイズより後に置いて大きさを上書きする
+@include mobile {
+  .voices h2 {
+    font-size: 28px;
+    margin-bottom: 26px;
   }
 }

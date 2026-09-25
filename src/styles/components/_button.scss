@@ -39,6 +39,24 @@
     }
   }
 
+  // 枠線だけのボタン（トップページ「取り組みを見る」）
+  &.outline {
+    background: transparent;
+    color: var(--green);
+    border: 1.5px solid var(--green);
+    box-shadow: none;
+    font-weight: 700;
+    gap: 14px;
+    padding: 16px 40px;
+    min-height: 60px;
+    border-radius: 10px;
+
+    &:hover {
+      background: #eef4ea;
+      transform: translateY(-2px);
+    }
+  }
+
   @include mobile {
     font-size: 15px;
   }
