@@ -2,9 +2,10 @@
 // トップページ：まちで聞いた声（カード3枚）
 // 強調したい語句は <b> で囲む（カード内で緑の太字になる）。<br /> は広い画面だけ効き、狭い画面では自然に折り返す
 const voices = [
-  '「<b>意見交換会</b>で声を上げても、<br />届いている気がしない」',
-  '「地域に不満はない。<br />でも休みの日は、<b>つい市外に<br />遊びに行ってしまう</b>」',
-  '「新しい会社の誘致は熱心だけど、<br />ここで根を張ってやる人への<br /><b>応援が少ない</b>」',
+  '「意見交換会やパブリックコメントで声を上げても、<b>届いている気がしない</b>」',
+  '「地域に不満はない。でも休みの日は、<b>つい市外に遊びに行ってしまう</b>」',
+  '「新しい会社の誘致は熱心だけど、ここで根を張ってやる人への<b>応援が少ない</b>気がする」',
+    '「復興予算でいろいろやるのはいいけど<b>将来的な負担が心配</b>」',
 ];
 ---
 <section id="voices" class="voices">
@@ -34,11 +35,11 @@ const voices = [
   padding: var(--section-pad) 0;
 
   h2 {
-    font-size: clamp(28px, 3.2vw, 40px);
+    font-size: clamp(20px, 2vw, 40px);
     margin-bottom: 36px;
 
     @include mobile {
-      font-size: 28px;
+      font-size: 20px;
       margin-bottom: 26px;
     }
   }
@@ -67,18 +68,18 @@ const voices = [
   padding: 0;
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
 
   li {
     background: #fff;
     border: 1px solid #dde4d8;
     border-radius: 10px;
-    padding: 36px 28px 40px;
+    padding: 20px 20px 32px;
   }
 
   p {
-    font-size: clamp(16px, 1.4vw, 19px);
+    font-size: clamp(16px, 1.2vw, 19px);
     line-height: 1.85;
     padding-left: 0.5em;
     text-indent: -0.5em;

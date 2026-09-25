@@ -9,14 +9,14 @@ const { policies } = Astro.props;
 ---
 <section id="policies" class="policies">
   <div class="wrap">
-    <h2>だから、これをやります。</h2>
+    <h2>そのためにやりたいこと</h2>
     <div class="policy-grid">
       {policies.map((p) => (
         <a class="policy" href={`/policies/${p.id}/`}>
           <span class={`crop crop${p.data.image.crop}`} role="img" aria-label={p.data.image.alt}></span>
-          <span class="policy-tag">{p.data.badge}</span>
-          <h3>{p.data.plain}</h3>
+          <h3>{p.data.badge}</h3>
           <span class="short-rule"></span>
+          <p>{p.data.plain}</p>
         </a>
       ))}
     </div>
@@ -86,6 +86,10 @@ const { policies } = Astro.props;
       font-size: 15px;
       padding-left: 12px;
     }
+  }
+  p {
+    padding: 6px 16px 10px;
+    font-size: 12px;
   }
 }
 
