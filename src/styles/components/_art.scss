@@ -1,0 +1,194 @@
+@use '../abstracts/tokens' as *;
+
+// 写真の切り出しと、資料カード用のプレースホルダー（紙・棒グラフ・円グラフ）
+
+.crop {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.5;
+  background-image: url('/assets/reference.jpg');
+  background-size: 613% auto;
+  background-repeat: no-repeat;
+  background-position: 5.4% 40.3%;
+}
+
+.crop1 {
+  background-position: 27.7% 40.3%;
+}
+
+.crop2 {
+  background-position: 50% 40.3%;
+}
+
+.crop3 {
+  background-position: 72.4% 40.3%;
+}
+
+.crop4 {
+  background-position: 94.7% 40.3%;
+}
+
+.resource-art {
+  height: 150px;
+  background: #e9ede2;
+  position: relative;
+  margin-bottom: 12px;
+  overflow: hidden;
+  border-radius: 4px;
+
+  @include mobile {
+    grid-row: 1/4;
+    height: 160px;
+    margin: 0;
+  }
+}
+
+.paper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #d8ddd5, #efede4);
+
+  > span {
+    font-family: var(--hand);
+    background: #fffdf4;
+    padding: 10px 35px;
+    font-size: 16px;
+    transform: rotate(-10deg);
+    line-height: 1.6;
+    box-shadow: 0 5px 10px #223a2815;
+
+    @include mobile {
+      padding: 15px;
+      font-size: 14px;
+    }
+  }
+
+  b {
+    font-size: 12px;
+    display: block;
+    color: #598163;
+    margin-top: 10px;
+  }
+}
+
+.badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 12px;
+  background: #345d47;
+  color: white;
+  border-radius: 3px;
+  padding: 1px 8px;
+  z-index: 2;
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 12px;
+  padding: 40px 30px 20px;
+  background: #edf0e9;
+
+  i {
+    width: 18px;
+    background: #759e80;
+    height: 75%;
+
+    &:nth-of-type(2) {
+      height: 55%;
+    }
+
+    &:nth-of-type(3) {
+      height: 85%;
+    }
+
+    &:nth-of-type(4) {
+      height: 45%;
+    }
+
+    &:nth-of-type(5) {
+      height: 65%;
+    }
+  }
+
+  @include mobile {
+    gap: 7px;
+    padding: 40px 16px 20px;
+  }
+}
+
+.rings {
+  display: grid;
+  place-items: center;
+}
+
+.ring {
+  width: 105px;
+  height: 105px;
+  border-radius: 50%;
+  background: conic-gradient(#375f48 0 30%, #96b198 30% 70%, #ccd9c6 70%);
+  border: 16px solid #e2e8db;
+}
+
+// 年表のアート（ミニアプリ一覧）
+.resource-art.line {
+  &:before {
+    content: '';
+    position: absolute;
+    left: 14%;
+    right: 14%;
+    top: 50%;
+    height: 3px;
+    background: #c7d2c4;
+    transform: translateY(-50%);
+  }
+
+  i {
+    position: absolute;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--green);
+    border: 3px solid #fff;
+    transform: translate(-50%, -50%);
+
+    &:nth-child(2) {
+      left: 20%;
+    }
+
+    &:nth-child(3) {
+      left: 44%;
+      background: $gold-dark;
+    }
+
+    &:nth-child(4) {
+      left: 66%;
+    }
+
+    &:nth-child(5) {
+      left: 84%;
+      background: $muted;
+    }
+  }
+}
+
+// 波形に切り抜いた横長写真
+.landscape {
+  height: 250px;
+  position: relative;
+  overflow: hidden;
+  clip-path: polygon(0 8%, 12% 4%, 25% 8%, 45% 0, 64% 4%, 83% 2%, 100% 6%, 100% 100%, 0 100%);
+
+  img {
+    height: 100%;
+    object-position: 50% 58%;
+  }
+
+  @include mobile {
+    height: 180px;
+  }
+}

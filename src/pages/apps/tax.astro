@@ -4,6 +4,7 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import Toc from '../../components/Toc.astro';
 import CtaBar from '../../components/CtaBar.astro';
 import kessan from '../../data/kessan-r6.json';
+import '../../styles/pages/tax.scss';
 
 const total = kessan.purposes.reduce((sum, p) => sum + p.amount, 0);
 const purposes = kessan.purposes.map((p) => ({ ...p, share: p.amount / total })).sort((a, b) => b.amount - a.amount);

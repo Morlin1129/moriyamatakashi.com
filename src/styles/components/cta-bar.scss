@@ -1,0 +1,35 @@
+@use '../abstracts/tokens' as *;
+
+.cta-bar {
+  background: var(--green);
+  color: #fff;
+  padding: 26px 0;
+
+  > .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  h2 {
+    font-size: 19px;
+    margin-bottom: 4px;
+  }
+
+  p {
+    font-size: 14px;
+    color: #dbe6dc;
+  }
+
+  @include mobile {
+    > .wrap {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .button {
+      width: 100%;
+    }
+  }
+}

@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import CtaBar from '../../components/CtaBar.astro';
+import '../../styles/pages/policies.scss';
 
 const policies = (await getCollection('policies')).sort((a, b) => a.data.order - b.data.order);
 ---

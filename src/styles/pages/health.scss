@@ -1,0 +1,64 @@
+@use '../abstracts/tokens' as *;
+
+// ミニアプリ：まちの健康診断（数表）
+
+.table-wrap {
+  overflow-x: auto;
+  margin-bottom: 1.2em;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  background: #fff;
+  border: 1px solid $line;
+  border-radius: 6px;
+
+  th,
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e6ece2;
+    text-align: right;
+    vertical-align: top;
+    white-space: nowrap;
+  }
+
+  th {
+    text-align: left;
+  }
+
+  thead th {
+    background: $tint;
+    text-align: right;
+    font-size: 13px;
+
+    &:first-child {
+      text-align: left;
+    }
+  }
+
+  small {
+    display: block;
+    font-size: 11px;
+    color: $muted;
+    font-weight: 400;
+    white-space: normal;
+  }
+
+  td.up {
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  td.down {
+    color: $red-text;
+    font-weight: 700;
+  }
+
+  tr.total th,
+  tr.total td {
+    background: $tint;
+    font-weight: 700;
+  }
+}

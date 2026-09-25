@@ -1,0 +1,581 @@
+@use '../abstracts/tokens' as *;
+
+// トップページ
+
+.hero {
+  height: min(720px, 61vw);
+  min-height: 560px;
+  position: relative;
+  isolation: isolate;
+  color: white;
+  overflow: hidden;
+
+  h1 {
+    font-size: clamp(35px, 4.8vw, 66px);
+    line-height: 1.7;
+    color: #1d2720;
+    transform: rotate(-3deg);
+    margin-bottom: 24px;
+
+    span {
+      display: inline-block;
+      background: #fffdf7;
+      padding: 0 15px 4px;
+      box-shadow: 0 2px 10px #14271a0a;
+      max-width: 100%;
+
+      + span {
+        margin-top: 7px;
+      }
+    }
+
+    em {
+      color: var(--green);
+      font-style: normal;
+    }
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: -5%;
+    width: 110%;
+    height: 23px;
+    background: var(--paper);
+    clip-path: polygon(0 45%, 30% 90%, 70% 60%, 100% 0, 100% 100%, 0 100%);
+  }
+
+  @include wide {
+    height: 760px;
+  }
+
+  @include mobile {
+    height: 660px;
+    min-height: 0;
+
+    h1 {
+      font-size: clamp(26px, 6.1vw, 42px);
+      line-height: 1.85;
+      margin-bottom: 18px;
+
+      span {
+        padding: 0 9px 3px;
+      }
+    }
+  }
+}
+
+.hero-photo {
+  height: 100%;
+  object-position: center 48%;
+  position: absolute;
+  z-index: -3;
+
+  @include mobile {
+    object-position: 60% center;
+  }
+}
+
+.hero-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: linear-gradient(90deg, #10231cc0, transparent 78%), linear-gradient(0deg, #10231c55, transparent 40%);
+
+  @include mobile {
+    background: linear-gradient(0deg, #172c23bd, transparent 85%);
+  }
+}
+
+.hero-copy {
+  position: absolute;
+  left: 5%;
+  bottom: 70px;
+  max-width: 640px;
+
+  p {
+    font-size: 17px;
+    margin-bottom: 26px;
+    text-shadow: 0 1px 4px #0009;
+    line-height: 1.9;
+  }
+
+  .hero-name {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 0 1px 4px #0009;
+  }
+
+  @include mobile {
+    left: 5%;
+    right: 5%;
+    bottom: 45px;
+
+    p {
+      font-size: 14px;
+      line-height: 1.9;
+    }
+  }
+}
+
+.hero-name small {
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 6px;
+}
+
+// 考え方
+.vision {
+  display: grid;
+  grid-template-columns: 43% 57%;
+  min-height: 390px;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.vision-copy {
+  padding: var(--section-pad) 5% var(--section-pad) 12%;
+
+  h2 {
+    font-size: 34px;
+    line-height: 1.55;
+    margin-bottom: 23px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+
+  @include mobile {
+    padding: var(--section-pad) 7% calc(var(--section-pad) * 0.7);
+
+    h2 {
+      font-size: 32px;
+    }
+
+    p {
+      font-size: 15px;
+    }
+  }
+}
+
+.vision-sub {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--green);
+  margin: -8px 0 16px;
+}
+
+.text-link {
+  display: inline-block;
+  border: 0;
+  border-bottom: 1px solid $underline;
+  background: none;
+  padding: 5px 0;
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--green);
+}
+
+.vision-photo {
+  position: relative;
+  min-height: 350px;
+
+  img {
+    height: 100%;
+    position: absolute;
+    object-position: center;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background: linear-gradient(90deg, var(--paper), transparent 28%);
+  }
+
+  p {
+    position: absolute;
+    z-index: 2;
+    bottom: 35px;
+    right: 5%;
+    padding: 12px 17px;
+    background: #fffdf0ec;
+    font-size: 20px;
+    transform: rotate(-5deg);
+  }
+
+  @include mobile {
+    min-height: 265px;
+
+    &:before {
+      background: linear-gradient(0deg, var(--paper), transparent 20%);
+    }
+
+    p {
+      font-size: 18px;
+      bottom: 30px;
+    }
+  }
+}
+
+// 各セクション共通
+.voices,
+.policies,
+.process {
+  padding: var(--section-pad) 0;
+}
+
+.voices h2,
+.policies h2,
+.process h2,
+.contact-strip h2 {
+  font-size: clamp(24px, 2.4vw, 32px);
+  margin-bottom: 28px;
+}
+
+// 聞いた声
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 14px;
+
+  &:before {
+    content: '';
+    width: 48px;
+    height: 3px;
+    background: var(--green);
+    border-radius: 2px;
+  }
+}
+
+// 上の共通見出しルールより後に置いて、このセクションだけ大きくする
+.voices h2 {
+  font-size: clamp(28px, 3.2vw, 40px);
+  margin-bottom: 36px;
+}
+
+.voice-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+
+  li {
+    background: #fff;
+    border: 1px solid #dde4d8;
+    border-radius: 10px;
+    padding: 36px 28px 40px;
+  }
+
+  p {
+    font-size: clamp(16px, 1.4vw, 19px);
+    line-height: 1.85;
+    padding-left: 0.5em;
+    text-indent: -0.5em;
+  }
+
+  b {
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  // <br /> は広い画面だけ効かせる
+  @include narrow-nav {
+    grid-template-columns: 1fr;
+
+    br {
+      display: none;
+    }
+
+    p {
+      font-size: 17px;
+    }
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 14px;
+
+    li {
+      padding: 26px 22px 28px;
+    }
+
+    p {
+      font-size: 16px;
+    }
+  }
+}
+
+.voice-icon {
+  display: block;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 26px;
+  color: var(--green);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+
+  circle {
+    fill: currentColor;
+    stroke: none;
+  }
+
+  @include mobile {
+    width: 38px;
+    height: 38px;
+    margin-bottom: 18px;
+  }
+}
+
+.voices-close {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  margin-top: 48px;
+  padding-top: 44px;
+  border-top: 1px solid #d9e0d5;
+
+  p {
+    font-size: 26px;
+    line-height: 1.7;
+    font-weight: 700;
+  }
+
+  strong {
+    color: var(--green);
+  }
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    margin-top: 36px;
+    padding-top: 32px;
+
+    p {
+      font-size: 21px;
+    }
+
+    .button {
+      width: 100%;
+    }
+  }
+}
+
+// 取り組み
+.policies {
+  position: relative;
+  background: linear-gradient(130deg, #edf2e7, #deeadb);
+  clip-path: polygon(0 0, 25% 1.2%, 60% 0, 100% 1.5%, 100% 100%, 0 100%);
+}
+
+.policy-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+
+  @include mobile {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+}
+
+.policy {
+  display: block;
+  padding: 0 0 18px;
+  text-align: left;
+  border: 0;
+  background: #fffdf8;
+  border-radius: 5px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: $shadow-card-hover;
+  }
+
+  h3 {
+    padding: 6px 16px 10px;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  @include mobile {
+    &:last-child {
+      grid-column: 1/-1;
+      width: calc(50% - 7px);
+      justify-self: center;
+    }
+
+    h3 {
+      font-size: 15px;
+      padding-left: 12px;
+    }
+  }
+}
+
+.policy-tag {
+  display: inline-block;
+  margin: 14px 16px 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--green);
+  background: $sage;
+  border-radius: 3px;
+  padding: 1px 8px;
+
+  @include mobile {
+    margin-left: 12px;
+  }
+}
+
+.short-rule {
+  display: block;
+  width: 42px;
+  height: 3px;
+  background: #527a55;
+  border-radius: 50%;
+  margin-left: 16px;
+}
+
+.small-link {
+  margin-top: 24px;
+  font-size: 15px;
+
+  a {
+    color: var(--green);
+    border-bottom: 1px solid $underline;
+  }
+}
+
+// 進め方
+.process {
+  background: linear-gradient(120deg, #204735, #285842);
+  color: #fff;
+
+  .small-link a {
+    color: #dfeadf;
+    border-color: #7f9a86;
+  }
+}
+
+.step-list-top {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+
+  li {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    column-gap: 14px;
+    row-gap: 6px;
+    align-items: start;
+  }
+
+  h3 {
+    font-size: 19px;
+    line-height: 1.6;
+    margin: 6px 0 0;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #ecf2e9;
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+}
+
+.step-num {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--green);
+  font-weight: 700;
+  font-size: 18px;
+  grid-row: span 2;
+}
+
+// ご意見募集
+.contact-strip {
+  background: linear-gradient(110deg, #e1ebd8, #f2f5e9, #dce8d3);
+  padding: calc(var(--section-pad) * 0.6) 0;
+
+  > .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+  }
+
+  h2 {
+    margin: 0;
+  }
+
+  .hand {
+    font-size: 23px;
+    transform: rotate(-4deg);
+  }
+
+  @include mobile {
+    > .wrap {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 23px;
+    }
+
+    .hand {
+      display: none;
+    }
+
+    .button {
+      width: 100%;
+    }
+  }
+}
+
+// セクション見出しのスマホサイズ。
+// `.contact-strip h2 { margin: 0 }` より後に置き、スマホでは margin-bottom が効く元の挙動を保つ
+@include mobile {
+  .voices h2,
+  .policies h2,
+  .process h2,
+  .contact-strip h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+}
+
+// 「聞いた声」の見出しだけは、上の共通スマホサイズより後に置いて大きさを上書きする
+@include mobile {
+  .voices h2 {
+    font-size: 28px;
+    margin-bottom: 26px;
+  }
+}

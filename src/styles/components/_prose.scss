@@ -1,0 +1,163 @@
+@use '../abstracts/tokens' as *;
+
+// 本文エリアと、本文の中で使うリスト・囲み
+
+.prose {
+  max-width: 760px;
+
+  section {
+    padding-top: 8px;
+    margin-bottom: 48px;
+  }
+
+  h2 {
+    font-size: clamp(23px, 2.2vw, 29px);
+    color: var(--green);
+    margin-bottom: 18px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid $line;
+  }
+
+  p {
+    margin-bottom: 1.1em;
+    font-size: 16px;
+    line-height: 2;
+  }
+}
+
+// 番号付きの手順・取り組みリスト
+.action-list,
+.step-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.2em;
+  counter-reset: n;
+  display: grid;
+  gap: 14px;
+
+  li {
+    counter-increment: n;
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px 22px 8px 66px;
+    position: relative;
+    box-shadow: $shadow-card;
+
+    &:before {
+      content: counter(n);
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--green);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 15px;
+    }
+  }
+
+  h3 {
+    font-size: 17px;
+    margin-bottom: 6px;
+    line-height: 1.6;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.9;
+  }
+
+  @include mobile {
+    li {
+      padding: 18px 16px 6px 58px;
+
+      &:before {
+        left: 14px;
+        top: 18px;
+      }
+    }
+  }
+}
+
+.step-list li:not(:last-child):after {
+  content: '';
+  position: absolute;
+  left: 35px;
+  bottom: -14px;
+  width: 2px;
+  height: 14px;
+  background: #b8cbb3;
+
+  @include mobile {
+    left: 29px;
+  }
+}
+
+.goal {
+  background: linear-gradient(120deg, #e8efe0, #f2f5ea);
+  border-radius: 10px;
+  padding: 28px 30px 12px;
+
+  h2 {
+    border-bottom-color: #cfdcc8;
+  }
+
+  @include mobile {
+    padding: 22px 18px 8px;
+  }
+}
+
+.check-list {
+  list-style: none;
+  padding: 18px 22px 6px;
+  margin: 0 0 1em;
+  background: $tint;
+  border: 1px solid $line;
+  border-radius: 6px;
+
+  li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 12px;
+    font-weight: 600;
+    line-height: 1.7;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.6em;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+  }
+}
+
+.prose .source-list {
+  font-size: 14px;
+  padding-left: 1.2em;
+
+  li {
+    margin-bottom: 6px;
+  }
+}
+
+.source-list a {
+  color: var(--green);
+}
+
+.note-small a,
+.next-link {
+  font-size: 14px;
+  color: var(--green);
+}
+
+.next-link {
+  margin-top: 8px;
+}
