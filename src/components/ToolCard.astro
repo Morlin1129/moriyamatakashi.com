@@ -1,0 +1,72 @@
+---
+import type { Tool } from '../data/tools';
+
+interface Props {
+  tool: Tool;
+}
+const { tool } = Astro.props;
+---
+<article id={tool.id} class="tool-card">
+  <div class:list={['resource-art', tool.art]}>
+    {tool.badge && <span class="badge">{tool.badge}</span>}
+    {tool.art === 'bars' && <><i></i><i></i><i></i><i></i><i></i></>}
+    {tool.art === 'rings' && <span class="ring"></span>}
+    {tool.art === 'line' && <><i></i><i></i><i></i><i></i></>}
+    {tool.art === 'paper' && <span>根拠をたどる<br /><b>資料集</b></span>}
+  </div>
+  <div class="tool-body">
+    <h3>{tool.title}</h3>
+    <p>{tool.description}</p>
+    <p class="meta">{tool.meta.map((line, i) => <>{i > 0 && <br />}{line}</>)}</p>
+    <a class="button" href={tool.href}>{tool.cta} <span>→</span></a>
+  </div>
+</article>
+
+<style lang="scss">
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: $shadow-card;
+
+  .resource-art {
+    margin: 0 0 14px;
+    height: 150px;
+
+    @include mobile {
+      grid-row: auto;
+      height: 140px;
+      margin: 0 0 14px;
+    }
+  }
+
+  h3 {
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.85;
+    margin-bottom: 0.6em;
+
+    &.meta {
+      font-size: 13px;
+      color: $muted;
+    }
+  }
+}
+
+.tool-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  .button {
+    margin-top: auto;
+    align-self: flex-start;
+  }
+}
+</style>
