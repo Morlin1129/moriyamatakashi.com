@@ -1,5 +1,4 @@
 ---
-import '../styles/components/breadcrumb.scss';
 interface Props {
   items: { label: string; href?: string }[];
 }
@@ -14,3 +13,16 @@ const { items } = Astro.props;
     </>
   ))}
 </nav>
+
+<style lang="scss">
+.breadcrumb {
+  font-size: 13px;
+  color: $muted;
+  padding: 18px 0 0;
+
+  a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+</style>

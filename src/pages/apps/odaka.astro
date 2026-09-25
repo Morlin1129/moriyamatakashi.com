@@ -4,13 +4,13 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import Toc from '../../components/Toc.astro';
 import CtaBar from '../../components/CtaBar.astro';
 import MiniChart from '../../components/MiniChart.astro';
+import ChartGrid from '../../components/ChartGrid.astro';
 import Timeline from '../../components/Timeline.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import type { TimelineItem, Project } from '../../data/odaka-types';
 import tl from '../../data/odaka-timeline.json';
 import pj from '../../data/odaka-projects.json';
 import nums from '../../data/odaka-numbers.json';
-import '../../styles/pages/odaka.scss';
 
 const items = tl.items as TimelineItem[];
 const projects = pj.items as Project[];
@@ -73,11 +73,11 @@ const toc = [
       <section id="numbers">
         <h2>数字で見る小高</h2>
         <p>小高区の人の動きです。住民登録の人口と、実際に住んでいる人の数は別の統計で、定義も違います。それぞれの定義と時点は、グラフの下の注記と「データと注意点」に書いています。</p>
-        <div class="chart-grid">
+        <ChartGrid>
           {nums.series.map((s) => (
             <MiniChart title={s.title} unit={s.unit} kind={s.kind as 'bar' | 'line'} decimals={0} note={s.note} points={s.points} yearSuffix={s.yearSuffix} />
           ))}
-        </div>
+        </ChartGrid>
       </section>
 
       <section id="check">
@@ -108,3 +108,28 @@ const toc = [
   </div>
   <CtaBar />
 </Base>
+
+<style lang="scss">
+// ミニアプリ：小高 復興のあゆみ（年表・事業カードは components/ 側）
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin: 0 0 1.2em;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.link-button {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--green);
+  text-decoration: underline;
+  cursor: pointer;
+}
+</style>

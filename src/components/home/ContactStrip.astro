@@ -1,0 +1,55 @@
+---
+// トップページ：お問い合わせへの誘導
+---
+<section class="contact-strip">
+  <div class="wrap">
+    <h2>話を聞かせてください。</h2>
+    <button class="button" data-open="contact">お問い合わせ・ご意見 <span>→</span></button>
+    <p class="hand">小さな声から、<br />大きな一歩へ。</p>
+  </div>
+</section>
+
+<style lang="scss">
+.contact-strip {
+  background: linear-gradient(110deg, #e1ebd8, #f2f5e9, #dce8d3);
+  padding: calc(var(--section-pad) * 0.6) 0;
+
+  > .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+  }
+
+  h2 {
+    font-size: clamp(24px, 2.4vw, 32px);
+    margin: 0;
+
+    @include mobile {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+  }
+
+  .hand {
+    font-size: 23px;
+    transform: rotate(-4deg);
+  }
+
+  @include mobile {
+    > .wrap {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 23px;
+    }
+
+    .hand {
+      display: none;
+    }
+
+    .button {
+      width: 100%;
+    }
+  }
+}
+</style>

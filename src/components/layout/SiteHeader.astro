@@ -1,5 +1,22 @@
-@use '../abstracts/tokens' as *;
+---
+import Brand from './Brand.astro';
+import { NAV, SITE_NAME, type NavKey } from '../../data/site';
 
+interface Props {
+  current?: NavKey;
+}
+const { current } = Astro.props;
+---
+<header class="header">
+  <Brand label={`${SITE_NAME} トップ`} />
+  <button class="menu" aria-label="メニューを開く" aria-expanded="false">☰</button>
+  <nav aria-label="メインメニュー">
+    {NAV.map((item) => <a href={item.href} aria-current={item.key === current ? 'page' : undefined}>{item.label}</a>)}
+    <button class="button small" data-open="contact">お問い合わせ <span>→</span></button>
+  </nav>
+</header>
+
+<style lang="scss">
 .header {
   background: rgba(250, 249, 243, 0.98);
   height: 92px;
@@ -29,6 +46,7 @@
       gap: 15px;
     }
 
+    // スマホではハンバーガーで開閉するドロップダウンになる（.open は site.js が付ける）
     @include mobile {
       display: none;
       position: absolute;
@@ -60,47 +78,6 @@
   }
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 23px;
-
-  strong {
-    font-family: $font-sans;
-    font-size: 30px;
-    line-height: 1.1;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-  }
-
-  span {
-    font-family: var(--hand);
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1.55;
-  }
-
-  // 1100px 以下で肩書きを隠し、760px 以下では小さく出し直す（順序に意味がある）
-  @include narrow-nav {
-    span {
-      display: none;
-    }
-  }
-
-  @include mobile {
-    gap: 13px;
-
-    strong {
-      font-size: 24px;
-    }
-
-    span {
-      display: block;
-      font-size: 11px;
-    }
-  }
-}
-
 // ハンバーガーメニュー（スマホのみ）
 .menu {
   display: none;
@@ -115,3 +92,4 @@
     font-size: 23px;
   }
 }
+</style>

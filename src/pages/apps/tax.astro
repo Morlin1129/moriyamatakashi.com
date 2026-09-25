@@ -4,7 +4,6 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import Toc from '../../components/Toc.astro';
 import CtaBar from '../../components/CtaBar.astro';
 import kessan from '../../data/kessan-r6.json';
-import '../../styles/pages/tax.scss';
 
 const total = kessan.purposes.reduce((sum, p) => sum + p.amount, 0);
 const purposes = kessan.purposes.map((p) => ({ ...p, share: p.amount / total })).sort((a, b) => b.amount - a.amount);
@@ -220,3 +219,182 @@ const toc = [
   dependents.addEventListener('change', render);
   render();
 </script>
+
+<style lang="scss">
+// ミニアプリ：税金はどこへ行った？
+
+.tax-form {
+  display: grid;
+  gap: 14px;
+  background: #fff;
+  border: 1px solid $line;
+  border-radius: 6px;
+  padding: 20px 22px;
+  margin-bottom: 18px;
+
+  label {
+    display: grid;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  input[type='range'] {
+    width: 100%;
+    accent-color: var(--green);
+  }
+
+  select {
+    font: inherit;
+    padding: 8px 12px;
+    border: 1px solid #b9c9b7;
+    border-radius: 6px;
+    background: #fff;
+    max-width: 200px;
+  }
+}
+
+.tax-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 400;
+
+  input {
+    font: inherit;
+    font-size: 20px;
+    font-weight: 700;
+    width: 100%;
+    max-width: 260px;
+    padding: 8px 12px;
+    border: 1px solid #b9c9b7;
+    border-radius: 6px;
+    text-align: right;
+  }
+}
+
+.tax-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.prose .tax-mode-note {
+  font-size: 14px;
+  color: $muted;
+  margin-bottom: 14px;
+}
+
+.tax-total {
+  background: var(--green);
+  color: #fff;
+  border-radius: 6px;
+  padding: 18px 22px;
+  margin-bottom: 18px;
+
+  p {
+    font-size: 16px;
+    margin: 0;
+  }
+
+  strong {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 2px;
+
+    @include mobile {
+      font-size: 24px;
+    }
+  }
+
+  .tax-note {
+    font-size: 13px;
+    color: #dbe6dc;
+    margin-top: 6px;
+
+    &:empty {
+      display: none;
+    }
+  }
+}
+
+.tax-bars {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 12px;
+
+  li {
+    background: #fff;
+    border: 1px solid $line;
+    border-radius: 6px;
+    padding: 12px 16px;
+  }
+}
+
+.tax-bar-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tax-bar-name {
+  font-weight: 700;
+
+  small {
+    font-size: 12px;
+    font-weight: 400;
+    color: $muted;
+    margin-left: 2px;
+  }
+}
+
+.tax-bar-amount {
+  font-size: 14px;
+
+  strong {
+    font-size: 20px;
+    color: var(--green);
+  }
+
+  small {
+    color: $muted;
+    margin-left: 4px;
+  }
+}
+
+.tax-bar-track {
+  height: 8px;
+  background: $sage;
+  border-radius: 4px;
+  margin: 8px 0 6px;
+  overflow: hidden;
+}
+
+.tax-bar-fill {
+  height: 100%;
+  background: var(--green);
+  border-radius: 4px;
+}
+
+.prose .tax-bar-plain {
+  font-size: 13px;
+  color: $muted;
+  line-height: 1.7;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tax-bar-share {
+  white-space: nowrap;
+  color: var(--green);
+  font-weight: 600;
+}
+</style>

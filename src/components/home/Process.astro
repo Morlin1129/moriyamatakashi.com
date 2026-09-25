@@ -1,0 +1,96 @@
+---
+// トップページ：進め方（3ステップ）
+const steps = [
+  ['聞いて、調べる', '困りごとを直接聞き、数字や資料でも確かめます。'],
+  ['一緒に考える', '関わる人と早い段階から、やり方と費用をくらべます。'],
+  ['小さく試して、結果を伝える', 'できるところから始め、良かった点も課題も伝えて次に活かします。'],
+];
+---
+<section id="process" class="process">
+  <div class="wrap">
+    <h2>どうやって進めるの？</h2>
+    <ol class="step-list-top">
+      {steps.map(([title, text], i) => (
+        <li><span class="step-num">{i + 1}</span><h3>{title}</h3><p>{text}</p></li>
+      ))}
+    </ol>
+    <p class="small-link"><a href="/vision/">くわしい考え方 →</a></p>
+  </div>
+</section>
+
+<style lang="scss">
+.process {
+  padding: var(--section-pad) 0;
+  background: linear-gradient(120deg, #204735, #285842);
+  color: #fff;
+
+  h2 {
+    font-size: clamp(24px, 2.4vw, 32px);
+    margin-bottom: 28px;
+
+    @include mobile {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.step-list-top {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+
+  li {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    column-gap: 14px;
+    row-gap: 6px;
+    align-items: start;
+  }
+
+  h3 {
+    font-size: 19px;
+    line-height: 1.6;
+    margin: 6px 0 0;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #ecf2e9;
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+}
+
+.step-num {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--green);
+  font-weight: 700;
+  font-size: 18px;
+  grid-row: span 2;
+}
+
+// 濃い背景なので明るい色のリンクにする
+.small-link {
+  margin-top: 24px;
+  font-size: 15px;
+
+  a {
+    color: #dfeadf;
+    border-bottom: 1px solid $underline;
+    border-color: #7f9a86;
+  }
+}
+</style>

@@ -4,10 +4,10 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import Toc from '../../components/Toc.astro';
 import CtaBar from '../../components/CtaBar.astro';
 import MiniChart from '../../components/MiniChart.astro';
+import ChartGrid from '../../components/ChartGrid.astro';
 import CompareBars from '../../components/CompareBars.astro';
 import ts from '../../data/kessan-timeseries.json';
 import cmp from '../../data/kessan-compare.json';
-import '../../styles/pages/health.scss';
 
 const rows = ts.rows;
 const oku = (v: number | null) => (v === null ? null : v / 100000); // 千円 → 億円
@@ -76,28 +76,28 @@ const toc = [
       <section id="population">
         <h2>人口</h2>
         <p>住民基本台帳の人口は、{before.year}年度の{fmtInt(before.population!)}人から{latest.year}年度の{fmtInt(latest.population!)}人へ、{fmtInt(before.population! - latest.population!)}人（{(100 - (latest.population! / before.population!) * 100).toFixed(0)}%）減りました。震災の年に大きく減り、その後も毎年少しずつ減り続けています。</p>
-        <div class="chart-grid one">
+        <ChartGrid one>
           <MiniChart title="住民基本台帳人口" unit="人" kind="line" decimals={0} points={series((r) => r.population)} />
-        </div>
+        </ChartGrid>
       </section>
 
       <section id="budget">
         <h2>歳入と歳出の大きさ</h2>
         <p>震災前の歳出は年{fmtOku(before.expTotal)}億円ほどでした。震災後は復興事業で急増し、{peak.year}年度の{fmtOku(peak.expTotal)}億円が最大です。{latest.year}年度は{fmtOku(latest.expTotal)}億円で、震災前の約{(latest.expTotal / before.expTotal).toFixed(1)}倍の規模が続いています。</p>
-        <div class="chart-grid">
+        <ChartGrid>
           <MiniChart title="歳出総額" unit="億円" points={series((r) => oku(r.expTotal))} />
           <MiniChart title="歳入総額" unit="億円" points={series((r) => oku(r.revTotal))} />
-        </div>
+        </ChartGrid>
       </section>
 
       <section id="purposes">
         <h2>何に使ってきたか（目的別歳出）</h2>
         <p>震災直後は避難者支援などで民生費が膨らみ、その後は復興関連の事業を含む総務費と、農地の復旧・営農再開を含む農林水産業費が大きくなりました。教育費は震災前の水準に戻りきっていません。</p>
-        <div class="chart-grid">
+        <ChartGrid>
           {['minsei', 'somu', 'norin', 'kyoiku', 'doboku', 'shoko'].map((k) => (
             <MiniChart title={PURPOSES[k].name} unit="億円" note={PURPOSES[k].plain} points={series((r) => oku(r.purposes[k as keyof typeof r.purposes] ?? null))} />
           ))}
-        </div>
+        </ChartGrid>
         <h3>震災前（{before.year}年度）と直近（{latest.year}年度）を比べる</h3>
         <div class="table-wrap">
           <table class="data-table">
@@ -120,30 +120,30 @@ const toc = [
       <section id="revenue">
         <h2>お金はどこから来たか（歳入の主な内訳）</h2>
         <p>市民や企業が納める地方税は、震災の年に大きく落ち込み、その後は震災前とほぼ同じ水準に戻っています。一方、国からの地方交付税と国庫支出金は震災後に大きく増え、今も震災前より多い水準です。市の財政は、震災前より国のお金に頼る割合が高くなっていると読めます。</p>
-        <div class="chart-grid">
+        <ChartGrid>
           <MiniChart title="地方税（市税）" unit="億円" points={series((r) => oku(r.localTax))} />
           <MiniChart title="地方交付税" unit="億円" points={series((r) => oku(r.kofuzei))} />
           <MiniChart title="国庫支出金" unit="億円" points={series((r) => oku(r.kokko))} />
           <MiniChart title="個人市民税" unit="億円" note="均等割＋所得割" points={series((r) => oku(r.personalTax))} />
-        </div>
+        </ChartGrid>
       </section>
 
       <section id="health">
         <h2>財政の健全さ</h2>
         <p>借金（地方債）の残高は、{rows[0].year}年度の{fmtOku(rows[0].bondBalance)}億円から{latest.year}年度の{fmtOku(latest.bondBalance)}億円へ減っています。返済の重さを示す実質公債費比率も{rows[0].kosaihi}%から{latest.kosaihi}%へ下がり、将来負担比率は2013年度以降「算定されない」（将来の負担より貯金などのほうが多い）状態です。財政力指数（1に近いほど自前の税収で運営できる）は0.6前後で大きく変わっていません。経常収支比率（毎年決まって入るお金のうち、人件費や借金返済など決まって出ていくお金が占める割合。高いほど自由に使えるお金が少ない）は震災前の85%前後から、近年は94%前後に上がっています。</p>
-        <div class="chart-grid">
+        <ChartGrid>
           <MiniChart title="地方債現在高（借金の残高）" unit="億円" points={series((r) => oku(r.bondBalance))} />
           <MiniChart title="実質公債費比率" unit="％" kind="line" note="18%を超えると借金に許可が必要。低いほど返済が軽い" points={series((r) => r.kosaihi)} />
           <MiniChart title="将来負担比率" unit="％" kind="line" note="2013年度以降は算定なし（負担より資産が多い）" points={series((r) => r.shorai)} />
           <MiniChart title="財政力指数" unit="" kind="line" decimals={2} note="1に近いほど自前の税収で運営できる" points={series((r) => r.zaiseiryoku)} />
           <MiniChart title="経常収支比率" unit="％" kind="line" note="高いほど、自由に使えるお金が少ない。2011年度は震災で税収が落ちたため一時的に100%超" points={series((r) => r.keijo)} />
-        </div>
+        </ChartGrid>
       </section>
 
       <section id="compare">
         <h2>近くの市と比べる（{cmpYear}年度）</h2>
         <p>隣の相馬市と、県内で人口が3〜7万人の市（{cmpNames}）を、人口1人あたりの金額で並べました。南相馬市は歳出も地方税も、借金の残高も、1人あたりで見ると同じ規模の市と比べて多めです。歳出が多いのは復興関連の事業が続いているためと考えられますが、人口が減るなかで、この規模をどう着地させるかが問われます。</p>
-        <div class="chart-grid">
+        <ChartGrid>
           <CompareBars title="歳出総額（1人あたり）" unit="万円／人" items={cmpItems((r) => perCapitaMan(r.expTotal, r.population))} />
           <CompareBars title="地方税（1人あたり）" unit="万円／人" items={cmpItems((r) => perCapitaMan(r.localTax, r.population))} />
           <CompareBars title="地方債現在高（1人あたり）" unit="万円／人" items={cmpItems((r) => perCapitaMan(r.bondBalance, r.population))} />
@@ -153,7 +153,7 @@ const toc = [
           <CompareBars title="財政力指数" unit="" decimals={2} items={cmpItems((r) => r.zaiseiryoku)} note="1に近いほど自前の税収で運営できる" />
           <CompareBars title="経常収支比率" unit="％" items={cmpItems((r) => r.keijo)} note="高いほど自由に使えるお金が少ない" />
           <CompareBars title="実質公債費比率" unit="％" items={cmpItems((r) => r.kosaihi)} refLine={{ value: 18, label: '18%（借金に許可が必要になる目安）' }} />
-        </div>
+        </ChartGrid>
         <p class="note-small">人口は各市の住民基本台帳人口。財政力指数・経常収支比率・実質公債費比率は総務省「主要財政指標一覧」の値です。</p>
       </section>
 
@@ -195,3 +195,68 @@ const toc = [
   </div>
   <CtaBar />
 </Base>
+
+<style lang="scss">
+// ミニアプリ：まちの健康診断（数表）
+
+.table-wrap {
+  overflow-x: auto;
+  margin-bottom: 1.2em;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  background: #fff;
+  border: 1px solid $line;
+  border-radius: 6px;
+
+  th,
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e6ece2;
+    text-align: right;
+    vertical-align: top;
+    white-space: nowrap;
+  }
+
+  th {
+    text-align: left;
+  }
+
+  thead th {
+    background: $tint;
+    text-align: right;
+    font-size: 13px;
+
+    &:first-child {
+      text-align: left;
+    }
+  }
+
+  small {
+    display: block;
+    font-size: 11px;
+    color: $muted;
+    font-weight: 400;
+    white-space: normal;
+  }
+
+  td.up {
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  td.down {
+    color: $red-text;
+    font-weight: 700;
+  }
+
+  tr.total th,
+  tr.total td {
+    background: $tint;
+    font-weight: 700;
+  }
+}
+</style>

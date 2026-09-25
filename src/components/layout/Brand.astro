@@ -1,0 +1,54 @@
+---
+// ロゴ（名前とキャッチコピー）。ヘッダーとフッターで共用
+import { SITE_NAME } from '../../data/site';
+
+interface Props {
+  href?: string;
+  label?: string;
+}
+const { href = '/', label } = Astro.props;
+---
+<a href={href} class="brand" aria-label={label}><strong>{SITE_NAME}</strong><span>南相馬のこれからを、<br />みなさんと。</span></a>
+
+<style lang="scss">
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+
+  strong {
+    font-family: $font-sans;
+    font-size: 30px;
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+
+  span {
+    font-family: var(--hand);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.55;
+  }
+
+  // 1100px 以下で肩書きを隠し、760px 以下では小さく出し直す（順序に意味がある）
+  @include narrow-nav {
+    span {
+      display: none;
+    }
+  }
+
+  @include mobile {
+    gap: 13px;
+
+    strong {
+      font-size: 24px;
+    }
+
+    span {
+      display: block;
+      font-size: 11px;
+    }
+  }
+}
+</style>

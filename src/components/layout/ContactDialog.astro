@@ -1,5 +1,14 @@
-@use '../abstracts/tokens' as *;
+---
+// お問い合わせダイアログ。data-open="contact" のボタンから site.js が開く
+---
+<dialog id="contact" aria-labelledby="contact-title">
+  <button class="close" aria-label="閉じる">×</button>
+  <h2 id="contact-title">お問い合わせ窓口は準備中です</h2>
+  <p>現在はサイトのデザイン試作版です。連絡先が決まり次第、お問い合わせ先をご案内します。</p>
+  <p>この画面では入力や送信を受け付けていません。</p>
+</dialog>
 
+<style lang="scss">
 dialog {
   width: min(700px, 92vw);
   max-height: 85vh;
@@ -57,3 +66,4 @@ dialog {
   width: 40px;
   height: 40px;
 }
+</style>
