@@ -1,0 +1,59 @@
+@use '../abstracts/tokens' as *;
+
+dialog {
+  width: min(700px, 92vw);
+  max-height: 85vh;
+  border: 0;
+  border-radius: 12px;
+  padding: 52px 40px 40px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 20px 80px #17342044;
+
+  &::backdrop {
+    background: #102a22a6;
+    backdrop-filter: blur(3px);
+  }
+
+  h2 {
+    font-family: var(--hand);
+    color: var(--green);
+    font-size: 29px;
+    margin-bottom: 24px;
+  }
+
+  h3 {
+    margin: 25px 0 10px;
+  }
+
+  p {
+    margin-bottom: 15px;
+  }
+
+  ul {
+    padding-left: 22px;
+  }
+
+  li {
+    margin-bottom: 10px;
+  }
+
+  @include mobile {
+    padding: 50px 23px 27px;
+
+    h2 {
+      font-size: 25px;
+    }
+  }
+}
+
+.close {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+  border: 0;
+  background: none;
+  font-size: 30px;
+  width: 40px;
+  height: 40px;
+}

@@ -1,0 +1,113 @@
+@use '../abstracts/tokens' as *;
+
+// 全ページ共通の土台（リセット・タイポグラフィ・汎用クラス）
+
+:root {
+  --section-pad: 80px;
+  --green: #{$green};
+  --ink: #{$ink};
+  --sage: #{$sage};
+  --paper: #{$paper};
+  --hand: 'Klee One',serif; // カスタムプロパティは空白がそのまま残るので元の CSS と同じ表記にしておく
+
+  @include mobile {
+    --section-pad: 56px;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+
+  @include mobile {
+    scroll-padding-top: 15px;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: $font-sans;
+  font-size: 16px;
+  line-height: 1.85;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid $gold;
+  outline-offset: 5px;
+}
+
+img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h2 {
+  font-size: clamp(25px, 2.5vw, 36px);
+  line-height: 1.6;
+}
+
+h3 {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.hand {
+  font-family: var(--hand);
+  font-weight: 600;
+  letter-spacing: 0.035em;
+}
+
+.wrap {
+  width: min(1240px, 90%);
+  margin: auto;
+}
+
+.nowrap {
+  display: inline-block;
+}
+
+// hidden 属性は display 指定より優先して非表示にする
+[hidden] {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    transition: none !important;
+  }
+}

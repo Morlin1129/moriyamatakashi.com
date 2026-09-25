@@ -1,0 +1,76 @@
+// デザイントークン（Sass 変数・ミックスイン）
+// ランタイムで参照する値は base/_base.scss の CSS 変数側にも書き出している
+
+// 基本色
+$green: #234f3d;
+$ink: #222d26;
+$sage: #e8efe3;
+$paper: #faf9f3;
+
+// 派生色
+$green-hover: #37694f; // ボタン・グラフのホバー
+$green-link: #568263; // ナビのホバー・現在ページ
+$green-soft: #52765a; // 見出し脇の小さな文字
+$muted: #5c6f5f; // 補足文
+$muted-dark: #3f4d42;
+$line: #dfe8d8; // カードの罫線
+$line-soft: #dfe4d8; // リストの罫線
+$tint: #f3f7f0; // 薄い緑の下地
+$underline: #b3c5b6;
+$gold: #bd9b46; // フォーカスリング・基準線
+$gold-dark: #b8862b;
+$gold-text: #8a6d1f;
+$gold-text-dark: #7a5a12;
+$gold-bg: #f6efdc;
+$red-text: #8a4b3a;
+$red-bg: #fbe9e5;
+$gray-bg: #eceeea;
+
+// 影
+$shadow-card: 0 2px 10px #20492b0d;
+$shadow-card-hover: 0 8px 20px #20492b18;
+
+// フォント
+$font-sans: 'Noto Sans JP', sans-serif;
+
+// ブレークポイント
+$bp-mobile: 760px;
+$bp-tablet: 900px;
+$bp-nav: 1100px;
+$bp-wide: 1500px;
+
+@mixin mobile {
+  @media (max-width: $bp-mobile) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: $bp-tablet) {
+    @content;
+  }
+}
+
+@mixin narrow-nav {
+  @media (max-width: $bp-nav) {
+    @content;
+  }
+}
+
+@mixin wide {
+  @media (min-width: $bp-wide) {
+    @content;
+  }
+}
+
+// 小さなラベル（年表の種別、事業カードの状態など）
+@mixin pill {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+  padding: 2px 10px;
+  border-radius: 4px;
+  background: $sage;
+  color: var(--green);
+}

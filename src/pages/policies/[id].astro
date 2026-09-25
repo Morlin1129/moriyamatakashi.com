@@ -5,6 +5,7 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import Toc from '../../components/Toc.astro';
 import ResourceCards from '../../components/ResourceCards.astro';
 import CtaBar from '../../components/CtaBar.astro';
+import '../../styles/pages/policy-detail.scss';
 
 export async function getStaticPaths() {
   const policies = (await getCollection('policies')).sort((a, b) => a.data.order - b.data.order);

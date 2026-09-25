@@ -1,0 +1,45 @@
+@use '../abstracts/tokens' as *;
+
+.button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 35px;
+  min-height: 48px;
+  padding: 12px 27px;
+  border: 1px solid #527965;
+  border-radius: 9px;
+  background: var(--green);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  box-shadow: 0 2px 0 #143b2a18;
+  transition: background 0.2s, transform 0.2s;
+
+  &:hover {
+    background: $green-hover;
+    transform: translateY(-2px);
+  }
+
+  &.small {
+    font-size: 14px;
+    gap: 18px;
+    padding: 10px 20px;
+    min-height: 44px;
+  }
+
+  &.light {
+    background: #fff;
+    color: var(--green);
+    border-color: #fff;
+
+    &:hover {
+      background: #eef4ea;
+    }
+  }
+
+  @include mobile {
+    font-size: 15px;
+  }
+}

@@ -7,6 +7,7 @@ import MiniChart from '../../components/MiniChart.astro';
 import CompareBars from '../../components/CompareBars.astro';
 import ts from '../../data/kessan-timeseries.json';
 import cmp from '../../data/kessan-compare.json';
+import '../../styles/pages/health.scss';
 
 const rows = ts.rows;
 const oku = (v: number | null) => (v === null ? null : v / 100000); // 千円 → 億円
