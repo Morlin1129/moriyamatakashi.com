@@ -1,5 +1,5 @@
 ---
-// トップページ：取り組み一覧（5枚のカード）
+// トップページ：取り組み一覧（番号付きの縦リスト。SP は見出し→写真→説明→ボタンの縦積み）
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -10,16 +10,21 @@ const { policies } = Astro.props;
 <section id="policies" class="policies">
   <div class="wrap">
     <h2>そのためにやりたいこと</h2>
-    <div class="policy-grid">
+    <ol class="policy-list">
       {policies.map((p) => (
-        <a class="policy" href={`/policies/${p.id}/`}>
-          <span class={`crop crop${p.data.image.crop}`} role="img" aria-label={p.data.image.alt}></span>
-          <h3>{p.data.badge}</h3>
-          <span class="short-rule"></span>
-          <p>{p.data.plain}</p>
-        </a>
+        <li>
+          <a class="policy" href={`/policies/${p.id}/`}>
+            <span class="policy-num" aria-hidden="true">{String(p.data.order).padStart(2, '0')}</span>
+            <div class="policy-body">
+              <h3>{p.data.badge}</h3>
+              <p>{p.data.plain}</p>
+              <span class="policy-more">くわしく見る <span aria-hidden="true">→</span></span>
+            </div>
+            <span class={`policy-photo crop crop${p.data.image.crop}`} role="img" aria-label={p.data.image.alt}></span>
+          </a>
+        </li>
       ))}
-    </div>
+    </ol>
     <p class="small-link"><a href="/resources/">数字や資料で見る →</a></p>
   </div>
 </section>
@@ -33,88 +38,147 @@ const { policies } = Astro.props;
 
   h2 {
     font-size: clamp(24px, 2.4vw, 32px);
-    margin-bottom: 28px;
+    margin-bottom: 20px;
 
     @include mobile {
-      font-size: 24px;
-      margin-bottom: 20px;
+      font-size: 20px;
+      margin-bottom: 8px;
     }
   }
 }
 
-.policy-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 18px;
+.policy-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #c9d8c2;
 
-  @include mobile {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+  li {
+    border-top: 1px solid #c9d8c2;
   }
 }
 
+// PC：番号｜見出し＋説明｜写真 の3列
 .policy {
-  display: block;
-  padding: 0 0 18px;
-  text-align: left;
-  border: 0;
-  background: #fffdf8;
-  border-radius: 5px;
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: $shadow-card-hover;
-  }
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr) clamp(220px, 24vw, 300px);
+  gap: clamp(20px, 3vw, 40px);
+  align-items: center;
+  padding: 32px 0;
+  color: inherit;
 
   h3 {
-    padding: 6px 16px 10px;
-    font-size: 16px;
-    line-height: 1.6;
+    font-size: clamp(24px, 2.3vw, 30px);
+    font-weight: 700;
+    line-height: 1.45;
+    margin-bottom: 10px;
+    transition: color 0.2s;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.85;
+    color: $muted-dark;
+    max-width: 36em;
+  }
+
+  &:hover {
+    h3 {
+      color: var(--green);
+    }
+
+    .policy-photo {
+      transform: scale(1.03);
+    }
+
+    .policy-more span {
+      transform: translateX(4px);
+    }
   }
 
   @include mobile {
-    // 5枚目は2列の中央に置く
-    &:last-child {
-      grid-column: 1/-1;
-      width: calc(50% - 7px);
-      justify-self: center;
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 36px 0 40px;
 
     h3 {
+      font-size: 26px;
+      line-height: 1.45;
+      margin-bottom: 20px;
+    }
+
+    p {
       font-size: 15px;
-      padding-left: 12px;
+      margin-top: 20px;
     }
   }
-  p {
-    padding: 6px 16px 10px;
-    font-size: 12px;
-  }
 }
 
-.policy-tag {
-  display: inline-block;
-  margin: 14px 16px 0;
-  font-size: 11px;
+.policy-num {
+  font-family: var(--hand);
   font-weight: 600;
-  color: var(--green);
-  background: $sage;
-  border-radius: 3px;
-  padding: 1px 8px;
+  font-size: clamp(44px, 4.4vw, 60px);
+  line-height: 1;
+  color: #527a55;
 
   @include mobile {
-    margin-left: 12px;
+    font-size: 30px;
+    margin-bottom: 10px;
   }
 }
 
-.short-rule {
-  display: block;
-  width: 42px;
-  height: 3px;
-  background: #527a55;
-  border-radius: 50%;
-  margin-left: 16px;
+// SP では写真を見出しと説明のあいだに差し込む
+.policy-body {
+  @include mobile {
+    display: contents;
+
+    h3 {
+      order: 1;
+    }
+
+    p {
+      order: 3;
+    }
+
+    .policy-more {
+      order: 4;
+    }
+  }
+}
+
+.policy-photo {
+  border-radius: 5px;
+  transition: transform 0.3s;
+
+  @include mobile {
+    order: 2;
+  }
+}
+
+.policy-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--green);
+
+  span {
+    transition: transform 0.2s;
+  }
+
+  @include mobile {
+    justify-content: center;
+    margin-top: 24px;
+    padding: 14px 24px;
+    font-size: 16px;
+    border: 1.5px solid var(--green);
+    border-radius: 999px;
+    background: #fffdf8;
+  }
 }
 
 .small-link {
