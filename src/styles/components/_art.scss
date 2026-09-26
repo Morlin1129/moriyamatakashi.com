@@ -1,31 +1,12 @@
 @use '../abstracts/tokens' as *;
 
-// 写真の切り出しと、資料カード用のプレースホルダー（紙・棒グラフ・円グラフ）
+// 取り組みの写真と、資料カード用のプレースホルダー（紙・棒グラフ・円グラフ）
 
 .crop {
   display: block;
   width: 100%;
   aspect-ratio: 1.5;
-  background-image: url('/assets/reference.jpg');
-  background-size: 613% auto;
-  background-repeat: no-repeat;
-  background-position: 5.4% 40.3%;
-}
-
-.crop1 {
-  background-position: 27.7% 40.3%;
-}
-
-.crop2 {
-  background-position: 50% 40.3%;
-}
-
-.crop3 {
-  background-position: 72.4% 40.3%;
-}
-
-.crop4 {
-  background-position: 94.7% 40.3%;
+  object-fit: cover;
 }
 
 .resource-art {

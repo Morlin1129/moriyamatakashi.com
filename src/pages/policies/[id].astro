@@ -34,7 +34,7 @@ const toc = [
       <p class="page-lead">{p.lead.split('\n').map((line, i) => <>{i > 0 && <br class="pc" />}{line}</>)}</p>
       {p.policyName && <p class="page-subtitle">政策名：{p.policyName}</p>}
     </div>
-    <div class="page-hero-media"><span class={`crop crop${p.image.crop}`} role="img" aria-label={p.image.alt}></span></div>
+    <div class="page-hero-media"><img class="crop" src={p.image.src} alt={p.image.alt} /></div>
   </section>
   <div class="page-body wrap">
     <Toc items={toc} />
