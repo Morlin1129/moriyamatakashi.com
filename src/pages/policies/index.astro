@@ -21,7 +21,7 @@ const policies = (await getCollection('policies')).sort((a, b) => a.data.order -
       {policies.map((policy) => (
         <li>
           <a class="policy-card" href={`/policies/${policy.id}/`}>
-            <span class={`crop crop${policy.data.image.crop}`} role="img" aria-label={policy.data.image.alt}></span>
+            <img class="crop" src={policy.data.image.src} alt={policy.data.image.alt} loading="lazy" />
             <span class="policy-card-body">
               <small>取り組み {String(policy.data.order).padStart(2, '0')}</small>
               <strong>{policy.data.title}</strong>
@@ -65,7 +65,6 @@ const policies = (await getCollection('policies')).sort((a, b) => a.data.order -
     height: 100%;
     min-height: 180px;
     aspect-ratio: auto;
-    background-size: 613% auto;
   }
 
   @include tablet {

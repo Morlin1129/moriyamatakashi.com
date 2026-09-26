@@ -20,7 +20,7 @@ const { policies } = Astro.props;
               <p>{p.data.plain}</p>
               <span class="policy-more">くわしく見る <span aria-hidden="true">→</span></span>
             </div>
-            <span class={`policy-photo crop crop${p.data.image.crop}`} role="img" aria-label={p.data.image.alt}></span>
+            <img class="policy-photo crop" src={p.data.image.src} alt={p.data.image.alt} loading="lazy" />
           </a>
         </li>
       ))}

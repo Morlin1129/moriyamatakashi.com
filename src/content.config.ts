@@ -13,7 +13,7 @@ const policies = defineCollection({
     titleLines: z.array(z.string()),
     lead: z.string(),
     policyName: z.string().optional(),
-    image: z.object({ crop: z.number(), alt: z.string() }),
+    image: z.object({ src: z.string(), alt: z.string() }),
     issue: z.array(z.string()),
     actions: z.array(z.object({ title: z.string(), text: z.string() })),
     checks: z.array(z.string()),

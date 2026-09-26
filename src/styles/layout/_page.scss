@@ -49,10 +49,6 @@
     transform: rotate(1.2deg);
   }
 
-  > .crop {
-    background-size: 613% auto;
-  }
-
   @include tablet {
     order: 0;
   }
