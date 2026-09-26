@@ -21,7 +21,7 @@ const career = [
       <h1>森山貴士について</h1>
       <p class="page-lead">大阪市出身 ／ 2014年 南相馬へ。Webエンジニア・地域拠点運営。</p>
     </div>
-    <div class="page-hero-media"><img src="/assets/portrait.jpg" alt="プロフィール写真の仮イメージ" /></div>
+    <div class="page-hero-media"><img src="/assets/profile.webp" alt="森山貴士のプロフィール写真" class="profile-photo" /></div>
   </section>
   <div class="page-body wrap">
     <Toc items={[{ id: 'about', label: '森山貴士について' }, { id: 'career', label: '経歴' }]} />
@@ -43,6 +43,11 @@ const career = [
 </Base>
 
 <style lang="scss">
+// 枠のほうが横長で上下が切れるため、頭が切れないよう上寄せにする
+.profile-photo {
+  object-position: center 22%;
+}
+
 // プロフィール：経歴
 
 .career {

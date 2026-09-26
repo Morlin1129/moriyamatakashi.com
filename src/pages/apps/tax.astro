@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import { navItem } from '../../data/site';
 import Toc from '../../components/Toc.astro';
 import CtaBar from '../../components/CtaBar.astro';
 import kessan from '../../data/kessan-r6.json';
@@ -39,7 +40,7 @@ const toc = [
 ];
 ---
 <Base title="税金はどこへ行った？ 南相馬版" description="年収を入れると、自分の市民税が1日あたり何にいくら使われているかが見える試作ページ。南相馬市の令和6年度決算カードをもとにしています。" current="resources">
-  <Breadcrumb items={[{ label: '資料と数字', href: '/resources/' }, { label: '税金はどこへ行った？' }]} />
+  <Breadcrumb items={[{ label: navItem('resources').label, href: navItem('resources').href }, { label: '税金はどこへ行った？' }]} />
   <section class="page-hero wrap">
     <div class="page-hero-copy">
       <p class="page-badge">ミニアプリ · 試作版</p>

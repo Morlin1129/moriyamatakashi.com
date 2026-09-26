@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import { navItem } from '../../data/site';
 import Toc from '../../components/Toc.astro';
 import CtaBar from '../../components/CtaBar.astro';
 import MiniChart from '../../components/MiniChart.astro';
@@ -37,7 +38,7 @@ const toc = [
 ];
 ---
 <Base title="小高 復興のあゆみ" description="震災後の小高区で、どんな計画や調査がつくられ、どんな事業が行われ、人口などの数字がどう動いたかを一つの時間軸で見る試作ページ。" current="resources">
-  <Breadcrumb items={[{ label: '資料と数字', href: '/resources/' }, { label: '小高 復興のあゆみ' }]} />
+  <Breadcrumb items={[{ label: navItem('resources').label, href: navItem('resources').href }, { label: '小高 復興のあゆみ' }]} />
   <section class="page-hero wrap">
     <div class="page-hero-copy">
       <p class="page-badge">ミニアプリ · 試作版</p>

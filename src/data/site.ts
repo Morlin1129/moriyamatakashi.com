@@ -9,6 +9,9 @@ export type NavKey = 'vision' | 'policies' | 'resources' | 'profile';
 export const NAV: { key: NavKey; label: string; href: string }[] = [
   { key: 'vision', label: '考え方', href: '/vision/' },
   { key: 'policies', label: '取り組みたいこと', href: '/policies/' },
-  { key: 'resources', label: '資料と数字', href: '/resources/' },
+  { key: 'resources', label: 'まちを知る', href: '/resources/' },
   { key: 'profile', label: 'プロフィール', href: '/profile/' },
 ];
+
+// パンくずなどでメニュー項目を引くときに使う（ラベルのベタ書きを避ける）
+export const navItem = (key: NavKey) => NAV.find((item) => item.key === key)!;
