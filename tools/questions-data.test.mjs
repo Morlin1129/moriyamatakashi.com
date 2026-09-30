@@ -32,6 +32,7 @@ test('定例会: id が一意で、号の情報がそろっている', () => {
     assert.match(s.id, /^r\d+-(0[1-9]|1[0-2])$/, `${label}: id は r<令和年>-<月2桁>`);
     assert.ok(nonEmpty(s.name), `${label}: name が空`);
     assert.ok(Number.isInteger(s.year) && Number.isInteger(s.month) && s.month >= 1 && s.month <= 12, `${label}: 年月が不正`);
+    assert.equal(s.id, `r${s.year - 2018}-${String(s.month).padStart(2, '0')}`, `${label}: id と year / month が合わない`);
     assert.ok(Number.isInteger(s.issue?.vol), `${label}: issue.vol が整数でない`);
     assert.match(s.issue.date, /^\d{4}-\d{2}-\d{2}$/, `${label}: issue.date は YYYY-MM-DD`);
     assert.ok(isUrl(s.issue.url) && isUrl(s.issue.pdf), `${label}: issue の url / pdf が不正`);
@@ -56,6 +57,7 @@ test('質問: 参照先と値が正しい', () => {
     const label = `質問 ${q.id}「${q.title}」`;
     assert.ok(sessionIds.has(q.session), `${label}: session ${q.session} がない`);
     assert.ok(q.id.startsWith(`${q.session}-`), `${label}: id は <session>-<番号>`);
+    assert.match(q.id.slice(q.session.length + 1), /^\d{2,}$/, `${label}: id の番号は2桁以上の数字`);
     assert.ok(memberIds.has(q.member), `${label}: member ${q.member} がない`);
     assert.ok(CATEGORY_IDS.includes(q.category), `${label}: category が不正 (${q.category})`);
     assert.ok(q.direction === null || DIRECTION_IDS.includes(q.direction), `${label}: direction が不正 (${q.direction})`);

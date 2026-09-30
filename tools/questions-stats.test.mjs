@@ -56,6 +56,11 @@ test('orderQuestions: 定例会の新しい順、同じ定例会は元の順', (
   assert.deepEqual(orderQuestions(questions, sessions).map((q) => q.id), ['q2', 'q3', 'q1', 'q4']);
 });
 
+test('orderQuestions: 未知の定例会の質問は最後に回る', () => {
+  const withUnknown = [{ id: 'qx', session: 'zz' }, ...questions];
+  assert.deepEqual(orderQuestions(withUnknown, sessions).map((q) => q.id), ['q2', 'q3', 'q1', 'q4', 'qx']);
+});
+
 test('sessionCounts: 定例会の並び（古い順）に、その分野の件数', () => {
   assert.deepEqual(sessionCounts(questions, sortSessions(sessions), 'a'), [2, 1, 0]);
 });

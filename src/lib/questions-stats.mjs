@@ -32,7 +32,7 @@ export function orderQuestions(questions, sessions) {
   const rank = new Map(sortSessions(sessions).map((s, i) => [s.id, i]));
   return questions
     .map((q, i) => ({ q, i }))
-    .sort((a, b) => rank.get(b.q.session) - rank.get(a.q.session) || a.i - b.i)
+    .sort((a, b) => (rank.get(b.q.session) ?? -1) - (rank.get(a.q.session) ?? -1) || a.i - b.i)
     .map(({ q }) => q);
 }
 
