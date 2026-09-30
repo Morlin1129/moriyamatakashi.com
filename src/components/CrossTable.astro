@@ -19,7 +19,7 @@ const filter = (cond: Record<string, string>) => JSON.stringify(cond);
     <tbody>
       {table.rows.map((r) => (
         <tr>
-          <th scope="row"><a href="#list" data-q-filter={filter({ member: r.member.id })}>{r.member.name}</a></th>
+          <th scope="row">{r.total > 0 ? <a href="#list" data-q-filter={filter({ member: r.member.id })}>{r.member.name}</a> : r.member.name}{r.member.roles?.map((role) => <span class="ct-role">{role.label}</span>)}{r.member.note && <span class="ct-mark" title={r.member.note} aria-label={`注記あり：${r.member.note}`}>※</span>}</th>
           {r.counts.map((n, i) => (
             <td class={`lv-${shadeLevel(n, table.max, LEVELS)}`}>
               {n > 0
@@ -83,6 +83,27 @@ const filter = (cond: Record<string, string>) => JSON.stringify(cond);
     background: #fff;
     text-align: left;
     font-weight: 600;
+  }
+
+  // 議員名の右に並べる役職・注記の印（名前のリンクとは別）
+  th[scope='row'] a {
+    display: inline-block;
+  }
+
+  .ct-role {
+    @include pill;
+    font-size: 11px;
+    padding: 0 6px;
+    margin-left: 6px;
+    background: $gold-bg;
+    color: $gold-text-dark;
+  }
+
+  .ct-mark {
+    margin-left: 4px;
+    font-size: 12px;
+    font-weight: 400;
+    color: $muted-dark;
   }
 
   a {
