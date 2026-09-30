@@ -38,7 +38,12 @@ const topicOf = (id: string) => topics.find((t) => t.category === id);
 // 議長など役職の期間と、議員ごとの注記（表の下の注記・セレクトの表示に使う）
 const CHAIR = '議長';
 const sessionName = (id: string) => allSessions.find((s) => s.id === id)?.name ?? id;
-const roleNotes = members.flatMap((m) => (m.roles ?? []).map((r) => `${m.name}：${sessionName(r.from)}〜${sessionName(r.to)} ${r.label}`));
+// 在任の古い順に並べる
+const sessionRank = new Map(allSessions.map((s, i) => [s.id, i]));
+const roleNotes = members
+  .flatMap((m) => (m.roles ?? []).map((r) => ({ m, r })))
+  .sort((a, b) => (sessionRank.get(a.r.from) ?? 0) - (sessionRank.get(b.r.from) ?? 0))
+  .map(({ m, r }) => `${m.name}：${sessionName(r.from)}〜${sessionName(r.to)} ${r.label}`);
 const memberNotes = members.filter((m) => m.note).map((m) => `${m.name}：${m.note}`);
 const hasChair = (m: Member) => m.roles?.some((r) => r.label === CHAIR) ?? false;
 const memberOption = (m: Member) => `${m.name}${hasChair(m) ? '（議長経験）' : ''}${m.note ? '※' : ''}`;
