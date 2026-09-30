@@ -22,7 +22,7 @@ const dayoriHref = q.page ? `${session.issue.pdf}#page=${q.page}` : session.issu
       : <span class="q-dir is-none">判定なし</span>}
   </p>
   <p class="q-links">
-    <a href={dayoriHref} target="_blank" rel="noopener">市議会だより Vol.{session.issue.vol}{q.page && `（${q.page}ページ）`}↗</a>
+    <a href={dayoriHref} target="_blank" rel="noopener">市議会だより Vol.{session.issue.vol}{q.page ? `（${q.page}ページ）` : ''}↗</a>
     <a href={SOURCES.kaigiroku.url} target="_blank" rel="noopener">会議録で全文を探す↗</a>
   </p>
 </li>
@@ -56,6 +56,11 @@ const dayoriHref = q.page ? `${session.issue.pdf}#page=${q.page}` : session.issu
   }
 }
 
+.q-dir.is-positive {
+  background: $green-soft;
+}
+
+.q-dir.is-study,
 .q-dir.is-status,
 .q-dir.is-none {
   color: $ink;

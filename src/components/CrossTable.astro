@@ -7,7 +7,7 @@ const { categories, table } = Astro.props;
 const LEVELS = 5;
 const filter = (cond: Record<string, string>) => JSON.stringify(cond);
 ---
-<div class="ct-wrap" tabindex="0" aria-label="議員×分野の件数表（横にスクロールできます）">
+<div class="ct-wrap" role="region" tabindex="0" aria-label="議員×分野の件数表（横にスクロールできます）">
   <table class="ct">
     <thead>
       <tr>
@@ -24,7 +24,7 @@ const filter = (cond: Record<string, string>) => JSON.stringify(cond);
             <td class={`lv-${shadeLevel(n, table.max, LEVELS)}`}>
               {n > 0
                 ? <a href="#list" data-q-filter={filter({ member: r.member.id, category: categories[i].id })} aria-label={`${r.member.name}・${categories[i].label} ${n}件`}>{n}</a>
-                : <span aria-label="0件">·</span>}
+                : 0}
             </td>
           ))}
           <td class="ct-sum">{r.total}</td>
@@ -94,6 +94,10 @@ const filter = (cond: Record<string, string>) => JSON.stringify(cond);
     &:focus-visible {
       text-decoration: underline;
     }
+
+    &:focus-visible {
+      outline-offset: -2px;
+    }
   }
 
   thead a,
@@ -118,15 +122,20 @@ const filter = (cond: Record<string, string>) => JSON.stringify(cond);
   color: $muted;
 }
 
-@for $i from 1 through 4 {
+@for $i from 1 through 3 {
   .lv-#{$i} {
     background: color-mix(in srgb, $green #{$i * 18%}, #fff);
     font-weight: 600;
   }
 }
 
-.lv-3,
+.lv-3 {
+  color: $ink;
+}
+
 .lv-4 {
+  background: color-mix(in srgb, $green 88%, #fff);
   color: #fff;
+  font-weight: 600;
 }
 </style>

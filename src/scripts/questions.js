@@ -24,7 +24,8 @@
 
   // リンク先への移動（#list や #q-xxx）はブラウザに任せ、条件だけ設定する
   document.querySelectorAll('[data-q-filter]').forEach((link) =>
-    link.addEventListener('click', () => {
+    link.addEventListener('click', (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
       const cond = JSON.parse(link.dataset.qFilter);
       selects.forEach((s) => { s.value = cond[s.name] ?? 'all'; });
       apply();
