@@ -864,6 +864,8 @@ git commit -m "feat: 議員×分野のクロス表コンポーネントを追加
 
 ### Task 7: QuestionCard
 
+> **注記（仕上げ後）:** 最終の QuestionCard は下のコードと異なる（`page` がない質問には議会だよりへのリンクを付けない、方向性なしの注記を `questions-meta.json` の `noDirection` から取る、`positive` の色を `$direction-colors` にそろえた、など）。最終の動きは設計書（`docs/superpowers/specs/2026-09-30-general-questions-design.md`）の「エラー処理・欠損」と「データ」を参照。
+
 **Files:**
 - Create: `src/components/QuestionCard.astro`
 
