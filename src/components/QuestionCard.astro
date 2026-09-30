@@ -6,7 +6,7 @@ interface Props { q: Question; session: Session; member: Member }
 const { q, session, member } = Astro.props;
 const category = CATEGORIES.find((c) => c.id === q.category);
 const direction = DIRECTIONS.find((d) => d.id === q.direction);
-const dayoriHref = q.page ? `${session.issue.pdf}#page=${q.page}` : session.issue.url;
+const dayoriHref = q.page ? `${session.issue.pdf}#page=${q.page}` : null;
 ---
 <li id={`q-${q.id}`} class="q-card" data-member={member.id} data-category={q.category} data-session={session.id} data-direction={q.direction ?? 'none'}>
   <p class="q-meta">{session.name} · {member.name}</p>
@@ -19,10 +19,10 @@ const dayoriHref = q.page ? `${session.issue.pdf}#page=${q.page}` : session.issu
   <p class="q-direction">
     {direction
       ? <><span class={`q-dir is-${direction.id}`}>{direction.label}</span><span class="q-reason">{q.reason}</span></>
-      : <span class="q-dir is-none">判定なし</span>}
+      : <><span class="q-dir is-none">答弁の要約なし</span><span class="q-reason">{q.page ? '市議会だよりでは件名のみ掲載' : '市議会だよりに掲載なし'}</span></>}
   </p>
   <p class="q-links">
-    <a href={dayoriHref} target="_blank" rel="noopener">市議会だより Vol.{session.issue.vol}{q.page ? `（${q.page}ページ）` : ''}↗</a>
+    {dayoriHref && <a href={dayoriHref} target="_blank" rel="noopener">市議会だより Vol.{session.issue.vol}（{q.page}ページ）↗</a>}
     <a href={SOURCES.kaigiroku.url} target="_blank" rel="noopener">会議録で全文を探す↗</a>
   </p>
 </li>

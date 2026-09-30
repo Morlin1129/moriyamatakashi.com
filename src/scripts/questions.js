@@ -3,6 +3,7 @@
 (() => {
   const form = document.getElementById('q-filter');
   if (!form) return;
+  form.hidden = false;
   const selects = [...form.querySelectorAll('select')];
   const cards = [...document.querySelectorAll('#q-list > li')];
   const count = document.getElementById('q-count');
