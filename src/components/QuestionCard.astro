@@ -1,0 +1,132 @@
+---
+// 一般質問1件のカード。絞り込み用に data-member / data-category / data-session / data-direction を持つ。
+import type { Question, Session, Member } from '../data/questions-types';
+import { CATEGORIES, DIRECTIONS, SOURCES } from '../data/questions-types';
+interface Props { q: Question; session: Session; member: Member }
+const { q, session, member } = Astro.props;
+const category = CATEGORIES.find((c) => c.id === q.category);
+const direction = DIRECTIONS.find((d) => d.id === q.direction);
+const dayoriHref = q.page ? `${session.issue.pdf}#page=${q.page}` : session.issue.url;
+---
+<li id={`q-${q.id}`} class="q-card" data-member={member.id} data-category={q.category} data-session={session.id} data-direction={q.direction ?? 'none'}>
+  <p class="q-meta">{session.name} · {member.name}</p>
+  <p class="q-tags"><span class="q-cat">{category?.label}</span></p>
+  <h3>{q.title}</h3>
+  <dl class="q-body">
+    <div><dt>質問</dt><dd>{q.question}</dd></div>
+    {q.answer && <div><dt>答弁</dt><dd>{q.answer}</dd></div>}
+  </dl>
+  <p class="q-direction">
+    {direction
+      ? <><span class={`q-dir is-${direction.id}`}>{direction.label}</span><span class="q-reason">{q.reason}</span></>
+      : <span class="q-dir is-none">判定なし</span>}
+  </p>
+  <p class="q-links">
+    <a href={dayoriHref} target="_blank" rel="noopener">市議会だより Vol.{session.issue.vol}{q.page && `（${q.page}ページ）`}↗</a>
+    <a href={SOURCES.kaigiroku.url} target="_blank" rel="noopener">会議録で全文を探す↗</a>
+  </p>
+</li>
+
+<style lang="scss">
+// 一般質問 みんなの論点: 質問カード
+
+.q-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px 20px 6px;
+  box-shadow: $shadow-card;
+  scroll-margin-top: 24px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.q-cat {
+  @include pill;
+}
+
+.q-dir {
+  @include pill;
+  color: #fff;
+  margin-right: 8px;
+}
+
+@each $id, $color in $direction-colors {
+  .q-dir.is-#{$id} {
+    background: $color;
+  }
+}
+
+.q-dir.is-status,
+.q-dir.is-none {
+  color: $ink;
+}
+
+.q-dir.is-none {
+  background: $gray-bg;
+}
+
+:global(.prose) .q-card {
+  h3 {
+    font-size: 17px;
+    line-height: 1.6;
+    margin: 0 0 8px;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.8;
+    margin: 0 0 8px;
+  }
+
+  p.q-meta {
+    font-size: 13px;
+    color: $muted;
+    margin-bottom: 4px;
+  }
+
+  p.q-tags {
+    margin-bottom: 6px;
+  }
+
+  p.q-links {
+    font-size: 13px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+  }
+}
+
+.q-body {
+  margin: 0 0 8px;
+  display: grid;
+  gap: 6px;
+
+  div {
+    display: grid;
+    grid-template-columns: 3em 1fr;
+    gap: 8px;
+  }
+
+  dt {
+    font-size: 12px;
+    font-weight: 700;
+    color: $green-soft;
+    padding-top: 3px;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+}
+
+.q-reason {
+  font-size: 13px;
+  color: $muted-dark;
+}
+
+.q-links a {
+  color: var(--green);
+}
+</style>
