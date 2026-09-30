@@ -44,12 +44,13 @@ test('定例会: id が一意で、号の情報がそろっている', () => {
   }
 });
 
-test('議員: id が一意で、よみがあり、1件以上質問している', () => {
+test('議員: id が一意で、よみと議席番号（正の整数で一意）がある', () => {
   unique(data.members.map((m) => m.id), '議員');
+  unique(data.members.map((m) => m.seat), '議席番号');
   for (const m of data.members) {
     assert.ok(nonEmpty(m.name) && nonEmpty(m.kana), `議員 ${m.id}: name / kana が空`);
     assert.match(m.kana, /^[ぁ-ゖー\s]+$/, `議員 ${m.id}: kana はひらがな`);
-    assert.ok(data.questions.some((q) => q.member === m.id), `議員 ${m.id}: 質問がない（一覧から外す）`);
+    assert.ok(Number.isInteger(m.seat) && m.seat > 0, `議員 ${m.id}: seat は正の整数`);
     if (m.note !== undefined) assert.ok(nonEmpty(m.note), `議員 ${m.id}: note が空`);
   }
 });
