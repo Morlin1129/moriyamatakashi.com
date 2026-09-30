@@ -4,9 +4,16 @@ import type { Category, CrossTab } from '../data/questions-types';
 import { shadeLevel } from '../lib/questions-stats.mjs';
 interface Props { categories: Category[]; table: CrossTab }
 const { categories, table } = Astro.props;
-const LEVELS = 5;
+// 濃淡の段階数（0件＋色の8段階）。色の段階数は下の style の $shade-mixes と合わせる
+const LEVELS = 9;
+const legendLevels = Array.from({ length: LEVELS - 1 }, (_, i) => i + 1);
 const filter = (cond: Record<string, string>) => JSON.stringify(cond);
 ---
+<p class="ct-legend">
+  <span>少ない</span>
+  <span class="ct-legend-steps" aria-hidden="true">{legendLevels.map((lv) => <i class={`lv-${lv}`}></i>)}</span>
+  <span>多い</span>
+</p>
 <div class="ct-wrap" role="region" tabindex="0" aria-label="議員×分野の件数表（横にスクロールできます）">
   <table class="ct">
     <thead>
@@ -138,25 +145,43 @@ const filter = (cond: Record<string, string>) => JSON.stringify(cond);
   }
 }
 
-// 件数の濃淡（0 は無色、1〜4 は緑を段階的に濃く）
+// 件数の濃淡（0 は無色、1〜 は緑と白の混ぜ方を段階的に濃くする）
+// 文字と背景のコントラスト比 4.5:1 を満たすため、混ぜ方 58%〜74% は使わない。
+// $shade-white-from 以上は白い文字、それ未満は $ink の文字にする。
+$shade-mixes: 8%, 20%, 32%, 44%, 56%, 75%, 87%, 100%;
+$shade-white-from: 70%;
+
 .lv-0 {
   color: $muted;
 }
 
-@for $i from 1 through 3 {
+@each $mix in $shade-mixes {
+  $i: index($shade-mixes, $mix);
+
   .lv-#{$i} {
-    background: color-mix(in srgb, $green #{$i * 18%}, #fff);
+    background: color-mix(in srgb, $green $mix, #fff);
+    color: if($mix >= $shade-white-from, #fff, $ink);
     font-weight: 600;
   }
 }
 
-.lv-3 {
-  color: $ink;
+// 表の上の凡例
+.ct-legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 6px;
+  font-size: 12px;
+  color: $muted-dark;
 }
 
-.lv-4 {
-  background: color-mix(in srgb, $green 88%, #fff);
-  color: #fff;
-  font-weight: 600;
+.ct-legend-steps {
+  display: inline-flex;
+  border: 1px solid $line;
+
+  i {
+    width: 16px;
+    height: 10px;
+  }
 }
 </style>
