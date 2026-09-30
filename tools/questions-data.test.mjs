@@ -23,6 +23,7 @@ test('対応表: id が一意で表示名がある', () => {
   unique(DIRECTION_IDS, '方向性');
   for (const c of [...meta.categories, ...meta.directions]) assert.ok(nonEmpty(c.label), `${c.id}: label が空`);
   for (const [k, s] of Object.entries(meta.sources)) assert.ok(isUrl(s.url) && nonEmpty(s.title), `sources.${k} が不正`);
+  for (const k of ['id', 'label', 'titleOnly', 'notInDayori']) assert.ok(nonEmpty(meta.noDirection[k]), `noDirection.${k} が空`);
 });
 
 test('定例会: id が一意で、号の情報がそろっている', () => {

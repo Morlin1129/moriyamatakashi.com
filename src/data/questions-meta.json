@@ -18,7 +18,7 @@
     { "id": "status", "label": "現状説明のみ", "hint": "事実や現状の説明で、方向を示していない" },
     { "id": "no", "label": "実施しない", "hint": "「考えていない」「困難」「予定はない」" }
   ],
-  "noDirection": { "id": "none", "label": "答弁の要約なし" },
+  "noDirection": { "id": "none", "label": "答弁の要約なし", "titleOnly": "市議会だよりでは件名のみ掲載", "notInDayori": "市議会だよりに掲載なし" },
   "sources": {
     "dayori": { "title": "南相馬市議会「市議会だより」", "url": "https://www.city.minamisoma.lg.jp/portal/admin/shigikai/3/index.html" },
     "kaigiroku": { "title": "南相馬市議会 会議録検索システム", "url": "https://ssp.kaigiroku.net/tenant/minamisoma/pg/index.html" },

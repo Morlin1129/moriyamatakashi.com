@@ -29,7 +29,7 @@ $gray-bg: #eceeea;
 // 一般質問の答弁の方向性（questions-meta.json の directions の id に対応）
 $direction-colors: (
   doing: $green,
-  positive: $green-link,
+  positive: $green-soft,
   study: $gold,
   status: $underline,
   no: $red-text,

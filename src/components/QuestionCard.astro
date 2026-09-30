@@ -19,7 +19,7 @@ const dayoriHref = q.page ? `${session.issue.pdf}#page=${q.page}` : null;
   <p class="q-direction">
     {direction
       ? <><span class={`q-dir is-${direction.id}`}>{direction.label}</span><span class="q-reason">{q.reason}</span></>
-      : <><span class="q-dir is-none">{NO_DIRECTION.label}</span><span class="q-reason">{q.page ? '市議会だよりでは件名のみ掲載' : '市議会だよりに掲載なし'}</span></>}
+      : <><span class="q-dir is-none">{NO_DIRECTION.label}</span><span class="q-reason">{q.page ? NO_DIRECTION.titleOnly : NO_DIRECTION.notInDayori}</span></>}
   </p>
   <p class="q-links">
     {dayoriHref && <a href={dayoriHref} target="_blank" rel="noopener">市議会だより Vol.{session.issue.vol}（{q.page}ページ）↗</a>}
@@ -54,10 +54,6 @@ const dayoriHref = q.page ? `${session.issue.pdf}#page=${q.page}` : null;
   .q-dir.is-#{$id} {
     background: $color;
   }
-}
-
-.q-dir.is-positive {
-  background: $green-soft;
 }
 
 .q-dir.is-study,

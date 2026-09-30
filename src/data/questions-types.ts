@@ -44,5 +44,8 @@ export interface CrossTab {
 
 export const CATEGORIES = meta.categories as Category[];
 export const DIRECTIONS = meta.directions as Direction[];
-export const NO_DIRECTION = meta.noDirection as { id: string; label: string };
+/** 方向性を判定していない質問の表示。titleOnly / notInDayori はカードの注記（議会だよりに件名だけ載った / 載っていない） */
+export interface NoDirection { id: string; label: string; titleOnly: string; notInDayori: string }
+
+export const NO_DIRECTION = meta.noDirection as NoDirection;
 export const SOURCES = meta.sources as Record<'dayori' | 'kaigiroku' | 'subjects', Source>;

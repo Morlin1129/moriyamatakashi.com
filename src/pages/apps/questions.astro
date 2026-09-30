@@ -49,8 +49,8 @@ const toc = [
     <div class="page-hero-copy">
       <p class="page-badge">ミニアプリ · 試作版</p>
       <h1><span class="nowrap">一般質問</span><span class="nowrap">みんなの論点</span></h1>
-      <p class="page-lead">市議会の一般質問で、どの分野が、どれくらい取り上げられてきたか。市の答弁はどんな方向だったか。<br class="pc" />{range}の{questions.length}件を、市議会だよりの要約から整理しました。</p>
-      <p class="page-subtitle">データ：{SOURCES.dayori.title}（各質問に該当号へのリンクあり）。分野・要約・方向性はAIによる分類です。</p>
+      <p class="page-lead">市議会の一般質問で、どの分野が、どれくらい取り上げられてきたか。市の答弁はどんな方向だったか。<br class="pc" />{range}の{questions.length}件を、市議会だよりの要約と一般質問件名表から整理しました。</p>
+      <p class="page-subtitle">データ：{SOURCES.dayori.title}（議会だよりに載った質問には該当号へのリンクあり）、{SOURCES.subjects.title}。分野・要約・方向性はAIによる分類です。</p>
     </div>
   </section>
 
@@ -95,7 +95,7 @@ const toc = [
         <dl class="dir-defs">
           {DIRECTIONS.map((d) => <div><dt>{d.label}</dt><dd>{d.hint}</dd></div>)}
         </dl>
-        <DirectionBar label="全体" counts={countBy(questions, 'direction', DIRECTION_IDS)} legend />
+        <DirectionBar label="全体" counts={countBy(questions, 'direction', DIRECTION_IDS)} legend unjudged={undetermined} />
         {CATEGORIES.filter((c, i) => table.colTotals[i] > 0).map((c) => (
           <DirectionBar label={c.label} counts={countBy(questions.filter((q) => q.category === c.id), 'direction', DIRECTION_IDS)} />
         ))}
@@ -117,7 +117,7 @@ const toc = [
 
       <section id="method">
         <h2>データと注意点</h2>
-        <p>{range}の定例会で行われた一般質問を、各号の市議会だよりに載った要約から書き起こしています。質問と答弁の文章は要約をさらに短くしたもので、原文ではありません。正確な内容は、各質問のリンクから市議会だよりの原文、または会議録で確かめてください。</p>
+        <p>{range}の定例会で行われた一般質問を、各号の市議会だよりに載った要約から書き起こしています。市議会だよりに載っていない件名と、「その他の質問」として件名だけが載っているものは、市議会の一般質問件名表（件名・要旨）から質問の側だけをまとめました。質問と答弁の文章は要約をさらに短くしたもので、原文ではありません。正確な内容は、各質問のリンクから市議会だよりの原文（載っている質問のみ）、または会議録で確かめてください。</p>
         <ol class="action-list">
           <li><h3>分野と方向性はAIによる分類</h3><p>分野は1件につき主な分野を1つだけ選んでいます。複数の分野にまたがる質問もあるため、件数は目安です。方向性は、議会だよりに載った答弁の要約から判定しており、同じ答弁でも読み方によって判定が分かれることがあると考えています。</p></li>
           <li><h3>件数は取り上げた回数</h3><p>このページの件数は、市議会の一般質問件名表の件名ごとに1件と数えたものです。市議会だよりで「その他の質問」として件名だけが載っているものも含みます。質問の深さや成果を表すものではありません。一般質問を行った議員だけを載せています。</p></li>
