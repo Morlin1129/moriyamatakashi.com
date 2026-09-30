@@ -22,3 +22,9 @@ PDFのレイアウトは年度で少し違うため、読み取りは完全で�
 ```sh
 npm test
 ```
+
+## questions-data.test.mjs / questions-stats.test.mjs
+
+`questions-data.test.mjs` は `src/data/questions.json`・`questions-analysis.json`・`questions-meta.json`（ミニアプリ「一般質問 みんなの論点」）の構造を確かめます。id の一意性と参照先、分野・方向性の値、方向性があるときの答弁・判定理由の有無、未収録の定例会の `note`、要約に URL を書かないこと、分析の質問 id と分野の一致を見ます。中身の事実関係は見ません。
+
+`questions-stats.test.mjs` は集計関数 `src/lib/questions-stats.mjs` を確かめます。

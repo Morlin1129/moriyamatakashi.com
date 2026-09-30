@@ -1,0 +1,141 @@
+---
+// 議員×分野のクロス表。セル・見出しは #list へのリンクで、src/scripts/questions.js が data-q-filter の条件で一覧を絞り込む。
+import type { Category, CrossTab } from '../data/questions-types';
+import { shadeLevel } from '../lib/questions-stats.mjs';
+interface Props { categories: Category[]; table: CrossTab }
+const { categories, table } = Astro.props;
+const LEVELS = 5;
+const filter = (cond: Record<string, string>) => JSON.stringify(cond);
+---
+<div class="ct-wrap" role="region" tabindex="0" aria-label="議員×分野の件数表（横にスクロールできます）">
+  <table class="ct">
+    <thead>
+      <tr>
+        <th scope="col" class="ct-corner">議員</th>
+        {categories.map((c) => <th scope="col"><a href="#list" data-q-filter={filter({ category: c.id })}>{c.label}</a></th>)}
+        <th scope="col" class="ct-sum">合計</th>
+      </tr>
+    </thead>
+    <tbody>
+      {table.rows.map((r) => (
+        <tr>
+          <th scope="row"><a href="#list" data-q-filter={filter({ member: r.member.id })}>{r.member.name}</a></th>
+          {r.counts.map((n, i) => (
+            <td class={`lv-${shadeLevel(n, table.max, LEVELS)}`}>
+              {n > 0
+                ? <a href="#list" data-q-filter={filter({ member: r.member.id, category: categories[i].id })} aria-label={`${r.member.name}・${categories[i].label} ${n}件`}>{n}</a>
+                : 0}
+            </td>
+          ))}
+          <td class="ct-sum">{r.total}</td>
+        </tr>
+      ))}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th scope="row">合計</th>
+        {table.colTotals.map((n) => <td class="ct-sum">{n}</td>)}
+        <td class="ct-sum">{table.total}</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<style lang="scss">
+// 一般質問 みんなの論点: 議員×分野のクロス表
+
+.ct-wrap {
+  overflow-x: auto;
+  margin: 0 0 1.2em;
+  border: 1px solid $line;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.ct {
+  border-collapse: collapse;
+  font-size: 13px;
+  width: 100%;
+
+  th,
+  td {
+    border-bottom: 1px solid $line-soft;
+    padding: 6px 8px;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  thead th {
+    font-size: 12px;
+    font-weight: 600;
+    white-space: normal;
+    min-width: 5.5em;
+    vertical-align: bottom;
+    line-height: 1.4;
+  }
+
+  // 議員名の列は横スクロールしても残す
+  th[scope='row'],
+  .ct-corner {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: #fff;
+    text-align: left;
+    font-weight: 600;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+
+    &:hover,
+    &:focus-visible {
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline-offset: -2px;
+    }
+  }
+
+  thead a,
+  th[scope='row'] a {
+    color: var(--green);
+  }
+
+  .ct-sum {
+    font-weight: 700;
+    background: $tint;
+  }
+
+  tfoot th,
+  tfoot td {
+    border-bottom: 0;
+    background: $tint;
+  }
+}
+
+// 件数の濃淡（0 は無色、1〜4 は緑を段階的に濃く）
+.lv-0 {
+  color: $muted;
+}
+
+@for $i from 1 through 3 {
+  .lv-#{$i} {
+    background: color-mix(in srgb, $green #{$i * 18%}, #fff);
+    font-weight: 600;
+  }
+}
+
+.lv-3 {
+  color: $ink;
+}
+
+.lv-4 {
+  background: color-mix(in srgb, $green 88%, #fff);
+  color: #fff;
+  font-weight: 600;
+}
+</style>

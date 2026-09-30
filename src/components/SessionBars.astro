@@ -1,0 +1,49 @@
+---
+// 分野ごとの、定例会別件数の小さな縦棒。max を全分野で共通にして目盛りをそろえる。
+import type { Session } from '../data/questions-types';
+interface Props { sessions: Session[]; counts: number[]; max: number; label: string }
+const { sessions, counts, max, label } = Astro.props;
+const summary = sessions.map((s, i) => `${s.name} ${counts[i]}件`).join('、');
+---
+<div class="sbars" role="img" aria-label={`${label}の定例会ごとの件数：${summary}`}>
+  {sessions.map((s, i) => (
+    <span class="sbars-col" title={`${s.name} ${counts[i]}件`}>
+      <i style={`height:${max > 0 ? (counts[i] / max) * 100 : 0}%`}></i>
+    </span>
+  ))}
+</div>
+{sessions.length > 1 && <p class="sbars-axis"><span>{sessions[0]?.name.replace('定例会', '')}</span><span>{sessions.at(-1)?.name.replace('定例会', '')}</span></p>}
+
+<style lang="scss">
+// 一般質問 みんなの論点: 定例会ごとの件数
+
+.sbars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 36px;
+  border-bottom: 1px solid $line;
+}
+
+.sbars-col {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+
+  i {
+    display: block;
+    width: 100%;
+    background: $green-link;
+    border-radius: 1px 1px 0 0;
+  }
+}
+
+:global(.prose) p.sbars-axis {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: $muted;
+  margin: 2px 0 0;
+}
+</style>

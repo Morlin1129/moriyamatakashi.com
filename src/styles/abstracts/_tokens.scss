@@ -26,6 +26,15 @@ $red-text: #8a4b3a;
 $red-bg: #fbe9e5;
 $gray-bg: #eceeea;
 
+// 一般質問の答弁の方向性（questions-meta.json の directions の id に対応）
+$direction-colors: (
+  doing: $green,
+  positive: $green-soft,
+  study: $gold,
+  status: $underline,
+  no: $red-text,
+);
+
 // 影
 $shadow-card: 0 2px 10px #20492b0d;
 $shadow-card-hover: 0 8px 20px #20492b18;

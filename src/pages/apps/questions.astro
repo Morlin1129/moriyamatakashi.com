@@ -1,0 +1,323 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import Toc from '../../components/Toc.astro';
+import CtaBar from '../../components/CtaBar.astro';
+import CrossTable from '../../components/CrossTable.astro';
+import DirectionBar from '../../components/DirectionBar.astro';
+import SessionBars from '../../components/SessionBars.astro';
+import QuestionCard from '../../components/QuestionCard.astro';
+import { navItem } from '../../data/site';
+import { CATEGORIES, DIRECTIONS, NO_DIRECTION, SOURCES } from '../../data/questions-types';
+import type { Session, Member, Question, Topic } from '../../data/questions-types';
+import data from '../../data/questions.json';
+import analysis from '../../data/questions-analysis.json';
+import { sortMembers, sortSessions, crossTab, countBy, orderQuestions, sessionCounts } from '../../lib/questions-stats.mjs';
+
+const TITLE = '一般質問 みんなの論点';
+const allSessions = sortSessions(data.sessions as Session[]);
+const sessions = allSessions.filter((s) => !s.note);
+const missing = allSessions.filter((s) => s.note);
+const members = sortMembers(data.members as Member[]);
+const questions = data.questions as Question[];
+const topics = analysis.topics as Topic[];
+
+const sessionById = new Map(sessions.map((s) => [s.id, s]));
+const memberById = new Map(members.map((m) => [m.id, m]));
+const questionById = new Map(questions.map((q) => [q.id, q]));
+const DIRECTION_IDS = DIRECTIONS.map((d) => d.id);
+
+const table = crossTab(questions, members, CATEGORIES);
+const undetermined = questions.filter((q) => q.direction === null).length;
+const perCategory = CATEGORIES.map((c) => ({ category: c, counts: sessionCounts(questions, sessions, c.id) }));
+const sessionMax = Math.max(0, ...perCategory.flatMap((p) => p.counts));
+const listed = orderQuestions(questions, sessions);
+const range = sessions.length === 0 ? '' : sessions.length === 1 ? sessions[0].name : `${sessions[0].name}〜${sessions.at(-1)!.name}`;
+const topicOf = (id: string) => topics.find((t) => t.category === id);
+
+const toc = [
+  { id: 'numbers', label: '数字で見る' },
+  { id: 'topics', label: '主要トピック' },
+  { id: 'answers', label: '答弁の方向性' },
+  { id: 'list', label: '質問一覧' },
+  { id: 'method', label: 'データと注意点' },
+];
+---
+<Base title={TITLE} description="南相馬市議会の現任期の一般質問を、議員別・分野別の件数、主要トピック、答弁の方向性で一覧できる試作ページ。" current="resources">
+  <Breadcrumb items={[{ label: navItem('resources').label, href: navItem('resources').href }, { label: TITLE }]} />
+  <section class="page-hero wrap">
+    <div class="page-hero-copy">
+      <p class="page-badge">ミニアプリ · 試作版</p>
+      <h1><span class="nowrap">一般質問</span><span class="nowrap">みんなの論点</span></h1>
+      <p class="page-lead">市議会の一般質問で、どの分野が、どれくらい取り上げられてきたか。市の答弁はどんな方向だったか。<br class="pc" />{range}の{questions.length}件を、市議会だよりの要約と一般質問件名表から整理しました。</p>
+      <p class="page-subtitle">データ：{SOURCES.dayori.title}（議会だよりに載った質問には該当号へのリンクあり）、{SOURCES.subjects.title}。分野・要約・方向性はAIによる分類です。</p>
+    </div>
+  </section>
+
+  <div class="page-body wrap">
+    <Toc items={toc} />
+    <article class="prose">
+      <section id="numbers">
+        <h2>数字で見る</h2>
+        <ul class="q-stats">
+          <li><b>{questions.length}</b><span>質問の件数</span></li>
+          <li><b>{members.length}</b><span>質問した議員</span></li>
+          <li><b>{sessions.length}</b><span>収録した定例会</span></li>
+        </ul>
+        <p>議員ごと・分野ごとの件数です。色が濃いほど件数が多いことを表します。数字や議員名・分野名を押すと、下の質問一覧をその条件で絞り込みます。議員は五十音順に並べています。件数は取り上げた回数で、質問の中身の良しあしを表すものではありません。</p>
+        <CrossTable categories={CATEGORIES} table={table} />
+      </section>
+
+      <section id="topics">
+        <h2>主要トピック</h2>
+        <p>分野ごとに、繰り返し取り上げられた論点をAIがまとめました。棒は、その分野の定例会ごとの件数です{sessions.length > 1 && `（${sessions[0].name}から${sessions.at(-1)!.name}まで、左が古い順）`}。</p>
+        {topics.length === 0 && <p class="note-small">主要トピックの分析は、全期間のデータがそろってから載せます。</p>}
+        <div class="topic-grid">
+          {perCategory.filter((p) => table.colTotals[CATEGORIES.indexOf(p.category)] > 0).map(({ category, counts }) => (
+            <section class="topic-card">
+              <h3>{category.label}<small>{table.colTotals[CATEGORIES.indexOf(category)]}件</small></h3>
+              <SessionBars sessions={sessions} counts={counts} max={sessionMax} label={category.label} />
+              {topicOf(category.id) && (
+                <ul class="topic-points">
+                  {topicOf(category.id)!.points.map((p) => (
+                    <li>{p.text}{questionById.has(p.questionIds[0]) && <a href={`#q-${p.questionIds[0]}`} data-q-filter="{}">{p.questionIds.length}件 · 例を見る：{questionById.get(p.questionIds[0])!.title}</a>}</li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          ))}
+        </div>
+      </section>
+
+      <section id="answers">
+        <h2>答弁の方向性</h2>
+        <p>市の答弁の結論が、次の{DIRECTIONS.length}つのどれに近いかをAIが判定しました。判定は市議会だよりの要約だけにもとづくもので、答弁の細かな言い回しや、その後の実際の対応までは反映していません。{undetermined > 0 && `市議会だよりに答弁の要約が載っていない${undetermined}件（「その他の質問」など）は、方向性を判定していません。`}</p>
+        <dl class="dir-defs">
+          {DIRECTIONS.map((d) => <div><dt>{d.label}</dt><dd>{d.hint}</dd></div>)}
+        </dl>
+        <DirectionBar label="全体" counts={countBy(questions, 'direction', DIRECTION_IDS)} legend unjudged={undetermined} />
+        {CATEGORIES.filter((c, i) => table.colTotals[i] > 0).map((c) => (
+          <DirectionBar label={c.label} counts={countBy(questions.filter((q) => q.category === c.id), 'direction', DIRECTION_IDS)} />
+        ))}
+      </section>
+
+      <section id="list">
+        <h2>質問一覧</h2>
+        <form id="q-filter" class="q-filter" aria-label="質問一覧の絞り込み" hidden>
+          <label>議員<select name="member"><option value="all">すべて</option>{members.map((m) => <option value={m.id}>{m.name}</option>)}</select></label>
+          <label>分野<select name="category"><option value="all">すべて</option>{CATEGORIES.map((c) => <option value={c.id}>{c.label}</option>)}</select></label>
+          <label>定例会<select name="session"><option value="all">すべて</option>{[...sessions].reverse().map((s) => <option value={s.id}>{s.name}</option>)}</select></label>
+          <label>方向性<select name="direction"><option value="all">すべて</option>{DIRECTIONS.map((d) => <option value={d.id}>{d.label}</option>)}<option value={NO_DIRECTION.id}>{NO_DIRECTION.label}</option></select></label>
+          <p class="q-filter-foot"><span aria-live="polite"><b id="q-count">{listed.length}</b>件</span><button type="reset" class="chip">条件をクリア</button></p>
+        </form>
+        <ol id="q-list" class="q-list">
+          {listed.map((q) => <QuestionCard q={q} session={sessionById.get(q.session)!} member={memberById.get(q.member)!} />)}
+        </ol>
+      </section>
+
+      <section id="method">
+        <h2>データと注意点</h2>
+        <p>{range}の定例会で行われた一般質問を、各号の市議会だよりに載った要約から書き起こしています。市議会だよりに載っていない件名と、「その他の質問」として件名だけが載っているものは、市議会の一般質問件名表（件名・要旨）から質問の側だけをまとめました。質問と答弁の文章は要約をさらに短くしたもので、原文ではありません。正確な内容は、各質問のリンクから市議会だよりの原文（載っている質問のみ）、または会議録で確かめてください。</p>
+        <ol class="action-list">
+          <li><h3>分野と方向性はAIによる分類</h3><p>分野は1件につき主な分野を1つだけ選んでいます。複数の分野にまたがる質問もあるため、件数は目安です。方向性は、議会だよりに載った答弁の要約から判定しており、同じ答弁でも読み方によって判定が分かれることがあると考えています。</p></li>
+          <li><h3>件数は取り上げた回数</h3><p>このページの件数は、市議会の一般質問件名表の件名ごとに1件と数えたものです。市議会だよりで「その他の質問」として件名だけが載っているものも含みます。質問の深さや成果を表すものではありません。一般質問を行った議員だけを載せています。</p></li>
+          {missing.length > 0 && <li><h3>未収録の定例会</h3><p>{missing.map((s) => `${s.name}（${s.note}）`).join('、')}</p></li>}
+          <li><h3>誤りを見つけたら</h3><p>このページの内容はすべて JSON ファイルに置いています。誤りがあれば<button type="button" class="link-button" data-open="contact">お問い合わせ</button>からお知らせください。</p></li>
+        </ol>
+        <h3>出典</h3>
+        <ul class="source-list">
+          {Object.values(SOURCES).map((s) => <li><a href={s.url} target="_blank" rel="noopener">{s.title}↗</a></li>)}
+        </ul>
+      </section>
+    </article>
+  </div>
+  <CtaBar />
+</Base>
+
+<script src="../../scripts/questions.js"></script>
+
+<style lang="scss">
+// ミニアプリ：一般質問 みんなの論点（表・棒・カードは components/ 側）
+
+// 親の grid で記事の幅がクロス表の最小幅まで広がらないようにする（表は .ct-wrap 内で横スクロール）
+.prose {
+  min-width: 0;
+}
+
+.q-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.4em;
+
+  li {
+    background: $tint;
+    border: 1px solid $line;
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: grid;
+    gap: 2px;
+  }
+
+  b {
+    font-size: 28px;
+    color: var(--green);
+    line-height: 1.2;
+  }
+
+  span {
+    font-size: 13px;
+    color: $muted;
+  }
+}
+
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin: 0 0 1.2em;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.topic-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px 18px 10px;
+  box-shadow: $shadow-card;
+  min-width: 0;
+
+  h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 16px;
+    margin: 0 0 8px;
+
+    small {
+      font-size: 13px;
+      font-weight: 400;
+      color: $muted;
+    }
+  }
+}
+
+.topic-points {
+  margin: 10px 0 0;
+  padding-left: 1.2em;
+  font-size: 14px;
+  line-height: 1.8;
+
+  li {
+    margin-bottom: 6px;
+  }
+
+  a {
+    display: block;
+    font-size: 12px;
+    color: var(--green);
+  }
+}
+
+.dir-defs {
+  display: grid;
+  gap: 4px;
+  margin: 0 0 1em;
+  font-size: 13px;
+
+  div {
+    display: grid;
+    grid-template-columns: 11em 1fr;
+    gap: 8px;
+
+    @include mobile {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+
+  dt {
+    font-weight: 700;
+  }
+
+  dd {
+    margin: 0;
+    color: $muted-dark;
+  }
+}
+
+.q-filter[hidden] {
+  display: none;
+}
+
+.q-filter {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 0 0 16px;
+  padding: 14px;
+  background: $tint;
+  border-radius: 8px;
+
+  @include mobile {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  label {
+    display: grid;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: $green-soft;
+  }
+
+  select {
+    font: inherit;
+    font-size: 14px;
+    font-weight: 400;
+    color: $ink;
+    padding: 6px 8px;
+    border: 1px solid $line;
+    border-radius: 6px;
+    background: #fff;
+    min-width: 0;
+  }
+}
+
+:global(.prose) p.q-filter-foot {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  font-size: 14px;
+
+  b {
+    font-size: 18px;
+    color: var(--green);
+    margin-right: 2px;
+  }
+}
+
+.q-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.4em;
+  display: grid;
+  gap: 12px;
+}
+
+.link-button {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--green);
+  text-decoration: underline;
+  cursor: pointer;
+}
+</style>
