@@ -35,6 +35,15 @@ const listed = orderQuestions(questions, sessions);
 const range = sessions.length === 0 ? '' : sessions.length === 1 ? sessions[0].name : `${sessions[0].name}〜${sessions.at(-1)!.name}`;
 const topicOf = (id: string) => topics.find((t) => t.category === id);
 
+// 議長など役職の期間と、議員ごとの注記（表の下の注記・セレクトの表示に使う）
+const CHAIR = '議長';
+const sessionName = (id: string) => allSessions.find((s) => s.id === id)?.name ?? id;
+const roleNotes = members.flatMap((m) => (m.roles ?? []).map((r) => `${m.name}：${sessionName(r.from)}〜${sessionName(r.to)} ${r.label}`));
+const memberNotes = members.filter((m) => m.note).map((m) => `${m.name}：${m.note}`);
+const hasChair = (m: Member) => m.roles?.some((r) => r.label === CHAIR) ?? false;
+const memberOption = (m: Member) => `${m.name}${hasChair(m) ? '（議長経験）' : ''}${m.note ? '※' : ''}`;
+const CHAIR_EXPLAIN = `${CHAIR}は議事を進める立場のため、${CHAIR}を務めている間は一般質問を行っていません。`;
+
 const toc = [
   { id: 'numbers', label: '数字で見る' },
   { id: 'topics', label: '主要トピック' },
@@ -66,6 +75,13 @@ const toc = [
         </ul>
         <p>議員ごと・分野ごとの件数です。色が濃いほど件数が多いことを表します。数字や議員名・分野名を押すと、下の質問一覧をその条件で絞り込みます。議員は五十音順に並べています。件数は取り上げた回数で、質問の中身の良しあしを表すものではありません。</p>
         <CrossTable categories={CATEGORIES} table={table} />
+        {(roleNotes.length > 0 || memberNotes.length > 0) && (
+          <ul class="note-small ct-notes">
+            {roleNotes.length > 0 && <li>{CHAIR_EXPLAIN}</li>}
+            {roleNotes.map((t) => <li>{t}</li>)}
+            {memberNotes.map((t) => <li>※ {t}</li>)}
+          </ul>
+        )}
       </section>
 
       <section id="topics">
@@ -104,7 +120,7 @@ const toc = [
       <section id="list">
         <h2>質問一覧</h2>
         <form id="q-filter" class="q-filter" aria-label="質問一覧の絞り込み" hidden>
-          <label>議員<select name="member"><option value="all">すべて</option>{members.map((m) => <option value={m.id}>{m.name}</option>)}</select></label>
+          <label>議員<select name="member"><option value="all">すべて</option>{members.map((m) => <option value={m.id}>{memberOption(m)}</option>)}</select></label>
           <label>分野<select name="category"><option value="all">すべて</option>{CATEGORIES.map((c) => <option value={c.id}>{c.label}</option>)}</select></label>
           <label>定例会<select name="session"><option value="all">すべて</option>{[...sessions].reverse().map((s) => <option value={s.id}>{s.name}</option>)}</select></label>
           <label>方向性<select name="direction"><option value="all">すべて</option>{DIRECTIONS.map((d) => <option value={d.id}>{d.label}</option>)}<option value={NO_DIRECTION.id}>{NO_DIRECTION.label}</option></select></label>
@@ -121,6 +137,7 @@ const toc = [
         <ol class="action-list">
           <li><h3>分野と方向性はAIによる分類</h3><p>分野は1件につき主な分野を1つだけ選んでいます。複数の分野にまたがる質問もあるため、件数は目安です。方向性は、議会だよりに載った答弁の要約から判定しており、同じ答弁でも読み方によって判定が分かれることがあると考えています。</p></li>
           <li><h3>件数は取り上げた回数</h3><p>このページの件数は、市議会の一般質問件名表の件名ごとに1件と数えたものです。市議会だよりで「その他の質問」として件名だけが載っているものも含みます。質問の深さや成果を表すものではありません。一般質問を行った議員だけを載せています。</p></li>
+          {roleNotes.length > 0 && <li><h3>議長と一般質問</h3><p>{CHAIR_EXPLAIN}このページの件数は任期全体で数えているため、議長を務めた期間のある議員は、質問できた定例会の数が少なく、件数もそのぶん少なくなっています。件数の違いは、質問の多さや熱心さの違いを表すものではないと考えています。</p></li>}
           {missing.length > 0 && <li><h3>未収録の定例会</h3><p>{missing.map((s) => `${s.name}（${s.note}）`).join('、')}</p></li>}
           <li><h3>誤りを見つけたら</h3><p>このページの内容はすべて JSON ファイルに置いています。誤りがあれば<button type="button" class="link-button" data-open="contact">お問い合わせ</button>からお知らせください。</p></li>
         </ol>
@@ -301,6 +318,12 @@ const toc = [
     color: var(--green);
     margin-right: 2px;
   }
+}
+
+.ct-notes {
+  margin: -0.6em 0 1.4em;
+  padding-left: 1.2em;
+  line-height: 1.7;
 }
 
 .q-list {

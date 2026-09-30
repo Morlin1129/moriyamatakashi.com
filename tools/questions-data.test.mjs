@@ -2,6 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { sortSessions } from '../src/lib/questions-stats.mjs';
 
 const read = (name) => JSON.parse(readFileSync(new URL(`../src/data/${name}`, import.meta.url), 'utf8'));
 const meta = read('questions-meta.json');
@@ -49,6 +50,24 @@ test('議員: id が一意で、よみがあり、1件以上質問している',
     assert.ok(nonEmpty(m.name) && nonEmpty(m.kana), `議員 ${m.id}: name / kana が空`);
     assert.match(m.kana, /^[ぁ-ゖー\s]+$/, `議員 ${m.id}: kana はひらがな`);
     assert.ok(data.questions.some((q) => q.member === m.id), `議員 ${m.id}: 質問がない（一覧から外す）`);
+    if (m.note !== undefined) assert.ok(nonEmpty(m.note), `議員 ${m.id}: note が空`);
+  }
+});
+
+test('議員: 役職（roles）の期間が正しく、議長の間は一般質問がない', () => {
+  const order = new Map(sortSessions(data.sessions).map((s, i) => [s.id, i]));
+  for (const m of data.members) {
+    for (const r of m.roles ?? []) {
+      const label = `議員 ${m.id} の役職「${r.label}」`;
+      assert.ok(nonEmpty(r.label), `議員 ${m.id}: roles の label が空`);
+      assert.ok(order.has(r.from) && order.has(r.to), `${label}: from / to が存在する定例会 id でない`);
+      assert.ok(order.get(r.from) <= order.get(r.to), `${label}: from が to より後`);
+      if (r.label !== '議長') continue;
+      for (const q of data.questions.filter((q) => q.member === m.id)) {
+        const i = order.get(q.session);
+        assert.ok(i < order.get(r.from) || i > order.get(r.to), `${label}: 期間内の ${q.session} に質問 ${q.id} がある`);
+      }
+    }
   }
 });
 

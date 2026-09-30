@@ -18,7 +18,11 @@ export interface Session {
   note?: string;
 }
 
-export interface Member { id: string; name: string; kana: string; note?: string }
+/** 議員の役職と、その期間（from〜to は定例会 id。両端を含む） */
+export interface MemberRole { label: string; from: string; to: string }
+
+/** roles: 議長など一般質問を行わない役職の期間。note: 表の注記（失職など） */
+export interface Member { id: string; name: string; kana: string; roles?: MemberRole[]; note?: string }
 
 export interface Question {
   id: string;
