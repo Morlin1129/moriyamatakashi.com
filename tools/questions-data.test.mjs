@@ -95,3 +95,14 @@ test('分析: 分野と質問 id が存在する', () => {
     }
   }
 });
+
+test('分析: 答弁のある質問がある論点では、例（先頭）に答弁のある質問を置く', () => {
+  const byId = new Map(data.questions.map((q) => [q.id, q]));
+  for (const t of analysis.topics) {
+    for (const p of t.points) {
+      const directed = p.questionIds.filter((id) => byId.get(id)?.direction != null);
+      if (directed.length === 0) continue;
+      assert.notEqual(byId.get(p.questionIds[0]).direction, null, `分析 ${t.category}「${p.text.slice(0, 20)}…」: 先頭 ${p.questionIds[0]} に方向性がない（${directed[0]} などを先頭に）`);
+    }
+  }
+});
