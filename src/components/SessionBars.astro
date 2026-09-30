@@ -12,7 +12,7 @@ const summary = sessions.map((s, i) => `${s.name} ${counts[i]}件`).join('、');
     </span>
   ))}
 </div>
-<p class="sbars-axis"><span>{sessions[0]?.name.replace('定例会', '')}</span><span>{sessions.at(-1)?.name.replace('定例会', '')}</span></p>
+{sessions.length > 1 && <p class="sbars-axis"><span>{sessions[0]?.name.replace('定例会', '')}</span><span>{sessions.at(-1)?.name.replace('定例会', '')}</span></p>}
 
 <style lang="scss">
 // 一般質問 みんなの論点: 定例会ごとの件数

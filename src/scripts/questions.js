@@ -3,7 +3,6 @@
 (() => {
   const form = document.getElementById('q-filter');
   if (!form) return;
-  form.hidden = false;
   const selects = [...form.querySelectorAll('select')];
   const cards = [...document.querySelectorAll('#q-list > li')];
   const count = document.getElementById('q-count');
@@ -18,6 +17,11 @@
     });
     count.textContent = String(shown);
   };
+
+  form.hidden = false;
+  // リロードや戻る操作でブラウザが選択値を復元することがあるので、表示と件数をそろえる
+  apply();
+  window.addEventListener('pageshow', apply);
 
   form.addEventListener('change', apply);
   // reset イベントの時点ではまだ値が戻っていないので、次のタスクで反映する

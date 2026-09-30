@@ -8,7 +8,7 @@ import DirectionBar from '../../components/DirectionBar.astro';
 import SessionBars from '../../components/SessionBars.astro';
 import QuestionCard from '../../components/QuestionCard.astro';
 import { navItem } from '../../data/site';
-import { CATEGORIES, DIRECTIONS, SOURCES } from '../../data/questions-types';
+import { CATEGORIES, DIRECTIONS, NO_DIRECTION, SOURCES } from '../../data/questions-types';
 import type { Session, Member, Question, Topic } from '../../data/questions-types';
 import data from '../../data/questions.json';
 import analysis from '../../data/questions-analysis.json';
@@ -32,7 +32,7 @@ const undetermined = questions.filter((q) => q.direction === null).length;
 const perCategory = CATEGORIES.map((c) => ({ category: c, counts: sessionCounts(questions, sessions, c.id) }));
 const sessionMax = Math.max(0, ...perCategory.flatMap((p) => p.counts));
 const listed = orderQuestions(questions, sessions);
-const range = sessions.length > 0 ? `${sessions[0].name}〜${sessions.at(-1)!.name}` : '';
+const range = sessions.length === 0 ? '' : sessions.length === 1 ? sessions[0].name : `${sessions[0].name}〜${sessions.at(-1)!.name}`;
 const topicOf = (id: string) => topics.find((t) => t.category === id);
 
 const toc = [
@@ -70,7 +70,7 @@ const toc = [
 
       <section id="topics">
         <h2>主要トピック</h2>
-        <p>分野ごとに、繰り返し取り上げられた論点をAIがまとめました。棒は、その分野の定例会ごとの件数です（{sessions[0]?.name}から{sessions.at(-1)?.name}まで、左が古い順）。</p>
+        <p>分野ごとに、繰り返し取り上げられた論点をAIがまとめました。棒は、その分野の定例会ごとの件数です{sessions.length > 1 && `（${sessions[0].name}から${sessions.at(-1)!.name}まで、左が古い順）`}。</p>
         {topics.length === 0 && <p class="note-small">主要トピックの分析は、全期間のデータがそろってから載せます。</p>}
         <div class="topic-grid">
           {perCategory.filter((p) => table.colTotals[CATEGORIES.indexOf(p.category)] > 0).map(({ category, counts }) => (
@@ -80,7 +80,7 @@ const toc = [
               {topicOf(category.id) && (
                 <ul class="topic-points">
                   {topicOf(category.id)!.points.map((p) => (
-                    <li>{p.text}<a href={`#q-${p.questionIds[0]}`} data-q-filter="{}">{p.questionIds.length}件 · 例：{questionById.get(p.questionIds[0])?.title}</a></li>
+                    <li>{p.text}{questionById.has(p.questionIds[0]) && <a href={`#q-${p.questionIds[0]}`} data-q-filter="{}">{p.questionIds.length}件 · 例を見る：{questionById.get(p.questionIds[0])!.title}</a>}</li>
                   ))}
                 </ul>
               )}
@@ -91,7 +91,7 @@ const toc = [
 
       <section id="answers">
         <h2>答弁の方向性</h2>
-        <p>市の答弁の結論が、次の5つのどれに近いかをAIが判定しました。判定は市議会だよりの要約だけにもとづくもので、答弁の細かな言い回しや、その後の実際の対応までは反映していません。{undetermined > 0 && `市議会だよりに答弁の要約が載っていない${undetermined}件（「その他の質問」など）は、方向性を判定していません。`}</p>
+        <p>市の答弁の結論が、次の{DIRECTIONS.length}つのどれに近いかをAIが判定しました。判定は市議会だよりの要約だけにもとづくもので、答弁の細かな言い回しや、その後の実際の対応までは反映していません。{undetermined > 0 && `市議会だよりに答弁の要約が載っていない${undetermined}件（「その他の質問」など）は、方向性を判定していません。`}</p>
         <dl class="dir-defs">
           {DIRECTIONS.map((d) => <div><dt>{d.label}</dt><dd>{d.hint}</dd></div>)}
         </dl>
@@ -107,8 +107,8 @@ const toc = [
           <label>議員<select name="member"><option value="all">すべて</option>{members.map((m) => <option value={m.id}>{m.name}</option>)}</select></label>
           <label>分野<select name="category"><option value="all">すべて</option>{CATEGORIES.map((c) => <option value={c.id}>{c.label}</option>)}</select></label>
           <label>定例会<select name="session"><option value="all">すべて</option>{[...sessions].reverse().map((s) => <option value={s.id}>{s.name}</option>)}</select></label>
-          <label>方向性<select name="direction"><option value="all">すべて</option>{DIRECTIONS.map((d) => <option value={d.id}>{d.label}</option>)}<option value="none">答弁の要約なし</option></select></label>
-          <p class="q-filter-foot"><span><b id="q-count">{listed.length}</b>件</span><button type="reset" class="chip">条件をクリア</button></p>
+          <label>方向性<select name="direction"><option value="all">すべて</option>{DIRECTIONS.map((d) => <option value={d.id}>{d.label}</option>)}<option value={NO_DIRECTION.id}>{NO_DIRECTION.label}</option></select></label>
+          <p class="q-filter-foot"><span aria-live="polite"><b id="q-count">{listed.length}</b>件</span><button type="reset" class="chip">条件をクリア</button></p>
         </form>
         <ol id="q-list" class="q-list">
           {listed.map((q) => <QuestionCard q={q} session={sessionById.get(q.session)!} member={memberById.get(q.member)!} />)}

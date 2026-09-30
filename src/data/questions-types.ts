@@ -44,4 +44,5 @@ export interface CrossTab {
 
 export const CATEGORIES = meta.categories as Category[];
 export const DIRECTIONS = meta.directions as Direction[];
+export const NO_DIRECTION = meta.noDirection as { id: string; label: string };
 export const SOURCES = meta.sources as Record<'dayori' | 'kaigiroku' | 'subjects', Source>;
