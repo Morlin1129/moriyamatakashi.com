@@ -1,0 +1,26 @@
+{
+  "categories": [
+    { "id": "childcare", "label": "子育て・教育" },
+    { "id": "welfare", "label": "福祉・医療・健康" },
+    { "id": "industry", "label": "産業・雇用・農林水産" },
+    { "id": "recovery", "label": "震災復興・原子力災害" },
+    { "id": "disaster", "label": "防災・消防・安全" },
+    { "id": "town", "label": "まちづくり・交通・公共施設" },
+    { "id": "environment", "label": "環境・エネルギー" },
+    { "id": "community", "label": "地域・市民活動・文化・スポーツ" },
+    { "id": "admin", "label": "行財政・市役所運営" },
+    { "id": "other", "label": "その他" }
+  ],
+  "directions": [
+    { "id": "doing", "label": "実施・実施予定", "hint": "「実施する」「○年度から行う」「すでに行っている」" },
+    { "id": "positive", "label": "前向きに検討", "hint": "「前向きに検討する」「実施に向けて検討する」" },
+    { "id": "study", "label": "研究・状況を見て判断", "hint": "「研究する」「国の動向を注視する」「今後判断する」" },
+    { "id": "status", "label": "現状説明のみ", "hint": "事実や現状の説明で、方向を示していない" },
+    { "id": "no", "label": "実施しない", "hint": "「考えていない」「困難」「予定はない」" }
+  ],
+  "sources": {
+    "dayori": { "title": "南相馬市議会「市議会だより」", "url": "https://www.city.minamisoma.lg.jp/portal/admin/shigikai/3/index.html" },
+    "kaigiroku": { "title": "南相馬市議会 会議録検索システム", "url": "https://ssp.kaigiroku.net/tenant/minamisoma/pg/index.html" },
+    "subjects": { "title": "南相馬市議会 議事係（一般質問件名表）", "url": "https://www.city.minamisoma.lg.jp/portal/sections/70/7010/70102/index.html" }
+  }
+}
