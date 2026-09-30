@@ -155,13 +155,20 @@ $shade-white-from: 70%;
   color: $muted;
 }
 
-@each $mix in $shade-mixes {
-  $i: index($shade-mixes, $mix);
+$shade-level: 0;
 
-  .lv-#{$i} {
+@each $mix in $shade-mixes {
+  $shade-level: $shade-level + 1;
+
+  .lv-#{$shade-level} {
     background: color-mix(in srgb, $green $mix, #fff);
-    color: if($mix >= $shade-white-from, #fff, $ink);
     font-weight: 600;
+
+    @if $mix >= $shade-white-from {
+      color: #fff;
+    } @else {
+      color: $ink;
+    }
   }
 }
 
