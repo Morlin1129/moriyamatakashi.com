@@ -1,0 +1,76 @@
+---
+// 答弁の方向性の積み上げ横棒。counts は DIRECTIONS の順。
+import { DIRECTIONS } from '../data/questions-types';
+interface Props { label: string; counts: { id: string; count: number }[]; legend?: boolean }
+const { label, counts, legend = false } = Astro.props;
+const total = counts.reduce((sum, c) => sum + c.count, 0);
+const nameOf = (id: string) => DIRECTIONS.find((d) => d.id === id)?.label ?? id;
+const summary = counts.filter((c) => c.count > 0).map((c) => `${nameOf(c.id)} ${c.count}件`).join('、');
+---
+<div class="dbar">
+  <p class="dbar-label">{label}<small>{total}件</small></p>
+  <div class="dbar-track" role="img" aria-label={`${label}：${summary || '0件'}`}>
+    {total > 0 && counts.filter((c) => c.count > 0).map((c) => (
+      <span class={`dbar-seg is-${c.id}`} style={`width:${(c.count / total) * 100}%`} title={`${nameOf(c.id)} ${c.count}件`}></span>
+    ))}
+  </div>
+  {legend && (
+    <ul class="dbar-legend">
+      {counts.map((c) => <li><i class={`is-${c.id}`}></i>{nameOf(c.id)} {c.count}件</li>)}
+    </ul>
+  )}
+</div>
+
+<style lang="scss">
+// 一般質問 みんなの論点: 方向性の積み上げ横棒
+
+.dbar {
+  margin: 0 0 12px;
+}
+
+:global(.prose) .dbar p.dbar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 4px;
+
+  small {
+    font-weight: 400;
+    color: $muted;
+  }
+}
+
+.dbar-track {
+  display: flex;
+  height: 14px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: $gray-bg;
+}
+
+.dbar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+  font-size: 13px;
+
+  i {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    margin-right: 6px;
+  }
+}
+
+@each $id, $color in $direction-colors {
+  .dbar-seg.is-#{$id},
+  .dbar-legend i.is-#{$id} {
+    background: $color;
+  }
+}
+</style>
