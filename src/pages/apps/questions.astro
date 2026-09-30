@@ -139,6 +139,11 @@ const toc = [
 <style lang="scss">
 // ミニアプリ：一般質問 みんなの論点（表・棒・カードは components/ 側）
 
+// 親の grid で記事の幅がクロス表の最小幅まで広がらないようにする（表は .ct-wrap 内で横スクロール）
+.prose {
+  min-width: 0;
+}
+
 .q-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
