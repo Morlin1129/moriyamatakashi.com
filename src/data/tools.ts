@@ -44,6 +44,16 @@ export const TOOLS: Tool[] = [
     cta: '試作版を見る',
   },
   {
+    id: 'questions',
+    art: 'bars',
+    badge: '試作版',
+    title: '一般質問 みんなの論点',
+    description: '市議会の一般質問を、議員ごと・分野ごとの件数、繰り返し取り上げられた論点、市の答弁の方向性で一覧できます。各質問から市議会だよりの原文へたどれます。',
+    meta: ['データ：南相馬市議会「市議会だより」（現任期の定例会）', '分野・要約・方向性はAIによる分類'],
+    href: '/apps/questions/',
+    cta: '試作版を見る',
+  },
+  {
     id: 'sources',
     art: 'paper',
     title: '資料集',

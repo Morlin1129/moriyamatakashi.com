@@ -29,6 +29,7 @@ npm run build
 - `src/pages/apps/tax.astro`: ミニアプリ「税金はどこへ行った？ 南相馬版」。決算データは `src/data/kessan-r6.json`
 - `src/pages/apps/health.astro`: ミニアプリ「まちの健康診断」。2008〜2024年度の決算カードから抜き出した `src/data/kessan-timeseries.json`（南相馬市の推移）と `src/data/kessan-compare.json`（県内7市の比較）を使う（グラフは `src/components/MiniChart.astro` と `CompareBars.astro`）
 - `src/pages/apps/odaka.astro`: ミニアプリ「小高 復興のあゆみ」。年表は `src/data/odaka-timeline.json`、主要事業は `src/data/odaka-projects.json`、数字は `src/data/odaka-numbers.json`（年表は `src/components/Timeline.astro`、事業カードは `ProjectCard.astro`、型は `src/data/odaka-types.ts`）。**中身を直すときは JSON だけ編集**し、`npm test` で構造を確かめる
+- `src/pages/apps/questions.astro`: ミニアプリ「一般質問 みんなの論点」。データは `src/data/questions.json`（定例会・議員・質問）と `src/data/questions-analysis.json`（分野ごとの主要トピック）、分野・方向性の対応表は `src/data/questions-meta.json`、集計は `src/lib/questions-stats.mjs`。**中身を直すときは JSON だけ編集**し、`npm test` で構造を確かめる。市議会だよりの PDF は `gikai/`（Git 対象外）に置いて読む
 - `src/components/`: パンくず、目次、資料カード、ご意見バー
 - `src/styles/global.css`: 配色、レイアウト、スマートフォン対応
 - `src/scripts/site.js`: メニュー、お問い合わせダイアログ、資料集の絞り込み
@@ -40,7 +41,7 @@ npm run build
 
 ## 試作段階の項目
 
-写真はAI生成の仮素材です。資料集は市の公開資料へのリンク一覧まで。ミニアプリは「税金はどこへ行った？」（税額は概算）と「まちの健康診断」（総務省の決算カードをPDFから機械的に読み取ったもの）、「小高 復興のあゆみ」（公開資料から書き起こした年表。資料未確認の項目を含む）を試作版として公開しています。お問い合わせ先は未設定で、送信機能はありません。公開前に本人の写真と確定した情報へ差し替えてください。
+写真はAI生成の仮素材です。資料集は市の公開資料へのリンク一覧まで。ミニアプリは「税金はどこへ行った？」（税額は概算）と「まちの健康診断」（総務省の決算カードをPDFから機械的に読み取ったもの）、「小高 復興のあゆみ」（公開資料から書き起こした年表。資料未確認の項目を含む）、「一般質問 みんなの論点」（市議会だよりの要約から書き起こし、分野・方向性はAIによる分類）を試作版として公開しています。お問い合わせ先は未設定で、送信機能はありません。公開前に本人の写真と確定した情報へ差し替えてください。
 
 `reference.jpg` は取り組みカードの写真領域をCSSで表示するために使用しています。
 
