@@ -23,6 +23,21 @@
     font-size: 16px;
     line-height: 2;
   }
+
+  h3 {
+    margin: 24px 0 10px;
+  }
+
+  // ふつうの箇条書き（後援会ページ・プライバシーポリシー）
+  .bullet-list {
+    padding-left: 22px;
+    margin: 0 0 1.1em;
+
+    li {
+      margin-bottom: 8px;
+      line-height: 1.9;
+    }
+  }
 }
 
 // 番号付きの手順・取り組みリスト

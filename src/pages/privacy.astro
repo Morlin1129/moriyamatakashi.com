@@ -69,7 +69,7 @@ const toc = [
       <section id="collect">
         <h2>集める情報</h2>
         <p>当会がこのサイトで集める情報は次のとおりです。</p>
-        <ul>
+        <ul class="bullet-list">
           <li><strong>お問い合わせフォーム</strong>: お名前、メールアドレス、電話番号（任意）、件名（任意）、お問い合わせの内容</li>
           <li><strong>後援会の入会申し込みフォーム</strong>: 氏名、ふりがな、郵便番号（任意）、住所、電話番号、メールアドレス（電話番号とメールアドレスはどちらか一方で可）</li>
           <li><strong>フォームの送信時の接続情報</strong>: 迷惑投稿を防ぐ仕組み（Cloudflare Turnstile）が、IP アドレスやブラウザの情報などを受け取ります</li>
@@ -81,7 +81,7 @@ const toc = [
       <section id="purpose">
         <h2>利用目的</h2>
         <p>集めた情報は、次の目的にだけ使います。</p>
-        <ul>
+        <ul class="bullet-list">
           <li>お問い合わせへの返信と、その内容に関する連絡</li>
           <li>後援会への入会の手続きと、入会された方への活動の報告や集まりのご案内の送付（郵送またはメール）</li>
           <li>迷惑投稿や不正なアクセスの防止</li>
@@ -140,16 +140,6 @@ const toc = [
 <style lang="scss">
 // 本文中のリンクは下線で分かるようにする（共通スタイルではリンクに色も下線も付けていない）
 :global(.prose.privacy) {
-  ul {
-    padding-left: 22px;
-    margin: 0 0 1.1em;
-
-    li {
-      margin-bottom: 8px;
-      line-height: 1.9;
-    }
-  }
-
   a:not(.button) {
     color: var(--green);
     text-decoration: underline;
