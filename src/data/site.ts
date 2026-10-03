@@ -16,6 +16,12 @@ export const NAV: { key: NavKey; label: string; href: string }[] = [
   { key: 'supporters', label: '後援会', href: '/supporters/' },
 ];
 
+// SNS（後援会ページのボタンとフッターのリンク）。badge はボタンの左に出す短い名前、action はボタンの文言
+export const SNS = [
+  { key: 'line', name: '公式LINE', badge: 'LINE', action: '友だち追加', href: 'https://lin.ee/RwiHFyR' },
+  { key: 'facebook', name: 'Facebook', badge: 'facebook', action: 'ページを見る', href: 'https://www.facebook.com/takashi.moriyama.12' },
+] as const;
+
 // メニューには載せず、フッターと各フォームからリンクするページ
 export const PRIVACY = { label: 'プライバシーポリシー', href: '/privacy/' };
 

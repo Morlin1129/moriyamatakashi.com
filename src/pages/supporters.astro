@@ -4,6 +4,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import Toc from '../components/Toc.astro';
 import CtaBar from '../components/CtaBar.astro';
 import ContactForm from '../components/form/ContactForm.astro';
+import SnsLinks from '../components/SnsLinks.astro';
 import FormField from '../components/form/FormField.astro';
 import { navItem, SITE_NAME, ORGANIZATION } from '../data/site';
 import { MEMBERSHIP } from '../data/contact';
@@ -37,6 +38,9 @@ const benefits = [
         <p>年齢・性別・地域を問わず、南相馬の未来を一緒に考えてくださる方ならどなたでもご入会いただけます。</p>
         <h3>入会された方へ</h3>
         <ul class="bullet-list">{benefits.map((b) => <li>{b}</li>)}</ul>
+        <h3>SNSで最新情報を受け取る</h3>
+        <p>後援会の活動や催しの案内は、SNSでもお知らせします。</p>
+        <SnsLinks />
       </section>
       <section id="join">
         <h2>入会申し込み</h2>
