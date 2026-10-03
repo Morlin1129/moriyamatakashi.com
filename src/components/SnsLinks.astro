@@ -19,7 +19,7 @@ import { SNS } from '../data/site';
   padding: 0;
   margin: 0 0 1.2em;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 14px;
   max-width: 740px;
 }
@@ -29,14 +29,16 @@ import { SNS } from '../data/site';
   align-items: center;
   gap: 12px;
   min-height: 56px;
-  padding: 10px 16px;
+  height: 100%;
+  padding: 10px 14px;
   background: #fff;
   border: 1px solid $line;
   border-radius: 8px;
   box-shadow: $shadow-card;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--ink);
+  white-space: nowrap;
   transition: box-shadow 0.2s, transform 0.2s;
 
   &:hover {
@@ -48,12 +50,11 @@ import { SNS } from '../data/site';
 // サービスの色の小さな札（ロゴは使わず文字だけ）
 .sns-badge {
   display: inline-block;
-  padding: 4px 10px;
+  padding: 4px 8px;
   border-radius: 4px;
   font-size: 12px;
   font-weight: 800;
   color: #fff;
-  white-space: nowrap;
 
   [data-sns='line'] & {
     background: #06c755;
