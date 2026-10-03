@@ -5,10 +5,18 @@ import Toc from '../components/Toc.astro';
 import CtaBar from '../components/CtaBar.astro';
 import ContactForm from '../components/form/ContactForm.astro';
 import FormField from '../components/form/FormField.astro';
-import { navItem, SITE_NAME } from '../data/site';
+import { navItem, SITE_NAME, ORGANIZATION } from '../data/site';
 import { MEMBERSHIP } from '../data/contact';
 
 const TITLE = navItem('supporters').label;
+
+// 入会するとできること（本人から受け取った案内文）
+const benefits = [
+  '後援会活動報告・ニュースレターの配布',
+  '各種会合・地域イベントへのご案内',
+  'タウンミーティング等での直接対話の機会',
+  'SNS（LINE・facebook・Instagram）での最新情報配信',
+];
 ---
 <Base title={TITLE} description={`${SITE_NAME}の活動を応援してくださる方の、後援会への入会申し込みを受け付けています。`} current="supporters">
   <Breadcrumb items={[{ label: TITLE }]} />
@@ -25,8 +33,10 @@ const TITLE = navItem('supporters').label;
     <article class="prose">
       <section id="about">
         <h2>後援会について</h2>
-        <p>後援会は、{SITE_NAME}の活動を応援してくださる方の集まりです。活動の報告や、集まりのご案内をお届けします。</p>
-        <p>案内の詳しい内容は準備中です。ご不明な点は、お問い合わせからお尋ねください。</p>
+        <p>{ORGANIZATION}は、「こうなったらいいな」を1つずつ実現すべく活動する、地域の皆さまとともに歩む後援会です。</p>
+        <p>年齢・性別・地域を問わず、南相馬の未来を一緒に考えてくださる方ならどなたでもご入会いただけます。</p>
+        <h3>入会された方へ</h3>
+        <ul class="bullet-list">{benefits.map((b) => <li>{b}</li>)}</ul>
       </section>
       <section id="join">
         <h2>入会申し込み</h2>
