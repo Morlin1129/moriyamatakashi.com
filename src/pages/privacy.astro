@@ -1,0 +1,201 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import Toc from '../components/Toc.astro';
+import CtaBar from '../components/CtaBar.astro';
+import { PRIVACY, ORGANIZATION, navItem } from '../data/site';
+
+const TITLE = PRIVACY.label;
+const ESTABLISHED = '2026年10月3日';
+
+// 利用している外部サービス。何のために使い、何が送られるかと、各社の説明へのリンク
+const services = [
+  {
+    name: 'Resend',
+    use: 'フォームの内容をメールで当会に届けるために使っています。送信された項目がこのサービスを経由します。',
+    policy: 'https://resend.com/legal/privacy-policy',
+  },
+  {
+    name: 'Cloudflare Turnstile',
+    use: 'フォームの送信が自動プログラムによるものでないかを確かめるために使っています。送信時に IP アドレスやブラウザの情報などの接続情報が Cloudflare に送られます。',
+    policy: 'https://www.cloudflare.com/privacypolicy/',
+  },
+  {
+    name: 'Vercel',
+    use: 'このサイトを配信するサーバーとして使っています。サーバーは IP アドレス、日時、ブラウザの種類などのアクセスログを記録することがあります。',
+    policy: 'https://vercel.com/legal/privacy-policy',
+  },
+  {
+    name: 'Google アナリティクス 4',
+    use: 'どのページがどれくらい見られているかを知り、サイトを改善するために使っています。Cookie を使って閲覧の状況を集めますが、氏名やメールアドレスなど個人を直接特定する情報は含みません。',
+    policy: 'https://policies.google.com/technologies/partner-sites?hl=ja',
+    optout: 'https://tools.google.com/dlpage/gaoptout?hl=ja',
+  },
+  {
+    name: 'Google Fonts',
+    use: '文字のフォントを配信するために使っています。ページを開くと、ブラウザが Google のサーバーに接続します。',
+    policy: 'https://developers.google.com/fonts/faq/privacy?hl=ja',
+  },
+];
+
+const toc = [
+  { id: 'intro', label: 'はじめに' },
+  { id: 'collect', label: '集める情報' },
+  { id: 'purpose', label: '利用目的' },
+  { id: 'third-party', label: '第三者への提供' },
+  { id: 'services', label: '外部サービス' },
+  { id: 'retention', label: '保管と削除' },
+  { id: 'request', label: '開示・訂正・削除' },
+  { id: 'revision', label: '改定' },
+];
+---
+<Base title={TITLE} description={`${ORGANIZATION}が運営するこのサイトでの、個人情報の集め方と使い方の説明。`}>
+  <Breadcrumb items={[{ label: TITLE }]} />
+  <section class="page-hero wrap">
+    <div class="page-hero-copy">
+      <p class="page-badge">{TITLE}</p>
+      <h1>個人情報の扱いについて</h1>
+      <p class="page-lead">このサイトで集める個人情報と、その使い方を説明します。</p>
+    </div>
+  </section>
+  <div class="page-body wrap">
+    <Toc items={toc} />
+    <article class="prose privacy">
+      <section id="intro">
+        <h2>はじめに</h2>
+        <p>このサイトは{ORGANIZATION}（以下「当会」）が運営しています。当会は、このサイトを通じてお預かりする個人情報を、ここに書いた目的の範囲で、ていねいに扱います。</p>
+      </section>
+
+      <section id="collect">
+        <h2>集める情報</h2>
+        <p>当会がこのサイトで集める情報は次のとおりです。</p>
+        <ul class="bullet-list">
+          <li><strong>お問い合わせフォーム</strong>: お名前、メールアドレス、電話番号（任意）、件名（任意）、お問い合わせの内容</li>
+          <li><strong>後援会の入会申し込みフォーム</strong>: 氏名、ふりがな、郵便番号（任意）、住所、電話番号、メールアドレス（電話番号とメールアドレスはどちらか一方で可）</li>
+          <li><strong>フォームの送信時の接続情報</strong>: 迷惑投稿を防ぐ仕組み（Cloudflare Turnstile）が、IP アドレスやブラウザの情報などを受け取ります</li>
+          <li><strong>アクセスログ</strong>: サイトを配信するサーバーが、IP アドレス、日時、ブラウザの種類などを記録することがあります</li>
+          <li><strong>アクセス解析の情報</strong>: 閲覧したページや滞在時間など、Google アナリティクス 4 が集める閲覧の状況</li>
+        </ul>
+      </section>
+
+      <section id="purpose">
+        <h2>利用目的</h2>
+        <p>集めた情報は、次の目的にだけ使います。</p>
+        <ul class="bullet-list">
+          <li>お問い合わせへの返信と、その内容に関する連絡</li>
+          <li>後援会への入会の手続きと、入会された方への活動の報告や集まりのご案内の送付（郵送またはメール）</li>
+          <li>迷惑投稿や不正なアクセスの防止</li>
+          <li>サイトの閲覧状況の把握と改善</li>
+        </ul>
+        <p>これらの目的の範囲を超えて使うことはありません。</p>
+      </section>
+
+      <section id="third-party">
+        <h2>第三者への提供</h2>
+        <p>当会は、ご本人の同意なく個人情報を第三者に提供しません。ただし、法令に基づいて開示を求められた場合は除きます。</p>
+        <p>次の「外部サービス」に書いたとおり、メールの送信やサイトの配信のために、情報が外部の事業者のサーバーを経由することがあります。</p>
+      </section>
+
+      <section id="services">
+        <h2>利用している外部サービス</h2>
+        <p>このサイトは次の外部サービスを使っています。各サービスでの情報の扱いは、それぞれの事業者の説明をご覧ください。</p>
+        <dl class="services">
+          {services.map((s) => (
+            <div>
+              <dt>{s.name}</dt>
+              <dd>
+                <p>{s.use}</p>
+                <p class="links">
+                  <a href={s.policy} target="_blank" rel="noopener">{s.name} のプライバシーに関する説明</a>
+                  {s.optout && <a href={s.optout} target="_blank" rel="noopener">計測を無効にする方法（オプトアウト アドオン）</a>}
+                </p>
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section id="retention">
+        <h2>保管と削除</h2>
+        <p>お預かりした個人情報は、利用目的に必要な期間だけ保管し、必要がなくなったものは削除します。</p>
+      </section>
+
+      <section id="request">
+        <h2>開示・訂正・削除の求め</h2>
+        <p>ご自身の個人情報について、開示、訂正、利用の停止、削除を望まれるときは、<button type="button" class="link-button" data-open="contact">お問い合わせフォーム</button>からお知らせください。ご本人であることを確かめたうえで対応します。後援会からの案内の送付をやめたいときも、同じ方法でお知らせください。</p>
+      </section>
+
+      <section id="revision">
+        <h2>改定</h2>
+        <p>この内容は、サイトの仕組みや法令の変更に合わせて改定することがあります。改定したときは、このページで知らせます。</p>
+        <p class="date">制定日: {ESTABLISHED}</p>
+      </section>
+
+      <p class="next-link"><a class="button" href={navItem('supporters').href}>後援会のページへ <span>→</span></a></p>
+    </article>
+  </div>
+  <CtaBar />
+</Base>
+
+<style lang="scss">
+// 本文中のリンクは下線で分かるようにする（共通スタイルではリンクに色も下線も付けていない）
+:global(.prose.privacy) {
+  a:not(.button) {
+    color: var(--green);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .link-button {
+    background: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    color: var(--green);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+
+  .services {
+    margin: 0;
+    display: grid;
+    gap: 16px;
+
+    > div {
+      background: $tint;
+      border: 1px solid $line;
+      border-radius: 6px;
+      padding: 16px 20px;
+    }
+
+    dt {
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    dd {
+      margin: 0;
+
+      p {
+        margin-bottom: 6px;
+        font-size: 15px;
+        line-height: 1.9;
+      }
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 20px;
+      font-size: 14px;
+      margin: 0;
+    }
+  }
+
+  .date {
+    color: $muted;
+    font-size: 14px;
+  }
+}
+</style>

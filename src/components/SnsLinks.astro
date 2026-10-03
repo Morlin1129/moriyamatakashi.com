@@ -1,0 +1,71 @@
+---
+// SNS へのボタン。同じ大きさのカードを横に並べ、狭い幅では折り返す（データは src/data/site.ts の SNS）
+import { SNS } from '../data/site';
+---
+<ul class="sns-links">
+  {SNS.map((s) => (
+    <li>
+      <a class="sns-item" data-sns={s.key} href={s.href} target="_blank" rel="noopener">
+        <span class="sns-badge">{s.badge}</span>
+        <span>{s.action}</span>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style lang="scss">
+.sns-links {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.2em;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 14px;
+  max-width: 740px;
+}
+
+.sns-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  height: 100%;
+  padding: 10px 14px;
+  background: #fff;
+  border: 1px solid $line;
+  border-radius: 8px;
+  box-shadow: $shadow-card;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  transition: box-shadow 0.2s, transform 0.2s;
+
+  &:hover {
+    box-shadow: $shadow-card-hover;
+    transform: translateY(-2px);
+  }
+}
+
+// サービスの色の小さな札（ロゴは使わず文字だけ）
+.sns-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #fff;
+
+  [data-sns='line'] & {
+    background: #06c755;
+  }
+
+  [data-sns='facebook'] & {
+    background: #1877f2;
+  }
+
+  [data-sns='instagram'] & {
+    background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af);
+  }
+}
+</style>
