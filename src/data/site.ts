@@ -20,6 +20,7 @@ export const NAV: { key: NavKey; label: string; href: string }[] = [
 export const SNS = [
   { key: 'line', name: '公式LINE', badge: 'LINE', action: '友だち追加', href: 'https://lin.ee/RwiHFyR' },
   { key: 'facebook', name: 'Facebook', badge: 'facebook', action: 'ページを見る', href: 'https://www.facebook.com/takashi.moriyama.12' },
+  { key: 'instagram', name: 'Instagram', badge: 'Instagram', action: 'アカウントを見る', href: 'https://www.instagram.com/takashi.moriyama.1129' },
 ] as const;
 
 // メニューには載せず、フッターと各フォームからリンクするページ
