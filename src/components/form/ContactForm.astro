@@ -3,16 +3,17 @@
 // 欄は slot で受け取り、ハニーポット・個人情報の一文・Turnstile・送信ボタン・結果欄をこちらで付ける。
 // 送信は src/scripts/contact-form.js（Base.astro で読み込む）が fetch で /api/contact/ に送る。
 import { TURNSTILE_SITE_KEY } from 'astro:env/client';
-import { PRIVACY_NOTE } from '../../data/contact';
+import { PRIVACY } from '../../data/site';
 
 interface Props {
   kind: 'inquiry' | 'membership';
   submitLabel: string;
   successMessage: string;
   label: string;
+  note: string;
 }
 
-const { kind, submitLabel, successMessage, label } = Astro.props;
+const { kind, submitLabel, successMessage, label, note } = Astro.props;
 ---
 <form class="contact-form" data-contact action="/api/contact/" method="post" aria-label={label}>
   <input type="hidden" name="kind" value={kind} />
@@ -20,7 +21,7 @@ const { kind, submitLabel, successMessage, label } = Astro.props;
   <p class="hp" aria-hidden="true">
     <label>ウェブサイト<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
   </p>
-  <p class="note">{PRIVACY_NOTE}</p>
+  <p class="note">{note} くわしくは<a href={PRIVACY.href}>{PRIVACY.label}</a>をご覧ください。</p>
   <div class="actions">
     {TURNSTILE_SITE_KEY ? (
       <div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY}></div>
