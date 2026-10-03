@@ -1,8 +1,8 @@
 // ミニアプリ「一般質問 みんなの論点」の集計。ページ（ビルド時）とテストの両方から使う純粋な関数。
 
-/** 議員を議席番号の順に並べる。同じ番号ならよみの五十音順（元の配列は変えない） */
+/** 議員を議席番号の大きい順に並べる。同じ番号ならよみの五十音順（元の配列は変えない） */
 export const sortMembers = (members) =>
-  [...members].sort((a, b) => a.seat - b.seat || a.kana.localeCompare(b.kana, 'ja'));
+  [...members].sort((a, b) => b.seat - a.seat || a.kana.localeCompare(b.kana, 'ja'));
 
 /** 定例会を年・月の古い順に並べる */
 export const sortSessions = (sessions) => [...sessions].sort((a, b) => a.year - b.year || a.month - b.month);

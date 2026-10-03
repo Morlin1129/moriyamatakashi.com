@@ -20,11 +20,11 @@ const questions = [
   { id: 'q4', session: 's1', member: 'm2', category: 'a', direction: 'doing' },
 ];
 
-test('sortMembers: 議席番号の順。同じ番号ならよみの五十音順。元の配列は変えない', () => {
-  assert.deepEqual(sortMembers(members).map((m) => m.id), ['m2', 'm1']);
+test('sortMembers: 議席番号の大きい順。同じ番号ならよみの五十音順。元の配列は変えない', () => {
+  assert.deepEqual(sortMembers(members).map((m) => m.id), ['m1', 'm2']);
   assert.equal(members[0].id, 'm2');
   const tie = [{ id: 'b', kana: 'さとう', seat: 3 }, { id: 'a', kana: 'あべ', seat: 3 }, { id: 'c', kana: 'いけだ', seat: 2 }];
-  assert.deepEqual(sortMembers(tie).map((m) => m.id), ['c', 'a', 'b']);
+  assert.deepEqual(sortMembers(tie).map((m) => m.id), ['a', 'b', 'c']);
 });
 
 test('sortSessions: 年・月の古い順', () => {
@@ -34,8 +34,8 @@ test('sortSessions: 年・月の古い順', () => {
 test('crossTab: 件数・行合計・列合計・総計・最大値', () => {
   const t = crossTab(questions, sortMembers(members), categories);
   assert.deepEqual(t.rows.map((r) => [r.member.id, r.counts, r.total]), [
-    ['m2', [1, 1], 2],
     ['m1', [2, 0], 2],
+    ['m2', [1, 1], 2],
   ]);
   assert.deepEqual(t.colTotals, [3, 1]);
   assert.equal(t.total, 4);
@@ -80,4 +80,11 @@ test('shadeLevel: 0件は0、最大値は最上段、途中は切り上げ', () 
   assert.equal(shadeLevel(1, 10, 5), 1);
   assert.equal(shadeLevel(6, 10, 5), 3);
   assert.equal(shadeLevel(0, 0, 5), 0);
+});
+
+test('shadeLevel: 段階が多くても 0件は0、1件以上は1以上、最大値は最上段', () => {
+  assert.equal(shadeLevel(0, 40, 9), 0);
+  assert.equal(shadeLevel(1, 40, 9), 1);
+  assert.equal(shadeLevel(40, 40, 9), 8);
+  assert.equal(shadeLevel(20, 40, 9), 4);
 });
