@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import Toc from '../components/Toc.astro';
+import CtaBar from '../components/CtaBar.astro';
+import ContactForm from '../components/form/ContactForm.astro';
+import FormField from '../components/form/FormField.astro';
+import { navItem, SITE_NAME } from '../data/site';
+import { MEMBERSHIP } from '../data/contact';
+
+const TITLE = navItem('supporters').label;
+---
+<Base title={TITLE} description={`${SITE_NAME}の活動を応援してくださる方の、後援会への入会申し込みを受け付けています。`} current="supporters">
+  <Breadcrumb items={[{ label: TITLE }]} />
+  <section class="page-hero wrap">
+    <div class="page-hero-copy">
+      <p class="page-badge">{TITLE}</p>
+      <h1>活動を応援してくださる方へ</h1>
+      <p class="page-lead">{SITE_NAME}の活動を応援してくださる方の、後援会への入会申し込みを受け付けています。</p>
+    </div>
+  </section>
+  <div class="page-body wrap">
+    <Toc items={[{ id: 'about', label: '後援会について' }, { id: 'join', label: '入会申し込み' }]} />
+    <article class="prose">
+      <section id="about">
+        <h2>後援会について</h2>
+        <p>後援会は、{SITE_NAME}の活動を応援してくださる方の集まりです。活動の報告や、集まりのご案内をお届けします。</p>
+        <p>案内の詳しい内容は準備中です。ご不明な点は、お問い合わせからお尋ねください。</p>
+      </section>
+      <section id="join">
+        <h2>入会申し込み</h2>
+        <p>下の項目を入力して送信してください。内容を確認のうえ、本人からご連絡します。</p>
+        <ContactForm kind="membership" label={MEMBERSHIP.title} submitLabel={MEMBERSHIP.submit} successMessage={MEMBERSHIP.success}>
+          <div class="field-row">
+            <FormField name="name" label="お名前" required autocomplete="name" />
+            <FormField name="kana" label="ふりがな" required />
+          </div>
+          <FormField name="postal" label="郵便番号" autocomplete="postal-code" inputmode="numeric" placeholder="9792121" />
+          <FormField name="address" label="住所" required autocomplete="street-address" />
+          <div class="field-row">
+            <FormField name="phone" label="電話番号" type="tel" autocomplete="tel" inputmode="tel" hint="メールアドレスとどちらか必須" />
+            <FormField name="email" label="メールアドレス" type="email" autocomplete="email" inputmode="email" hint="電話番号とどちらか必須" />
+          </div>
+        </ContactForm>
+      </section>
+    </article>
+  </div>
+  <CtaBar />
+</Base>
+
+<style lang="scss">
+// 入会申し込みフォームは本文より少し狭くして読みやすく
+:global(.prose) .contact-form {
+  max-width: 640px;
+  margin-top: 20px;
+}
+</style>
