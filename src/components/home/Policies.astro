@@ -9,7 +9,8 @@ const { policies } = Astro.props;
 ---
 <section id="policies" class="policies">
   <div class="wrap">
-    <h2>そのためにやりたいこと</h2>
+    <p class="eyebrow">取り組みたいこと</p>
+    <h2>みんなの『こうしてほしい』が、ちゃんと届くまちへ</h2>
     <ol class="policy-list">
       {policies.map((p) => (
         <li>
@@ -44,6 +45,24 @@ const { policies } = Astro.props;
       font-size: 20px;
       margin-bottom: 8px;
     }
+  }
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 14px;
+
+  &:before {
+    content: '';
+    width: 48px;
+    height: 3px;
+    background: var(--green);
+    border-radius: 2px;
   }
 }
 
