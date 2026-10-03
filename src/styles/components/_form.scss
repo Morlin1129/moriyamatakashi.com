@@ -74,6 +74,12 @@
     font-size: 13px;
     color: $muted;
     line-height: 1.7;
+
+    a {
+      color: var(--green);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
   }
 
   .actions {

@@ -1,6 +1,6 @@
 ---
 import Brand from './Brand.astro';
-import { NAV, SITE_NAME } from '../../data/site';
+import { NAV, ORGANIZATION, PRIVACY } from '../../data/site';
 ---
 <footer>
   <div class="wrap footer-main">
@@ -8,7 +8,7 @@ import { NAV, SITE_NAME } from '../../data/site';
     <nav aria-label="フッターメニュー">{NAV.map((item) => <a href={item.href}>{item.label}</a>)}</nav>
     <a href="#" class="top-link" aria-label="ページ上部に戻る">↑</a>
   </div>
-  <div class="wrap footer-bottom"><span>デザイン試作版 · 写真は生成した仮イメージです</span><span>© 2026 {SITE_NAME}後援会</span></div>
+  <div class="wrap footer-bottom"><span>デザイン試作版 · 写真は生成した仮イメージです</span><span><a href={PRIVACY.href}>{PRIVACY.label}</a> · © 2026 {ORGANIZATION}</span></div>
 </footer>
 
 <style lang="scss">
@@ -56,6 +56,11 @@ footer {
   color: #c9d7ca;
   font-size: 12px;
   margin-top: 25px;
+
+  a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
 
   @include mobile {
     flex-direction: column;

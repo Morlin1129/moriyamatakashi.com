@@ -31,6 +31,7 @@ npm run build
 - `CONTACT_TO`: 受け取るメールアドレス
 - `CONTACT_FROM`: 送信元（Resend で検証済みのドメインのアドレス）
 - `TURNSTILE_SITE_KEY` / `TURNSTILE_SECRET_KEY`: Turnstile のキー。ローカルは `.env.example` にあるテスト用キー（必ず通る）でよい
+- `GA_MEASUREMENT_ID`: Google アナリティクス 4 の測定 ID（`G-` で始まる）。設定したときだけ `Base.astro` が計測スクリプトを読み込む。Vercel では Production にだけ設定する（プレビューの閲覧を混ぜない）
 
 フォームの動作確認は `npm run dev` で行ってください（静的ファイルだけを配信するサーバーでは API が動きません）。
 
@@ -38,6 +39,7 @@ npm run build
 
 - `src/layouts/Base.astro`: 全ページ共通のヘッダー・フッター・お問い合わせダイアログ
 - `src/pages/supporters.astro`: 後援会のページと入会申し込みフォーム。案内文は仮のもの
+- `src/pages/privacy.astro`: プライバシーポリシー。フッターと各フォームからリンク。外部サービスを増減したらここも直す（設計は `docs/superpowers/specs/2026-10-03-privacy-policy-design.md`）
 - `src/pages/api/contact.ts`: お問い合わせ・入会申し込みの送信先 API。入力の検証とメール本文は `src/lib/contact.mjs`（`npm test` で確かめる）、画面の文言は `src/data/contact.ts`
 - `src/components/form/`: フォームの共通部品（`ContactForm.astro` が枠、`FormField.astro` が欄）。送信処理は `src/scripts/contact-form.js`
 - `src/pages/`: 各ページ（`index` トップ、`vision` 考え方、`resources` 資料と数字、`profile` プロフィール、`policies/` 取り組み）

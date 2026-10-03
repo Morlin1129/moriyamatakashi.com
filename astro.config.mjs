@@ -15,6 +15,8 @@ export default defineConfig({
     schema: {
       // Turnstile のサイトキー（公開してよい値）。秘密の値は API 側で getSecret() を使って実行時に読む
       TURNSTILE_SITE_KEY: envField.string({ context: 'client', access: 'public', optional: true }),
+      // Google アナリティクス 4 の測定 ID（G-…）。設定したときだけ Base.astro が gtag.js を読み込む
+      GA_MEASUREMENT_ID: envField.string({ context: 'client', access: 'public', optional: true }),
     },
   },
   // :where() でスコープし、詳細度を増やさない（共通 CSS との優先順位を書いた通りに保つため）

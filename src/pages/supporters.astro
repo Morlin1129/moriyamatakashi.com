@@ -30,7 +30,7 @@ const TITLE = navItem('supporters').label;
       <section id="join">
         <h2>入会申し込み</h2>
         <p>下の項目を入力して送信してください。内容を確認のうえ、本人からご連絡します。</p>
-        <ContactForm kind="membership" label={MEMBERSHIP.title} submitLabel={MEMBERSHIP.submit} successMessage={MEMBERSHIP.success}>
+        <ContactForm kind="membership" label={MEMBERSHIP.title} note={MEMBERSHIP.note} submitLabel={MEMBERSHIP.submit} successMessage={MEMBERSHIP.success}>
           <div class="field-row">
             <FormField name="name" label="お名前" required autocomplete="name" />
             <FormField name="kana" label="ふりがな" required />

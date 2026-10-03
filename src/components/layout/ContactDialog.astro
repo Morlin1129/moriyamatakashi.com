@@ -9,7 +9,7 @@ import { INQUIRY } from '../../data/contact';
   <button class="close" aria-label="閉じる">×</button>
   <h2 id="contact-title">{INQUIRY.title}</h2>
   <p class="lead">{INQUIRY.lead}</p>
-  <ContactForm kind="inquiry" label={INQUIRY.title} submitLabel={INQUIRY.submit} successMessage={INQUIRY.success}>
+  <ContactForm kind="inquiry" label={INQUIRY.title} note={INQUIRY.note} submitLabel={INQUIRY.submit} successMessage={INQUIRY.success}>
     <FormField name="name" label="お名前" required autocomplete="name" />
     <FormField name="email" label="メールアドレス" type="email" required autocomplete="email" inputmode="email" />
     <div class="field-row">
