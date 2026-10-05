@@ -3,6 +3,7 @@ import '../styles/global.scss';
 import SiteHeader from '../components/layout/SiteHeader.astro';
 import SiteFooter from '../components/layout/SiteFooter.astro';
 import ContactDialog from '../components/layout/ContactDialog.astro';
+import { GA_MEASUREMENT_ID } from 'astro:env/client';
 import { SITE_NAME, TAGLINE, DEFAULT_DESCRIPTION, type NavKey } from '../data/site';
 
 interface Props {
@@ -20,6 +21,18 @@ const fullTitle = title ? `${title}｜${SITE_NAME}` : `${SITE_NAME}｜${TAGLINE}
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    {GA_MEASUREMENT_ID && (
+      <>
+        <!-- Google アナリティクス 4（環境変数 GA_MEASUREMENT_ID があるときだけ）。扱いは /privacy/ に記載 -->
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
+        <script is:inline define:vars={{ id: GA_MEASUREMENT_ID }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', id);
+        </script>
+      </>
+    )}
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta property="og:type" content={subpage ? 'article' : 'website'} />
@@ -30,6 +43,9 @@ const fullTitle = title ? `${title}｜${SITE_NAME}` : `${SITE_NAME}｜${TAGLINE}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- お問い合わせフォームの迷惑投稿対策（Cloudflare Turnstile）。読み込み完了を turnstile-ready で知らせ、描画は contact-form.js が行う -->
+    <script is:inline>window.onTurnstileLoad = () => document.dispatchEvent(new Event('turnstile-ready'));</script>
+    <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad&render=explicit" async defer></script>
   </head>
   <body class:list={[{ subpage }]}>
     <SiteHeader current={current} />
@@ -39,5 +55,6 @@ const fullTitle = title ? `${title}｜${SITE_NAME}` : `${SITE_NAME}｜${TAGLINE}
     <SiteFooter />
     <ContactDialog />
     <script src="../scripts/site.js"></script>
+    <script src="../scripts/contact-form.js"></script>
   </body>
 </html>

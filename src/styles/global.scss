@@ -3,6 +3,7 @@
 // トークン（変数・mixin）は astro.config.mjs の additionalData で全ファイルに自動で読み込まれる。
 @use 'base/base';
 @use 'components/button';
+@use 'components/form';
 @use 'components/art';
 @use 'components/chips';
 @use 'components/prose';

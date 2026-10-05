@@ -1,0 +1,34 @@
+---
+// お問い合わせ・入会申し込みフォームの共通の枠。
+// 欄は slot で受け取り、ハニーポット・個人情報の一文・Turnstile・送信ボタン・結果欄をこちらで付ける。
+// 送信は src/scripts/contact-form.js（Base.astro で読み込む）が fetch で /api/contact/ に送る。
+import { TURNSTILE_SITE_KEY } from 'astro:env/client';
+import { PRIVACY } from '../../data/site';
+
+interface Props {
+  kind: 'inquiry' | 'membership';
+  submitLabel: string;
+  successMessage: string;
+  label: string;
+  note: string;
+}
+
+const { kind, submitLabel, successMessage, label, note } = Astro.props;
+---
+<form class="contact-form" data-contact action="/api/contact/" method="post" aria-label={label}>
+  <input type="hidden" name="kind" value={kind} />
+  <slot />
+  <p class="hp" aria-hidden="true">
+    <label>ウェブサイト<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+  </p>
+  <p class="note">{note} くわしくは<a href={PRIVACY.href}>{PRIVACY.label}</a>をご覧ください。</p>
+  <div class="actions">
+    {TURNSTILE_SITE_KEY ? (
+      <div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY}></div>
+    ) : (
+      <p class="form-status is-error">確認用の部品（Turnstile）が設定されていないため、いまは送信できません。</p>
+    )}
+    <button class="button" type="submit">{submitLabel} <span>→</span></button>
+  </div>
+  <p class="form-status" role="status" aria-live="polite" data-success={successMessage}></p>
+</form>

@@ -1,17 +1,30 @@
 ---
-// お問い合わせダイアログ。data-open="contact" のボタンから site.js が開く
+// お問い合わせダイアログ。data-open="contact" のボタンから site.js が開く。
+// 送信は ContactForm（/api/contact/ へ fetch）。
+import ContactForm from '../form/ContactForm.astro';
+import FormField from '../form/FormField.astro';
+import { INQUIRY } from '../../data/contact';
 ---
 <dialog id="contact" aria-labelledby="contact-title">
   <button class="close" aria-label="閉じる">×</button>
-  <h2 id="contact-title">お問い合わせ窓口は準備中です</h2>
-  <p>現在はサイトのデザイン試作版です。連絡先が決まり次第、お問い合わせ先をご案内します。</p>
-  <p>この画面では入力や送信を受け付けていません。</p>
+  <h2 id="contact-title">{INQUIRY.title}</h2>
+  <p class="lead">{INQUIRY.lead}</p>
+  <ContactForm kind="inquiry" label={INQUIRY.title} note={INQUIRY.note} submitLabel={INQUIRY.submit} successMessage={INQUIRY.success}>
+    <FormField name="name" label="お名前" required autocomplete="name" />
+    <FormField name="email" label="メールアドレス" type="email" required autocomplete="email" inputmode="email" />
+    <div class="field-row">
+      <FormField name="phone" label="電話番号" type="tel" autocomplete="tel" inputmode="tel" />
+      <FormField name="subject" label="件名" />
+    </div>
+    <FormField name="message" label="内容" type="textarea" required />
+  </ContactForm>
 </dialog>
 
 <style lang="scss">
 dialog {
   width: min(700px, 92vw);
   max-height: 85vh;
+  overflow: auto;
   border: 0;
   border-radius: 12px;
   padding: 52px 40px 40px;
@@ -28,23 +41,12 @@ dialog {
     font-family: var(--hand);
     color: var(--green);
     font-size: 29px;
+    margin-bottom: 12px;
+  }
+
+  .lead {
     margin-bottom: 24px;
-  }
-
-  h3 {
-    margin: 25px 0 10px;
-  }
-
-  p {
-    margin-bottom: 15px;
-  }
-
-  ul {
-    padding-left: 22px;
-  }
-
-  li {
-    margin-bottom: 10px;
+    font-size: 15px;
   }
 
   @include mobile {

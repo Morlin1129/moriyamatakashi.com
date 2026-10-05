@@ -1,0 +1,22 @@
+---
+// フォームの欄ひとつ（ラベル・入力・エラー文）。ContactForm.astro の中で使う
+interface Props {
+  name: string;
+  label: string;
+  type?: 'text' | 'email' | 'tel' | 'textarea';
+  required?: boolean;
+  hint?: string;
+  autocomplete?: string;
+  inputmode?: 'numeric' | 'tel' | 'email';
+  placeholder?: string;
+}
+
+const { name, label, type = 'text', required = false, hint, autocomplete, inputmode, placeholder } = Astro.props;
+// エラー文は label の中に置くので、id を振らなくても欄と結びつく（同じ名前の欄が 1 ページに 2 つあっても衝突しない）
+const common = { name, required, autocomplete, inputmode, placeholder };
+---
+<label class="field">
+  <span>{label}{hint ? <small>{hint}</small> : !required && <small>任意</small>}</span>
+  {type === 'textarea' ? <textarea {...common} rows="6"></textarea> : <input type={type} {...common} />}
+  <span class="field-error" aria-live="polite"></span>
+</label>

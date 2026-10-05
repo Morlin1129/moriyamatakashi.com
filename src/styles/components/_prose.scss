@@ -23,6 +23,38 @@
     font-size: 16px;
     line-height: 2;
   }
+
+  h3 {
+    margin: 24px 0 10px;
+  }
+
+  // 本文中のリンク。地の文と見分けがつくよう、緑の文字＋やわらかい下線にする
+  // ボタンと資料カード（.resource-cards）は対象外。各コンポーネントのリンク行（p > a）は含める
+  :is(p, li, dd) > a:not(.button, .resource-cards a) {
+    color: var(--green);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: $underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.22em;
+    transition: color 0.2s, text-decoration-color 0.2s;
+
+    &:hover {
+      color: $green-hover;
+      text-decoration-color: currentColor;
+    }
+  }
+
+  // ふつうの箇条書き（後援会ページ・プライバシーポリシー）
+  .bullet-list {
+    padding-left: 22px;
+    margin: 0 0 1.1em;
+
+    li {
+      margin-bottom: 8px;
+      line-height: 1.9;
+    }
+  }
 }
 
 // 番号付きの手順・取り組みリスト
