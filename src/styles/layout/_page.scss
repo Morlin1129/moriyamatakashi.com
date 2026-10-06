@@ -146,18 +146,21 @@
     margin-bottom: 44px;
   }
 
-  .action-list li {
+  .action-list li,
+  .policy-body :where(section > ol) li {
     background: $tint;
     border: 1px solid $line;
     box-shadow: none;
     border-radius: 6px;
   }
 
-  .action-list h3 {
+  .action-list h3,
+  .policy-body :where(section > ol) li > strong:first-child {
     font-size: 16px;
   }
 
-  .goal {
+  .goal,
+  .policy-body :where(section:last-child) {
     background: $tint;
     border: 1px solid $line;
     border-radius: 6px;

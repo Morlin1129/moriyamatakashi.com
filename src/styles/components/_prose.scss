@@ -58,8 +58,11 @@
 }
 
 // 番号付きの手順・取り組みリスト
+// .policy-body（取り組みの Markdown 本文）では、セクション直下の番号付きリストが提案カードになる
+// :where() で包み、クラス指定（.action-list）と同じ詳細度にそろえる
 .action-list,
-.step-list {
+.step-list,
+.policy-body :where(section > ol) {
   list-style: none;
   padding: 0;
   margin: 0 0 1.2em;
@@ -98,6 +101,14 @@
     line-height: 1.6;
   }
 
+  // Markdown では「1. **見出し**」の太字がカードの見出し（h3 と同じ見た目）
+  li > strong:first-child {
+    display: block;
+    font-size: 17px;
+    margin: 24px 0 6px;
+    line-height: 1.6;
+  }
+
   p {
     font-size: 15px;
     line-height: 1.9;
@@ -129,7 +140,20 @@
   }
 }
 
-.goal {
+// Markdown のカードは本文が <p> で包まれないので、li 自体に文字サイズと下余白（li の下余白 + p の下マージン分）を持たせる
+.policy-body :where(section > ol) > li {
+  padding-bottom: calc(8px + 1.1em);
+  font-size: 15px;
+  line-height: 1.9;
+
+  @include mobile {
+    padding-bottom: calc(6px + 1.1em);
+  }
+}
+
+// 目指す姿（取り組みの Markdown 本文では最後のセクション）
+.goal,
+.policy-body :where(section:last-child) {
   background: linear-gradient(120deg, #e8efe0, #f2f5ea);
   border-radius: 10px;
   padding: 28px 30px 12px;
@@ -143,7 +167,9 @@
   }
 }
 
-.check-list {
+// 確かめたいこと（取り組みの Markdown 本文では、セクション直下の箇条書き）
+.check-list,
+.policy-body :where(section > ul) {
   list-style: none;
   padding: 18px 22px 6px;
   margin: 0 0 1em;
