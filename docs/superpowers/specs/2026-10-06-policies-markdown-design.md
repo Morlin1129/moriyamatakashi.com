@@ -14,12 +14,13 @@
 - `#issue` などのセクション id へサイト内からリンクしている箇所はない（目次だけが使う）。
 - `city-hall.yaml` に未コミットの文言修正がある。移行にそのまま含める。
 - Astro 7 の `glob` ローダーは `.md` を読み、`render()` で `<Content />` と見出し一覧（`headings`）を返す。見出しには本文から生成した id が付く。
+- Astro 7 の Markdown 処理系は Sätteri（Rust 製）で、`markdown.rehypePlugins` は `@astrojs/markdown-remark` を別途入れないと効かない。Sätteri 自身に `hastPlugins`（hast を扱うプラグイン）の仕組みがあり、`@astrojs/markdown-satteri` は astro に同梱されている。
 
 ## 方針
 
 - 1 ページ = `src/content/policies/<id>.md`。frontmatter には一覧・トップ・資料集が使う項目だけ残し、4 セクションは本文に Markdown で書く。
 - 見た目は「どのセクションか」ではなく「本文の構造」で決める。ファイルごとに `{#goal}` のような印を書かせない。
-- 新しい依存は増やさない。セクションを `<section>` で包む処理は自前の小さな rehype プラグインで行う。
+- 新しい依存は増やさない。セクションを `<section>` で包む処理は、Sätteri の `hastPlugins` に渡す自前の小さなプラグインで行う。
 - YAML は削除し、README の該当箇所を書き換える。
 
 ## frontmatter（`src/content.config.ts` のスキーマ）
@@ -69,14 +70,14 @@
 
 ## 表示のしくみ
 
-### rehype プラグイン `src/lib/rehype-sections.mjs`
+### セクション化プラグイン `src/lib/sectionize.mjs` と `src/lib/satteri-sections.mjs`
 
-Markdown から作った HTML の並びを、見出しごとに `<section>` で包む。
+Markdown から作った HTML の並び（hast）を、見出しごとに `<section>` で包む。`sectionize.mjs` が純粋関数、`satteri-sections.mjs` がそれを Sätteri の `after` フックから呼ぶプラグイン。
 
 - `h2` から次の `h2` の直前までを `<section>` で包む。`h3` は包まない。
 - 見出しの id はそのまま残す（目次はそこへリンクする）。section には id を付けない。
-- `astro.config.mjs` の `markdown.rehypePlugins` に登録する。Markdown を使っているのは取り組みだけなので、サイト全体への影響はない。
-- 純粋関数（hast のツリーを受け取って返す）として書き、`tools/rehype-sections.test.mjs` で `npm test` に含める。
+- `astro.config.mjs` の `markdown.processor` に `satteri({ hastPlugins: [...] })` として登録する。Markdown を使っているのは取り組みだけなので、サイト全体への影響はない。`@astrojs/markdown-satteri` を直接 import するので `package.json` の dependencies に明記する（インストール済みで、新しく入るものはない）。
+- `sectionize` は純粋関数（hast の子ノード配列を受け取って返す）として書き、`tools/sectionize.test.mjs` で `npm test` に含める。
 
 ### `src/pages/policies/[id].astro`
 
@@ -103,7 +104,7 @@ Markdown から作った HTML の並びを、見出しごとに `<section>` で�
 
 ## 確認
 
-- `npm test` が通る（rehype プラグインのテストを含む）。
+- `npm test` が通る（`sectionize` のテストを含む）。
 - `npm run build` が通る。
 - プレビューで取り組み 5 ページ、一覧、トップ、資料集を見て、移行前のスクリーンショットと比べる。マークアップは変わるので計算済みスタイルの一致は求めず、見た目の一致を見る。
 - 目次のリンクで各セクションへ飛べること。
