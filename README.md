@@ -43,7 +43,7 @@ npm run build
 - `src/pages/api/contact.ts`: お問い合わせ・入会申し込みの送信先 API。入力の検証とメール本文は `src/lib/contact.mjs`（`npm test` で確かめる）、画面の文言は `src/data/contact.ts`
 - `src/components/form/`: フォームの共通部品（`ContactForm.astro` が枠、`FormField.astro` が欄）。送信処理は `src/scripts/contact-form.js`
 - `src/pages/`: 各ページ（`index` トップ、`vision` 考え方、`resources` 資料と数字、`profile` プロフィール、`policies/` 取り組み）
-- `src/content/policies/*.yaml`: 取り組み5つの内容。**取り組みの文章・資料リンクを直すときはここだけ編集**すれば、個別ページ・一覧・トップのカード・資料集の一覧に反映されます
+- `src/content/policies/*.md`: 取り組み5つの内容（frontmatter + Markdown 本文）。**取り組みの文章・資料リンクを直すときはここだけ編集**すれば、個別ページ・一覧・トップのカード・資料集の一覧に反映されます
 - `src/pages/apps/tax.astro`: ミニアプリ「税金はどこへ行った？ 南相馬版」。決算データは `src/data/kessan-r6.json`
 - `src/pages/apps/health.astro`: ミニアプリ「まちの健康診断」。2008〜2024年度の決算カードから抜き出した `src/data/kessan-timeseries.json`（南相馬市の推移）と `src/data/kessan-compare.json`（県内7市の比較）を使う（グラフは `src/components/MiniChart.astro` と `CompareBars.astro`）
 - `src/pages/apps/odaka.astro`: ミニアプリ「小高 復興のあゆみ」。年表は `src/data/odaka-timeline.json`、主要事業は `src/data/odaka-projects.json`、数字は `src/data/odaka-numbers.json`（年表は `src/components/Timeline.astro`、事業カードは `ProjectCard.astro`、型は `src/data/odaka-types.ts`）。**中身を直すときは JSON だけ編集**し、`npm test` で構造を確かめる
@@ -55,7 +55,26 @@ npm run build
 
 ## 取り組みを追加・編集する
 
-`src/content/policies/` に YAML を1つ置くと、`/policies/<ファイル名>/` のページができます。項目は `src/content.config.ts` のスキーマを参照してください。`order` が表示順、`badge` がラベル、`resources` が関連する資料です。
+`src/content/policies/` に Markdown を1つ置くと、`/policies/<ファイル名>/` のページができます。frontmatter の項目は `src/content.config.ts` のスキーマを参照してください。`order` が表示順、`badge` がラベル、`resources` が関連する資料です。
+
+本文は `##` の見出しで区切ります。見出しの文言は自由ですが、次の約束があります。
+
+```md
+## いま、課題と考えていること
+段落。リンクは [考え方](/vision/) のように書く。
+
+## 提案・働きかけたいこと
+1. **提案の見出し**
+   提案の本文。番号付きの箇条書きが提案カードになり、1行目の太字が見出しになる。
+
+## まず確かめたいこと
+- 箇条書きが「確かめたいこと」の強調リストになる。
+
+## 目指す市役所の姿
+最後のセクションが緑の囲みになる。
+```
+
+`##` の見出しは目次に出ます。`###` は普通の小見出しとして使えます。セクション直下の箇条書きは強調リストの見た目になるので、課題や目指す姿は段落で書いてください。セクション分けの処理は `src/lib/sectionize.mjs`（`npm test` で確かめる）です。
 
 ## 試作段階の項目
 

@@ -417,7 +417,7 @@ git commit -m "feat: 取り組みを frontmatter 付き Markdown に移行"
 grep -rn "action-list\|check-list\|class=\"goal\"\|step-list" src --include='*.astro' --include='*.scss'
 ```
 
-Expected: `.action-list` `.check-list` `.goal` は `_prose.scss` と `_page.scss` にしか出ない。`step-list` は他ページの `.astro` で使っている（残す）。
+実際の結果: `.action-list` `.check-list` `.goal` は `vision.astro` とミニアプリ（`apps/*.astro`）でも使っていた。そのため書き換えではなく、既存ルールに `:where()` で詳細度をそろえた構造ベースのセレクタを**追加**する形にした（Step 2・3 の内容はその方針で読み替える）。
 
 - [ ] **Step 2: `_prose.scss` を書き換える**
 

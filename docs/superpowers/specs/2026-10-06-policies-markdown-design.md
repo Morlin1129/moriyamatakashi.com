@@ -88,13 +88,13 @@ Markdown から作った HTML の並び（hast）を、見出しごとに `<sect
 
 ### 見た目（`src/styles/components/_prose.scss`）
 
-既存のクラス `.action-list` `.check-list` `.goal` は取り組みでしか使っていない。構造で当てる形に書き換える。
+既存のクラス `.action-list` `.check-list` `.goal` は考え方ページやミニアプリでも使っているので残し、同じルールに構造ベースのセレクタを追加する。`:where()` で包んで旧クラスと同じ詳細度にそろえ、`.prose section` などの既存ルールとの優先順位を変えない。
 
 | 今 | これから |
 |---|---|
-| `.action-list li`（提案カード） | `.policy-body section > ol > li`。見出しは `li > strong:first-child`（ブロック表示にして `h3` と同じ大きさにする） |
-| `.check-list`（確かめたいこと） | `.policy-body section > ul` |
-| `.goal`（目指す姿の囲み） | `.policy-body > section:last-child` |
+| `.action-list li`（提案カード） | `.policy-body :where(section > ol) li`。見出しは `li > strong:first-child`（ブロック表示にして `h3` と同じ大きさにする）。本文は `<p>` で包まれないので `li` に文字サイズと下余白を持たせる |
+| `.check-list`（確かめたいこと） | `.policy-body :where(section > ul)` |
+| `.goal`（目指す姿の囲み） | `.policy-body :where(section:last-child)` |
 `_page.scss` にある取り組み向けの上書き（`.action-list` `.goal`）も同じ対応で直す。他のページ（`supporters` など）が `.step-list` を使っているので、`.step-list` は残す。
 
 ## 移行
