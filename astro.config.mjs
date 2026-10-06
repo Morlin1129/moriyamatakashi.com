@@ -1,11 +1,17 @@
 import { fileURLToPath } from 'node:url';
 import { defineConfig, envField } from 'astro/config';
 import vercel from '@astrojs/vercel';
+import { satteri } from '@astrojs/markdown-satteri';
+import { satteriSections } from './src/lib/satteri-sections.mjs';
 
 // 各 .astro の <style lang="scss"> と .scss から、トークン（変数・mixin）を @use なしで使えるようにする
 const tokens = fileURLToPath(new URL('./src/styles/abstracts/_tokens.scss', import.meta.url));
 
 export default defineConfig({
+  // Markdown（取り組みの本文）。h2 ごとに <section> で包み、CSS で見た目を当てられるようにする
+  markdown: {
+    processor: satteri({ hastPlugins: [satteriSections] }),
+  },
   // 静的サイトのまま。お問い合わせの API（src/pages/api/contact.ts）だけ prerender = false で Vercel の関数になる
   output: 'static',
   adapter: vercel(),
