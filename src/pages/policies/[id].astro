@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import Toc from '../../components/Toc.astro';
@@ -16,12 +16,10 @@ export async function getStaticPaths() {
 
 const { policy, prev, next } = Astro.props;
 const p = policy.data;
-const number = String(p.order).padStart(2, '0');
+const { Content, headings } = await render(policy);
+// 目次は本文の ## 見出しから。関連する資料は Astro 側で描くので手で足す
 const toc = [
-  { id: 'issue', label: 'いま、課題と考えていること' },
-  { id: 'actions', label: '提案・働きかけたいこと' },
-  { id: 'check', label: 'まず確かめたいこと' },
-  { id: 'goal', label: p.goalHeading },
+  ...headings.filter((h) => h.depth === 2).map((h) => ({ id: h.slug, label: h.text })),
   ...(p.resources.length ? [{ id: 'sources', label: '関連する資料' }] : []),
 ];
 ---
@@ -39,22 +37,9 @@ const toc = [
   <div class="page-body wrap">
     <Toc items={toc} />
     <article class="prose">
-      <section id="issue">
-        <h2>いま、課題と考えていること</h2>
-        {p.issue.map((text) => <p set:html={text} />)}
-      </section>
-      <section id="actions">
-        <h2>提案・働きかけたいこと</h2>
-        <ol class="action-list">{p.actions.map((a) => <li><h3>{a.title}</h3><p>{a.text}</p></li>)}</ol>
-      </section>
-      <section id="check">
-        <h2>まず確かめたいこと</h2>
-        <ul class="check-list">{p.checks.map((c) => <li>{c}</li>)}</ul>
-      </section>
-      <section id="goal" class="goal">
-        <h2>{p.goalHeading}</h2>
-        {p.goal.map((text) => <p>{text}</p>)}
-      </section>
+      <div class="policy-body">
+        <Content />
+      </div>
       {p.resources.length > 0 && (
         <section id="sources">
           <h2>関連する資料</h2>
