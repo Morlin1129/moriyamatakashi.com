@@ -45,8 +45,10 @@
 [考え方](/vision/)で書いたとおり、……
 
 ## 提案・働きかけたいこと
-### 仕事の実態を把握する
-サービス残業を含む……
+1. **仕事の実態を把握する**
+   サービス残業を含む……
+2. **日々の仕事を改善する**
+   業務の進め方や……
 
 ## まず確かめたいこと
 - サービス残業を含む労働時間と、業務ごとの作業量
@@ -60,7 +62,8 @@
 
 - `##` が目次の項目になる。見出しの文言は自由。
 - 「目指す姿」は本文の最後のセクションに置く（最後のセクションが緑の囲みになる）。
-- 「提案」は `###` + 段落で書く。`###` の小セクションはカードになる。
+- 「提案」は `1.` の番号付き箇条書きで書き、各項目の 1 行目を太字にする。セクション直下の番号付き箇条書きはカードになり、先頭の太字がカードの見出しになる。2 行目の字下げは任意。
+- `###` は普通の小見出しとして自由に使える（カードにはならない）。
 - 「確かめたいこと」は `-` の箇条書き。セクション直下の箇条書きは強調リストになる（課題の中に箇条書きを書くと同じ見た目になるので、課題は段落で書く）。
 - リンクは `[文言](/path/)`。生の HTML は使わない。
 
@@ -70,8 +73,7 @@
 
 Markdown から作った HTML の並びを、見出しごとに `<section>` で包む。
 
-- `h2` から次の `h2` の直前までを `<section>` で包む。
-- その中の `h3` から次の `h3`（または `h2`）の直前までを、入れ子の `<section>` で包む。
+- `h2` から次の `h2` の直前までを `<section>` で包む。`h3` は包まない。
 - 見出しの id はそのまま残す（目次はそこへリンクする）。section には id を付けない。
 - `astro.config.mjs` の `markdown.rehypePlugins` に登録する。Markdown を使っているのは取り組みだけなので、サイト全体への影響はない。
 - 純粋関数（hast のツリーを受け取って返す）として書き、`tools/rehype-sections.test.mjs` で `npm test` に含める。
@@ -89,15 +91,14 @@ Markdown から作った HTML の並びを、見出しごとに `<section>` で�
 
 | 今 | これから |
 |---|---|
-| `.action-list li`（提案カード） | `.policy-body section section`。見出しは `h3` |
+| `.action-list li`（提案カード） | `.policy-body section > ol > li`。見出しは `li > strong:first-child`（ブロック表示にして `h3` と同じ大きさにする） |
 | `.check-list`（確かめたいこと） | `.policy-body section > ul` |
 | `.goal`（目指す姿の囲み） | `.policy-body > section:last-child` |
-
-`.prose section` の余白（`padding-top` / `margin-bottom`）は入れ子の section には効かせない。`_page.scss` にある取り組み向けの上書き（`.action-list` `.goal`）も同じ対応で直す。他のページ（`supporters` など）が `.step-list` を使っているので、`.step-list` は残す。
+`_page.scss` にある取り組み向けの上書き（`.action-list` `.goal`）も同じ対応で直す。他のページ（`supporters` など）が `.step-list` を使っているので、`.step-list` は残す。
 
 ## 移行
 
-- 使い捨てスクリプト（scratchpad、`js-yaml` で読む）で 5 本の YAML を `.md` に変換する。`lead` は `|` の複数行、`issue` の `<a href>` は Markdown リンクに直す。`goalHeading` は最後の `##` の文言に使う。
+- 使い捨てスクリプト（scratchpad、`js-yaml` で読む）で 5 本の YAML を `.md` に変換する。`lead` は `|` の複数行、`issue` の `<a href>` は Markdown リンクに直す。`actions` は `1. **title**` + 字下げした `text` に、`checks` は `-` に、`goalHeading` は最後の `##` の文言に使う。
 - 変換後に YAML を削除し、`src/content.config.ts` のコメントと README（`src/content/policies/*.yaml` の説明、「取り組みを追加・編集する」）を `.md` の説明に書き換える。
 
 ## 確認
