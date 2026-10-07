@@ -6,6 +6,7 @@
   <div class="hero-shade"></div>
   <div class="hero-copy">
     <h1 class="hand"><span>「こうなったらいいな」</span><br /><span>を、ひとつずつ。</span></h1>
+    <p class="hero-lead">南相馬で暮らし、働き、地域の声を聞いてきました。<br />「こうなったらいいな」を、できるところから形にしていきます。</p>
   </div>
 </section>
 
@@ -23,6 +24,7 @@
     line-height: 1.7;
     color: #1d2720;
     transform: rotate(-3deg);
+    margin-bottom: 28px;
 
     span {
       display: inline-block;
@@ -97,16 +99,34 @@
   }
 }
 
+// PC は見出しとリード文のブロックを上下中央に置く。SP は下寄せのまま
 .hero-copy {
   position: absolute;
   left: 5%;
-  bottom: 70px;
+  top: 50%;
+  transform: translateY(-50%);
   max-width: 640px;
 
   @include mobile {
     left: 5%;
     right: 5%;
+    top: auto;
     bottom: 45px;
+    transform: none;
+  }
+}
+
+.hero-lead {
+  font-size: 17px;
+  line-height: 1.9;
+  text-shadow: 0 1px 4px #0009;
+
+  @include mobile {
+    font-size: 14px;
+
+    br {
+      display: none;
+    }
   }
 }
 
