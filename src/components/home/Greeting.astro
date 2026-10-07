@@ -1,0 +1,97 @@
+---
+// トップページ：ごあいさつ（写真つき2カラム。ヒーローから名前と自己紹介を移した）
+---
+<section id="greeting" class="greeting">
+  <div class="wrap">
+    <div class="greeting-photo">
+      <img src="/assets/profile.webp" alt="森山貴士のプロフィール写真" loading="lazy" />
+    </div>
+    <div class="greeting-copy">
+      <p class="eyebrow">ごあいさつ</p>
+      <h2 class="greeting-name">森山貴士 <small>もりやま たかし</small></h2>
+      <p>南相馬で暮らし、働き、地域の活動に関わってきました。</p>
+      <p>小高を拠点に、カフェ・小売・コワーキングスペースを併設した「アオスバシ」を運営する一般社団法人オムスビの代表理事を務めています。元々はITの仕事をしてきた人間で、ITを使って仕事を楽にしたり、商品やサービスをPRするお手伝いもしています。</p>
+      <p>みんなの声を聞いて、できるところから変えていきます。</p>
+      <a class="button" href="/profile/">くわしいプロフィール <span>→</span></a>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+.greeting {
+  padding: var(--section-pad) 0;
+
+  .wrap {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @include tablet {
+    .wrap {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 14px;
+
+  &:before {
+    content: '';
+    width: 48px;
+    height: 3px;
+    background: var(--green);
+    border-radius: 2px;
+  }
+}
+
+.greeting-photo img {
+  aspect-ratio: 1.5;
+  border-radius: 8px;
+  box-shadow: 0 12px 30px #20492b1f;
+  transform: rotate(-1.2deg);
+}
+
+.greeting-copy {
+  p {
+    font-size: 16px;
+    line-height: 1.95;
+    margin-bottom: 14px;
+  }
+
+  .button {
+    margin-top: 12px;
+  }
+
+  @include mobile {
+    p {
+      font-size: 15px;
+    }
+
+    .button {
+      width: 100%;
+    }
+  }
+}
+
+.greeting-name {
+  font-size: clamp(26px, 2.4vw, 34px);
+  margin-bottom: 18px;
+
+  small {
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 8px;
+    color: var(--green);
+  }
+}
+</style>

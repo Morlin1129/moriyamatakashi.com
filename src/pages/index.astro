@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Hero from '../components/home/Hero.astro';
 import Vision from '../components/home/Vision.astro';
-import Voices from '../components/home/Voices.astro';
+import Greeting from '../components/home/Greeting.astro';
 import Policies from '../components/home/Policies.astro';
 import Process from '../components/home/Process.astro';
 import ContactStrip from '../components/home/ContactStrip.astro';
@@ -13,7 +13,7 @@ const policies = (await getCollection('policies')).sort((a, b) => a.data.order -
 <Base subpage={false}>
   <Hero />
   <!-- <Vision /> -->
-  <Voices />
+  <Greeting />
   <Policies policies={policies} />
 
   <div class="landscape">

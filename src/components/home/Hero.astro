@@ -6,9 +6,6 @@
   <div class="hero-shade"></div>
   <div class="hero-copy">
     <h1 class="hand"><span>「こうなったらいいな」</span><br /><span>を、ひとつずつ。</span></h1>
-    <p class="hero-name">森山貴士 <small>もりやま たかし</small></p>
-    <p>南相馬で暮らし、働き、地域の活動に関わってきました。<br />みんなの声を聞いて、できるところから変えていきます。</p>
-    <a class="button" href="/profile/">くわしいプロフィール <span>→</span></a>
   </div>
 </section>
 
@@ -26,7 +23,6 @@
     line-height: 1.7;
     color: #1d2720;
     transform: rotate(-3deg);
-    margin-bottom: 24px;
 
     span {
       display: inline-block;
@@ -70,7 +66,6 @@
     h1 {
       font-size: clamp(24px, 4vw, 42px);
       line-height: 1.85;
-      margin-bottom: 18px;
 
       span {
         padding: 0 9px 3px;
@@ -85,8 +80,9 @@
   position: absolute;
   z-index: -3;
 
+  // 人物が写真の中央にいるので、縦長の枠でも顔が見出しの上に収まるよう中央に寄せる
   @include mobile {
-    object-position: 60% center;
+    object-position: 48% center;
   }
 }
 
@@ -107,35 +103,11 @@
   bottom: 70px;
   max-width: 640px;
 
-  p {
-    font-size: 17px;
-    margin-bottom: 26px;
-    text-shadow: 0 1px 4px #0009;
-    line-height: 1.9;
-  }
-
-  .hero-name {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    text-shadow: 0 1px 4px #0009;
-  }
-
   @include mobile {
     left: 5%;
     right: 5%;
     bottom: 45px;
-
-    p {
-      font-size: 14px;
-      line-height: 1.9;
-    }
   }
 }
 
-.hero-name small {
-  font-size: 14px;
-  font-weight: 500;
-  margin-left: 6px;
-}
 </style>
