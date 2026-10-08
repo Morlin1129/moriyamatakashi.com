@@ -153,6 +153,9 @@
     box-shadow: none;
     border-radius: 6px;
   }
+  .policy-body :where(section > ol) li > p > strong {
+    display: block;
+  }
 
   .action-list h3,
   .policy-body :where(section > ol) li > strong:first-child {
@@ -164,6 +167,7 @@
     background: $tint;
     border: 1px solid $line;
     border-radius: 6px;
+    padding-top: 2em;
   }
 
   .breadcrumb {

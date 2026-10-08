@@ -23,7 +23,7 @@ const summaryParagraphs = p.summary.split(/\n\n+/).map((para) => para.split('\n'
 const toc = [
   { id: 'summary', label: '概要' },
   ...headings.filter((h) => h.depth === 2).map((h) => ({ id: h.slug, label: h.text })),
-  ...(p.resources.length ? [{ id: 'sources', label: '関連する資料' }] : []),
+  ...(p.resources?.length ? [{ id: 'sources', label: '関連する資料' }] : []),
 ];
 ---
 <Base title={p.title} description={p.lead} current="policies">
@@ -41,15 +41,15 @@ const toc = [
     <Toc items={toc} />
     <article class="prose">
       <div class="policy-body">
-        <section>
+        <!-- <section>
           <h2 id="summary">概要</h2>
           {summaryParagraphs.map((lines) => (
             <p>{lines.map((line, i) => <>{i > 0 && <br class="pc" />}{line}</>)}</p>
           ))}
-        </section>
+        </section> -->
         <Content />
       </div>
-      {p.resources.length > 0 && (
+      {p.resources?.length > 0 && (
         <section id="sources">
           <h2>関連する資料</h2>
           <ResourceCards items={p.resources} />

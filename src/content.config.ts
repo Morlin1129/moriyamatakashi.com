@@ -16,7 +16,7 @@ const policies = defineCollection({
     lead: z.string(), // 見出しの下の一文
     summary: z.string(), // リーフレットの本文。詳細ページの冒頭に「概要」として載せ、一覧では先頭の抜粋を出す。空行で段落を分ける
     image: z.object({ src: z.string(), alt: z.string() }),
-    resources: z.array(z.object({ title: z.string(), url: z.string().url(), note: z.string() })),
+    resources: z.array(z.object({ title: z.string(), url: z.string().url(), note: z.string() })).optional(),
   }),
 });
 
