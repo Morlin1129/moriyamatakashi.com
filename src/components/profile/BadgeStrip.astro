@@ -1,0 +1,57 @@
+---
+// アイコンの帯（移住して12年 など）。データは src/data/profile.ts の BADGES
+import { BADGES } from '../../data/profile';
+---
+<ul class="badge-strip" aria-label="森山貴士のいま">
+  {BADGES.map((b) => (
+    <li>
+      <img src={b.icon} alt="" width="56" height="56" loading="lazy" />
+      <span>{b.label}</span>
+    </li>
+  ))}
+</ul>
+
+<style lang="scss">
+.badge-strip {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 1.2em;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: $tint;
+    border: 1px solid $line;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--green);
+  }
+
+  img {
+    width: 56px;
+    height: 56px;
+    flex: none;
+  }
+
+  @include mobile {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+
+    li {
+      font-size: 13px;
+      padding: 8px 10px;
+    }
+
+    img {
+      width: 44px;
+      height: 44px;
+    }
+  }
+}
+</style>

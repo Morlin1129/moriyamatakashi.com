@@ -1,0 +1,68 @@
+---
+// あゆみ（年・出来事の年表）。データは src/data/profile.ts の MILESTONES
+import { MILESTONES } from '../../data/profile';
+---
+<dl class="milestones">
+  {MILESTONES.map((m) => (
+    <div>
+      <dt>{m.when}</dt>
+      <dd>{m.text}</dd>
+    </div>
+  ))}
+</dl>
+
+<style lang="scss">
+.milestones {
+  margin: 0 0 1.2em;
+  padding-left: 18px;
+  border-left: 2px solid $underline;
+  display: grid;
+  gap: 12px;
+
+  div {
+    position: relative;
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 14px;
+    align-items: baseline;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: -25px;
+      top: 0.55em;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--green);
+      border: 2px solid var(--paper);
+    }
+  }
+
+  dt {
+    font-size: 14px;
+    font-weight: 700;
+    color: $green-soft;
+    white-space: nowrap;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.85;
+  }
+
+  @include mobile {
+    padding-left: 14px;
+
+    div {
+      grid-template-columns: 1fr;
+      gap: 2px;
+
+      &:before {
+        left: -21px;
+      }
+    }
+  }
+}
+</style>
