@@ -43,6 +43,7 @@ npm run build
 - `src/pages/api/contact.ts`: お問い合わせ・入会申し込みの送信先 API。入力の検証とメール本文は `src/lib/contact.mjs`（`npm test` で確かめる）、画面の文言は `src/data/contact.ts`
 - `src/components/form/`: フォームの共通部品（`ContactForm.astro` が枠、`FormField.astro` が欄）。送信処理は `src/scripts/contact-form.js`
 - `src/pages/`: 各ページ（`index` トップ、`vision` 考え方、`resources` 資料と数字、`profile` プロフィール、`policies/` 取り組み）
+- `src/pages/profile.astro`: プロフィール。文章はこのファイル、数字・年表・掲載記事などの構造データは `src/data/profile.ts`（`npm test` で構造を確かめる）、部品は `src/components/profile/`。写真は `public/assets/profile/`（リーフレットから取り出したもの）。設計は `docs/superpowers/specs/2026-10-08-profile-page-design.md`
 - `src/content/policies/*.md`: 取り組み5つの内容（frontmatter + Markdown 本文）。**取り組みの文章・資料リンクを直すときはここだけ編集**すれば、個別ページ・一覧・トップのカード・資料集の一覧に反映されます
 - `src/pages/apps/tax.astro`: ミニアプリ「税金はどこへ行った？ 南相馬版」。決算データは `src/data/kessan-r6.json`
 - `src/pages/apps/health.astro`: ミニアプリ「まちの健康診断」。2008〜2024年度の決算カードから抜き出した `src/data/kessan-timeseries.json`（南相馬市の推移）と `src/data/kessan-compare.json`（県内7市の比較）を使う（グラフは `src/components/MiniChart.astro` と `CompareBars.astro`）
