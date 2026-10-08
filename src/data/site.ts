@@ -9,8 +9,8 @@ export const DEFAULT_DESCRIPTION =
 export type NavKey = 'vision' | 'policies' | 'resources' | 'profile' | 'supporters';
 
 export const NAV: { key: NavKey; label: string; href: string }[] = [
-  { key: 'vision', label: '考え方', href: '/vision/' },
   { key: 'policies', label: '取り組みたいこと', href: '/policies/' },
+  { key: 'vision', label: '考え方', href: '/vision/' },
   { key: 'resources', label: 'まちを知る', href: '/resources/' },
   { key: 'profile', label: 'プロフィール', href: '/profile/' },
   { key: 'supporters', label: '後援会', href: '/supporters/' },
