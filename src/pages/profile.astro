@@ -3,43 +3,81 @@ import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Toc from '../components/Toc.astro';
 import CtaBar from '../components/CtaBar.astro';
+import BadgeStrip from '../components/profile/BadgeStrip.astro';
+import FieldCards from '../components/profile/FieldCards.astro';
+import Milestones from '../components/profile/Milestones.astro';
+import StatTiles from '../components/profile/StatTiles.astro';
+import { CASES, CAREER, PRESS, WORK_URL } from '../data/profile';
 
-const career = [
-  ['出身', '大阪市'],
-  ['学歴', '立命館大学 政策科学部 卒業'],
-  ['2014年', '南相馬市小高区へ移住'],
-  ['仕事', 'Webエンジニア／業務改善（BPR）コンサルティング'],
-  ['地域活動', '一般社団法人オムスビ 代表理事、地域拠点 AOSUBASHI を運営'],
-  ['受賞', '令和4年度「新しい東北」復興・創生の星顕彰'],
+// 文章はこのファイルに、数字・年表・リンクは src/data/profile.ts に置く（設計: docs/superpowers/specs/2026-10-08-profile-page-design.md）
+// 公開前に本人が確認すること: IT 実績 3 件の測定条件とクライアントの承諾、年表の月
+const toc = [
+  { id: 'about', label: '森山貴士について' },
+  { id: 'activities', label: '南相馬で取り組んできたこと' },
+  { id: 'work', label: 'IT・業務改善の仕事' },
+  { id: 'career', label: '経歴・受賞・外部掲載' },
 ];
 ---
-<Base title="プロフィール" description="森山貴士のプロフィール。大阪市出身、2014年に南相馬市小高区へ移住。" current="profile">
+<Base
+  title="プロフィール"
+  description="森山貴士のプロフィール。大阪市出身、2014年に南相馬市小高区へ移住。ITエンジニア・業務改善コンサルタントとして働きながら、地域拠点「アオスバシ」の運営や学びの場づくりに取り組んできました。"
+  current="profile"
+>
   <Breadcrumb items={[{ label: 'プロフィール' }]} />
   <section class="page-hero wrap">
     <div class="page-hero-copy">
       <p class="page-badge">プロフィール</p>
-      <h1>森山貴士について</h1>
-      <p class="page-lead">大阪市出身 ／ 2014年 南相馬へ。Webエンジニア・地域拠点運営。</p>
+      <h1><span class="nowrap">ITの仕事と、</span><span class="nowrap">地域の「やりたい」を</span><span class="nowrap">形にする仕事を</span><span class="nowrap">してきました。</span></h1>
+      <p class="page-lead">大阪市出身。2014年に南相馬市へ移住して12年。<br />ITエンジニア・業務改善コンサルタント／一般社団法人オムスビ 代表理事。</p>
     </div>
     <div class="page-hero-media"><img src="/assets/profile.webp" alt="森山貴士のプロフィール写真" class="profile-photo" /></div>
   </section>
   <div class="page-body wrap">
-    <Toc items={[{ id: 'about', label: '森山貴士について' }, { id: 'career', label: '経歴' }]} />
+    <Toc items={toc} />
     <article class="prose">
       <section id="about">
-        <h2>ごあいさつ</h2>
-        <p>みなさんこんにちは。森山です。「オムスビの森山」や「アオスバシの森山」として知ってくださっている方もいるかと思いますが、小高を拠点に、カフェ・小売・コワーキングスペースを併設した「アオスバシ」の運営などを行う一般社団法人オムスビの代表理事を務めています。</p>
-        <p>そのかたわら、システム開発や業務改善、事業支援の仕事にも取り組んでいます。生計はこちらがメインです。</p>
-        <p>2014年に南相馬市に移住し、13年目になります。結婚し、子どもが産まれ、現在は一児の父です。</p>
-        <p>人の話を聞き、課題を整理し、できる形にする。思えば仕事も地域の活動もこうしたことをずっとやってきました。</p>
-        <p>これまで地域や企業に対してやってきたことを、</p>
-        <p>市政の取り組みにもつなげていきたいと考えています。</p>
-        <p>地域の人たちの「こうなったらいいな」を一つずつ、実現していける市政に取り組んでまいります。</p>
-
+        <h2>森山貴士について</h2>
+        <p>南相馬市小高区で、カフェ・小売・コワーキングなどの機能を持つ地域拠点「アオスバシ」を運営しています。</p>
+        <p>市内ではコーヒー屋として知っていただくことも多いのですが、本業はITエンジニア・業務改善コンサルタントです。</p>
+        <p>2014年に南相馬市へ移住して以来、ITの仕事を続けながら、地域の人たちと一緒に、暮らしや交流の場づくり、子どもたちの学びの機会づくりなどに取り組んできました。</p>
+        <p>移住したばかりのころは、予定していた仕事がなくなり、地域の人に小さな仕事を回してもらいながらのスタートでした。うまくいかなかったこともたくさんありますが、そのたびにやり方を考え、周りの人たちに助けてもらいながら続けてきました。</p>
+        <p>仕事の分野はさまざまですが、共通しているのは、人の話を聞き、課題を整理し、実際に形にしていくことです。</p>
+        <p>結婚し、子どもが産まれ、現在は一児の父です。</p>
+        <p>これまで地域や企業で取り組んできたことを、今度は市政に関わる活動にも生かしていきたいと考えています。</p>
+        <BadgeStrip />
+      </section>
+      <section id="activities">
+        <h2>南相馬で取り組んできたこと</h2>
+        <p>避難指示解除直後の小高で、暮らしや交流の場づくりから始めました。地域の人たちと一緒に積み重ねてきたことを、4つの分野で紹介します。</p>
+        <FieldCards />
+        <h3>あゆみ</h3>
+        <Milestones />
+      </section>
+      <section id="work">
+        <h2>IT・業務改善の仕事</h2>
+        <p>東京のIT企業で5年、ソフトウェア開発と先端技術の研究に携わったあと、2014年からフリーランスのITエンジニア・コンサルタントとして、Webシステムの開発や企業の業務改善に取り組んでいます。コンサルティング会社のIT顧問も務めています。</p>
+        <p>単にシステムをつくるだけでなく、実際の仕事がどのように進められているのかを調べ、何が課題になっているのかを整理し、よりよい仕組みを考えることを大切にしてきました。</p>
+        <StatTiles />
+        <h3>業務改善の実践例</h3>
+        <ul class="case-list">
+          {CASES.map((c) => <li><strong>{c.title}</strong><span>{c.text}</span></li>)}
+        </ul>
+        <p class="work-link"><a href={WORK_URL} target="_blank" rel="noopener">制作・開発の実績一覧（一般社団法人オムスビ）↗</a></p>
+        <p>地域での活動とは一見違う仕事に見えるかもしれませんが、人の話を聞き、課題を整理し、実際に動く仕組みにする。その点は同じだと感じています。</p>
       </section>
       <section id="career">
-        <h2>経歴</h2>
-        <dl class="career">{career.map(([k, v]) => <><dt>{k}</dt><dd>{v}</dd></>)}</dl>
+        <h2>経歴・受賞・外部掲載</h2>
+        <dl class="career">{CAREER.map(([k, v]) => <><dt>{k}</dt><dd>{v}</dd></>)}</dl>
+        <h3>外部掲載</h3>
+        <ul class="press-list">
+          {PRESS.map((p) => (
+            <li>
+              <span class="press-outlet">{p.outlet}</span>
+              <a href={p.url} target="_blank" rel="noopener">{p.title}↗</a>
+              {p.date && <small>{p.date}</small>}
+            </li>
+          ))}
+        </ul>
       </section>
       <p class="next-link"><a class="button" href="/vision/">考え方を読む <span>→</span></a></p>
     </article>
@@ -53,13 +91,39 @@ const career = [
   object-position: center 22%;
 }
 
-// プロフィール：経歴
+// 業務改善の実践例（見出し＋一文の箇条書き）
+.case-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1em;
+  display: grid;
+  gap: 10px;
 
+  li {
+    background: #fff;
+    border: 1px solid $line;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  strong {
+    display: block;
+    color: var(--green);
+  }
+}
+
+.work-link {
+  font-size: 14px;
+}
+
+// 経歴
 .career {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 0;
-  margin: 0;
+  margin: 0 0 1.4em;
 
   dt,
   dd {
@@ -87,5 +151,33 @@ const career = [
       padding-top: 4px;
     }
   }
+}
+
+// 外部掲載
+.press-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.2em;
+  display: grid;
+  gap: 10px;
+
+  li {
+    font-size: 15px;
+    line-height: 1.8;
+    padding-left: 1em;
+    text-indent: -1em;
+  }
+
+  small {
+    margin-left: 8px;
+    font-size: 13px;
+    color: $muted;
+  }
+}
+
+.press-outlet {
+  @include pill;
+  margin-right: 8px;
+  text-indent: 0;
 }
 </style>
