@@ -1,5 +1,6 @@
 ---
-// トップページ：取り組み一覧（番号付きの縦リスト。SP は見出し→写真→説明→ボタンの縦積み）
+// トップページ：取り組み一覧（番号付きの縦リスト。SP は見出し→写真→一文→ボタンの縦積み）
+// 文言はリーフレット（政策パンフレット）の frontmatter（pretitle / title / lead）
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -10,15 +11,17 @@ const { policies } = Astro.props;
 <section id="policies" class="policies">
   <div class="wrap">
     <p class="eyebrow">取り組みたいこと</p>
-    <h2>みんなの『こうしてほしい』が、ちゃんと届くまちへ</h2>
+    <h2>「こうなったらいいな」を、ひとつずつ実現するために</h2>
+    <p class="policies-note">取り組みたい5つのテーマがあります。</p>
     <ol class="policy-list">
       {policies.map((p) => (
         <li>
           <a class="policy" href={`/policies/${p.id}/`}>
             <span class="policy-num" aria-hidden="true">{String(p.data.order).padStart(2, '0')}</span>
             <div class="policy-body">
-              <h3>{p.data.badge}</h3>
-              <p>{p.data.plain}</p>
+              {p.data.pretitle && <span class="policy-pretitle">{p.data.pretitle}</span>}
+              <h3>{p.data.title}</h3>
+              <p>{p.data.lead}</p>
               <span class="policy-more">くわしく見る <span aria-hidden="true">→</span></span>
             </div>
             <img class="policy-photo crop" src={p.data.image.src} alt={p.data.image.alt} loading="lazy" />
@@ -39,12 +42,23 @@ const { policies } = Astro.props;
 
   h2 {
     font-size: clamp(24px, 2.4vw, 32px);
-    margin-bottom: 20px;
+    margin-bottom: 8px;
 
     @include mobile {
       font-size: 20px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
+  }
+}
+
+.policies-note {
+  font-size: 15px;
+  color: $muted-dark;
+  margin-bottom: 20px;
+
+  @include mobile {
+    font-size: 14px;
+    margin-bottom: 8px;
   }
 }
 
@@ -148,10 +162,26 @@ const { policies } = Astro.props;
   }
 }
 
-// SP では写真を見出しと説明のあいだに差し込む
+.policy-pretitle {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 6px;
+
+  @include mobile {
+    font-size: 13px;
+  }
+}
+
+// SP では写真を見出しと一文のあいだに差し込む
 .policy-body {
   @include mobile {
     display: contents;
+
+    .policy-pretitle {
+      order: 0;
+    }
 
     h3 {
       order: 1;

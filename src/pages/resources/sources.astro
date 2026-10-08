@@ -9,7 +9,7 @@ import { navItem } from '../../data/site';
 
 // 資料一覧は取り組みの YAML に書いた resources をまとめたもの
 const policies = (await getCollection('policies')).sort((a, b) => a.data.order - b.data.order);
-const resources = policies.flatMap((p) => p.data.resources.map((r) => ({ ...r, tag: p.data.badge, cat: p.id })));
+const resources = policies.flatMap((p) => p.data.resources.map((r) => ({ ...r, tag: p.data.title, cat: p.id })));
 
 const nav = navItem('resources');
 
@@ -41,7 +41,7 @@ const toc = [
         <h2>資料を探す</h2>
         <div class="filter-chips" role="group" aria-label="取り組みで絞り込む" data-target="#resource-list">
           <button type="button" class="chip is-active" data-filter="all" aria-pressed="true">すべて</button>
-          {policies.map((p) => <button type="button" class="chip" data-filter={p.id} aria-pressed="false">{p.data.badge}</button>)}
+          {policies.map((p) => <button type="button" class="chip" data-filter={p.id} aria-pressed="false">{p.data.title}</button>)}
         </div>
         <ResourceCards items={resources} id="resource-list" />
       </section>

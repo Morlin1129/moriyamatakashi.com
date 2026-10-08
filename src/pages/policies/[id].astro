@@ -17,20 +17,23 @@ export async function getStaticPaths() {
 const { policy, prev, next } = Astro.props;
 const p = policy.data;
 const { Content, headings } = await render(policy);
-// 目次は本文の ## 見出しから。関連する資料は Astro 側で描くので手で足す
+// リーフレットの本文（summary）を「概要」として本文の先頭に置く。空行で段落、行の折り返しは PC 表示でだけ <br>
+const summaryParagraphs = p.summary.split(/\n\n+/).map((para) => para.split('\n'));
+// 目次は「概要」＋本文の ## 見出し。関連する資料は Astro 側で描くので手で足す
 const toc = [
+  { id: 'summary', label: '概要' },
   ...headings.filter((h) => h.depth === 2).map((h) => ({ id: h.slug, label: h.text })),
   ...(p.resources.length ? [{ id: 'sources', label: '関連する資料' }] : []),
 ];
 ---
-<Base title={p.title} description={p.lead.replace(/\n/g, '')} current="policies">
-  <Breadcrumb items={[{ label: '取り組み', href: '/policies/' }, { label: p.badge }]} />
+<Base title={p.title} description={p.lead} current="policies">
+  <Breadcrumb items={[{ label: '取り組み', href: '/policies/' }, { label: p.title }]} />
   <section class="page-hero wrap">
     <div class="page-hero-copy">
-      <p class="page-badge">{p.badge}</p>
+      <p class="page-badge">取り組み {String(p.order).padStart(2, '0')}</p>
+      {p.pretitle && <p class="page-pretitle">{p.pretitle}</p>}
       <h1>{p.titleLines.map((line) => <span class="nowrap">{line}</span>)}</h1>
-      <p class="page-lead">{p.lead.split('\n').map((line, i) => <>{i > 0 && <br class="pc" />}{line}</>)}</p>
-      {p.policyName && <p class="page-subtitle">政策名：{p.policyName}</p>}
+      <p class="page-lead">{p.lead}</p>
     </div>
     <div class="page-hero-media"><img class="crop" src={p.image.src} alt={p.image.alt} /></div>
   </section>
@@ -38,6 +41,12 @@ const toc = [
     <Toc items={toc} />
     <article class="prose">
       <div class="policy-body">
+        <section>
+          <h2 id="summary">概要</h2>
+          {summaryParagraphs.map((lines) => (
+            <p>{lines.map((line, i) => <>{i > 0 && <br class="pc" />}{line}</>)}</p>
+          ))}
+        </section>
         <Content />
       </div>
       {p.resources.length > 0 && (
@@ -58,6 +67,14 @@ const toc = [
 </Base>
 
 <style lang="scss">
+// 取り組み詳細：見出しの上に添える一文（リーフレットの小さな前置き）
+.page-pretitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 6px;
+}
+
 // 取り組み詳細：前後のページへのリンク
 
 .pager {

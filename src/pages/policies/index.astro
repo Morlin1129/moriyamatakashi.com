@@ -3,16 +3,19 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import CtaBar from '../../components/CtaBar.astro';
+import { excerpt } from '../../lib/excerpt.mjs';
 
 const policies = (await getCollection('policies')).sort((a, b) => a.data.order - b.data.order);
+// 一覧カードに出す本文（summary）の抜粋の長さ
+const EXCERPT_LENGTH = 80;
 ---
 <Base title="取り組み" description="森山貴士が南相馬で取り組みたい5つのテーマ。" current="policies">
   <Breadcrumb items={[{ label: '取り組み' }]} />
   <section class="page-hero wrap">
     <div class="page-hero-copy">
       <p class="page-badge">取り組み</p>
-      <h1>取り組みたい、5つのこと</h1>
-      <p class="page-lead">現場で聞いた声と、市の資料や数字をもとに、5つのテーマで取り組みたいことをまとめました。<br class="pc" />どのテーマも、「実施した」で終わらせず、結果を確かめて改善することを大切にします。</p>
+      <h1>取り組みたい、5つのテーマ</h1>
+      <p class="page-lead">「こうなったらいいな」を、ひとつずつ実現するために、取り組みたい5つのテーマがあります。</p>
     </div>
     <div class="page-hero-media"><img src="/assets/landscape.jpg" alt="緑に囲まれた地方のまちのイメージ" /></div>
   </section>
@@ -24,8 +27,10 @@ const policies = (await getCollection('policies')).sort((a, b) => a.data.order -
             <img class="crop" src={policy.data.image.src} alt={policy.data.image.alt} loading="lazy" />
             <span class="policy-card-body">
               <small>取り組み {String(policy.data.order).padStart(2, '0')}</small>
+              {policy.data.pretitle && <span class="policy-card-pretitle">{policy.data.pretitle}</span>}
               <strong>{policy.data.title}</strong>
-              <span>{policy.data.lead.replace(/\n/g, '')}</span>
+              <span class="policy-card-lead">{policy.data.lead}</span>
+              <span class="policy-card-excerpt">{excerpt(policy.data.summary, EXCERPT_LENGTH)}</span>
               <em>くわしく読む →</em>
             </span>
           </a>
@@ -94,7 +99,20 @@ const policies = (await getCollection('policies')).sort((a, b) => a.data.order -
     line-height: 1.55;
   }
 
-  > span {
+  .policy-card-pretitle {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: -2px;
+  }
+
+  .policy-card-lead {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.7;
+  }
+
+  .policy-card-excerpt {
     font-size: 15px;
     color: #4d5a50;
     line-height: 1.85;
