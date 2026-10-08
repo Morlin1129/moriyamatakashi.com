@@ -11,8 +11,8 @@ export type NavKey = 'vision' | 'policies' | 'resources' | 'profile' | 'supporte
 export const NAV: { key: NavKey; label: string; href: string }[] = [
   { key: 'policies', label: '取り組みたいこと', href: '/policies/' },
   { key: 'vision', label: '考え方', href: '/vision/' },
-  { key: 'resources', label: 'まちを知る', href: '/resources/' },
   { key: 'profile', label: 'プロフィール', href: '/profile/' },
+  { key: 'resources', label: 'まちを知る', href: '/resources/' },
   { key: 'supporters', label: '後援会', href: '/supporters/' },
 ];
 
