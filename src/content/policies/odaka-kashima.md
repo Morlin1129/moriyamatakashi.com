@@ -14,7 +14,7 @@ summary: |-
   そして、途中で意見を聞くだけでなく、どうすればもっと良いものが実現できるかまで、一緒に考えられる進め方を増やします。
 image:
   src: /assets/policies/odaka-kashima.webp
-  alt: 地域の人が集まって話し合う様子
+  alt: 班に分かれて、計画の説明を聞きながら話し合うワークショップの様子
 resources:
   - title: 小高区商業施設整備に関する資料（2017年）
     url: https://www.city.minamisoma.lg.jp/material/files/group/34/20170828-092534.pdf

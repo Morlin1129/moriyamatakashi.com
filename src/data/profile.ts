@@ -115,15 +115,15 @@ export const MILESTONES: Milestone[] = [
 // 03 数字のある実績（AI 勉強会スライドより。公開前に測定条件とクライアントの承諾を確認する）
 export const STATS: Stat[] = [
   { value: '5倍', label: 'Webサイトのアクセス数', note: 'リニューアル前後で5倍に。安定して稼働するサイトへ' },
-  { value: '6倍', label: '問い合わせ率の改善', note: '0.2%から1.2%へ' },
-  { value: '約100万円', label: '年間コストの削減', note: '独自CRMと電子契約の連携による' },
+  { value: '6倍', label: '問い合わせ率の改善', note: '事業者HPの問い合わせを0.2%から1.2%へ' },
+  { value: '約100万円', label: '年間コストの削減', note: '地域事業者のシステム導入によるコスト効果' },
 ];
 
 // 03 業務改善の実践例（クライアント名は出さない）
 export const CASES: Case[] = [
-  { title: '不動産情報の管理システム', text: '問い合わせと物件情報の管理・分析を一元化し、業務の工数を削減' },
+  { title: '不動産情報の管理システム', text: '問い合わせと物件情報の管理・分析を一元化し、業務の工数を大幅削減' },
   { title: '大手小売業のナレッジ管理改善', text: '社内に蓄積された知識や業務情報を、必要な人が使いやすくする改善プロジェクトに参画' },
-  { title: '卸売業の業務改善', text: '現場の業務の流れを整理し、仕事の進め方や情報管理の改善を検討するプロジェクトに参画' },
+  { title: '大手卸売業の業務改善', text: '現場の業務の流れを整理し、仕事の進め方や情報管理の改善を検討するプロジェクトに参画' },
 ];
 
 // 04 経歴
@@ -157,6 +157,16 @@ export const PRESS: Press[] = [
     url: 'https://fukushima-hook.jp/interview_moriyama/',
   },
   {
+    outlet: 'Youtube',
+    title: '福島県 The three stories ふくしま移住 3つのストーリー',
+    url: 'https://www.youtube.com/watch?v=Gl6PZfqqEnc',
+  },
+  {
+    outlet: '環境庁',
+    title: '福島環境再生の100人の記憶',
+    url: 'https://fukushima-mirai.env.go.jp/activity/article/pdf/fukushima100_091.pdf',
+  },
+  {
     outlet: '福島民友',
     title: '名店からパン仕入れ、南相馬「アオスバシ」開店 元すし店を改修',
     date: '2023年7月',
@@ -168,4 +178,17 @@ export const PRESS: Press[] = [
     date: '2023年1月',
     url: 'https://www.reconstruction.go.jp/topics/m23/01/230106_senteikekka.pdf',
   },
+  {
+    outlet: '日本建築学会',
+    title: 'アジア建築交流国際シンポジウム(ISAIA) 2024 KYOTO ',
+    date: '2024年10月',
+    url: 'https://isaia2024.aij.or.jp/theme-session/#theme5',
+  },
+  {
+    outlet: '寄稿論文',
+    title: '「環境と公害」南相馬での生業実践：高校生と若者世代で一緒に取り組む「まちづくり資産」の蓄積 第47巻第4号',
+    date: '2018年4月',
+    url: 'https://isaia2024.aij.or.jp/theme-session/#theme5',
+  },
+
 ];
