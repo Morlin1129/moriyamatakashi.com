@@ -20,6 +20,12 @@ const EXCERPT_LENGTH = 80;
     <div class="page-hero-media"><img src="/assets/landscape.jpg" alt="緑に囲まれた地方のまちのイメージ" /></div>
   </section>
   <div class="wrap">
+    <div class="prose policy-intro">
+      <p>南相馬に移住してから、地域でさまざまな仕事や活動に関わってきました。</p>
+      <p>その中で、地域にはまだまだ多くの可能性があると感じる一方で、今の仕組みでは解決しきれない課題があることも実感してきました。</p>
+      <p>市役所の仕事の進め方、市民の声が届く仕組み、子育てや地域の産業、そして将来の公共施設のあり方。</p>
+      <p>これまでの経験をもとに、これからの南相馬に必要だと考えることを、5つのテーマにまとめました。</p>
+    </div>
     <ul class="policy-list">
       {policies.map((policy) => (
         <li>
@@ -43,6 +49,31 @@ const EXCERPT_LENGTH = 80;
 
 <style lang="scss">
 // 取り組み一覧
+
+// 一覧の前に置く前書き。ゆったり読めるよう、本文より余白を広めにとる
+.policy-intro {
+  margin: 16px 0 72px;
+
+  p {
+    font-size: 17px;
+    line-height: 2.2;
+    margin-bottom: 1.6em;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  @include mobile {
+    margin: 4px 0 48px;
+
+    p {
+      font-size: 16px;
+      line-height: 2;
+      margin-bottom: 1.4em;
+    }
+  }
+}
 
 .policy-list {
   list-style: none;
