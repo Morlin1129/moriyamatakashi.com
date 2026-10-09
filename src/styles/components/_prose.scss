@@ -45,6 +45,23 @@
     }
   }
 
+  // 本文中の写真と添え書き（取り組みの Markdown 本文では <figure> で書く）
+  figure {
+    margin: 28px 0 1.6em;
+
+    img {
+      height: auto;
+      border-radius: 8px;
+    }
+
+    figcaption {
+      margin-top: 10px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: $muted;
+    }
+  }
+
   // ふつうの箇条書き（後援会ページ・プライバシーポリシー）
   .bullet-list {
     padding-left: 22px;
