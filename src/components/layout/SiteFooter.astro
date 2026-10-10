@@ -12,7 +12,7 @@ import { NAV, SNS, ORGANIZATION, PRIVACY } from '../../data/site';
     </nav>
     <a href="#" class="top-link" aria-label="ページ上部に戻る">↑</a>
   </div>
-  <div class="wrap footer-bottom"><span>デザイン試作版 · 写真は生成した仮イメージです</span><span><a href={PRIVACY.href}>{PRIVACY.label}</a> · © 2026 {ORGANIZATION}</span></div>
+  <div class="wrap footer-bottom"><span><a href={PRIVACY.href}>{PRIVACY.label}</a> · © 2026 {ORGANIZATION}</span></div>
 </footer>
 
 <style lang="scss">
@@ -31,8 +31,14 @@ footer {
   nav {
     display: flex;
     align-items: center;
-    gap: 25px;
+    flex-wrap: wrap;
+    gap: 12px 25px;
     font-size: 14px;
+
+    // 幅が足りないときは項目の途中で折れず、項目ごとに次の行へ送る
+    a {
+      white-space: nowrap;
+    }
   }
 
   // ページのリンクと SNS のリンクの区切り

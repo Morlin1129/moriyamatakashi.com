@@ -21,6 +21,7 @@ export const SNS = [
   { key: 'line', name: '公式LINE', badge: 'LINE', action: '友だち追加', href: 'https://lin.ee/RwiHFyR' },
   { key: 'facebook', name: 'Facebook', badge: 'facebook', action: 'ページを見る', href: 'https://www.facebook.com/takashi.moriyama.12' },
   { key: 'instagram', name: 'Instagram', badge: 'Instagram', action: 'フォローする', href: 'https://www.instagram.com/takashi.moriyama.1129' },
+  { key: 'note', name: 'note', badge: 'note', action: '記事を読む', href: 'https://note.com/omsbhand' },
 ] as const;
 
 // メニューには載せず、フッターと各フォームからリンクするページ
